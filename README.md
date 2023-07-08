@@ -19,7 +19,7 @@ CoinPulse utilises the CoinGecko API to fetch real-time and historical market da
 
 ## Live Production
 
-Check out the live version of the CoinPulse Crypto App: https://coinpulse-crypto-app.vercel.app/ 
+Check out the live version of the CoinPulse Crypto App: https://coinpulse-crypto-app.vercel.app/
 
 ## Getting Started
 
