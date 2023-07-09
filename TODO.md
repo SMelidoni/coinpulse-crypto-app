@@ -8,7 +8,7 @@
 
 ## Low Priority
 
-- [ ] Update Favicon
+- [x] Update Favicon
 
 # Ideas
 
