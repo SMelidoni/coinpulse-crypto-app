@@ -5,7 +5,9 @@ import { useEffect, useRef } from 'react';
 const Home: FC = () => {
 	return (
 		<section id='home' className='home-section'>
-			<div className='home-container'>Track Cryptocurrencies</div>
+			<div className='home-container'>
+				<h1>Track Cryptocurrencies</h1>
+			</div>
 		</section>
 	);
 };
