@@ -1,10 +1,12 @@
-import React from 'react';
 import './App.scss';
+
+import React from 'react';
+import Home from './pages/home/home.component';
 
 function App() {
 	return (
 		<div className='App'>
-			<header className='App-header'>CoinPulse</header>
+			<Home />
 		</div>
 	);
 }
