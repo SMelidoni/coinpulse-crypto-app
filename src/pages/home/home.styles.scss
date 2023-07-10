@@ -5,8 +5,10 @@
 	background-color: $background-primary;
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	min-height: 100vh;
 	padding: 1rem;
+	width: 100%;
 
 	.home-container {
 		align-items: center;
@@ -15,10 +17,23 @@
 		justify-content: center;
 		text-align: center;
 
-		h1 {
-			font-size: 100px;
+		.title {
+			font-size: 70px;
 			font-weight: 600;
+			letter-spacing: 1.2px;
 			text-transform: uppercase;
 		}
+	}
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+	.home-section .home-container .title {
+		font-size: 50px;
+	}
+}
+
+@media screen and (min-width: 769px) and (max-width: $breakpoint-desktop) {
+	.home-section .home-container .title {
+		font-size: 60px;
 	}
 }
