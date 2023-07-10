@@ -1,0 +1,17 @@
+@import '../../styles/variables.scss';
+
+.home-section {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	padding: 1rem;
+
+	.home-container {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		text-align: center;
+	}
+}
