@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useState } from 'react';
 import './home.styles.scss';
+import React, { FC, useEffect, useState } from 'react';
 
 interface CoinData {
 	id: string;
