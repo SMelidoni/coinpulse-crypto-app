@@ -45,26 +45,24 @@
 					display: flex;
 					align-items: center;
 
+					.increase {
+						color: $increase-color;
+					}
+
+					.decrease {
+						color: $decrease-color;
+					}
+
 					p {
 						margin: 0 10px;
+						font-size: 20px;
+						font-weight: 600;
 					}
 
 					span {
 						color: $primary-color;
+						font-weight: 600;
 					}
-				}
-
-				h2,
-				p {
-					font-weight: 400;
-				}
-
-				.increase {
-					color: $increase-color;
-				}
-
-				.decrease {
-					color: $decrease-color;
 				}
 			}
 		}
