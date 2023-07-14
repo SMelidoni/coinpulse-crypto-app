@@ -15,6 +15,7 @@
 
 - [x] Update Favicon
 - [ ] Add Total Market Cap under NavBar
+- [ ] Mention CoinGecko on Site (https://www.coingecko.com/en/branding)
 
 # Ideas
 
