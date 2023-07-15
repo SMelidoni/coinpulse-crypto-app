@@ -5,10 +5,11 @@
 - [ ] Create Homepage
 - [ ] Create Navbar
 - [ ] Integrate Crypto Fear & Greed Index
-- [ ] Create 'Market' section 
+  - [ ] Add ToolTip Explaining what the FAG Index is
+- [ ] Create 'Market' section
   - [ ] Integrate CoinGecko API
 - [ ] Create 'Learn' section
-  - [ ] What is Cryptocurrency? etc. 
+  - [ ] What is Cryptocurrency? etc.
 - [ ] Make Website Live (Vercel)
 
 ## Low Priority
