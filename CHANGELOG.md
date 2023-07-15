@@ -5,3 +5,4 @@
 - Added new favicon
 - Implemented the initial setup of the Home page, integrated global style definitions via variables.scss, set global font-family to Quicksand
 - Added top crypto coins display on Home section (includes: name, price (£), 24h price change)
+- Integrated Fear and Greed Index from alternative.me API
