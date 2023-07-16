@@ -1,0 +1,38 @@
+.fear-greed-index {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 8px;
+	padding: 20px;
+	color: white;
+	h2 {
+		margin-bottom: 20px;
+	}
+	.fear-greed-value {
+		font-size: 3em;
+	}
+	.fear-greed-name {
+		font-weight: 600;
+		font-size: 24px;
+	}
+}
+
+.fear-greed-index.Extreme-Fear {
+	background-color: #ea3943;
+}
+
+.fear-greed-index.Fear {
+	background-color: #ea8c00;
+}
+
+.fear-greed-index.Neutral {
+	background-color: #f3d42f;
+}
+
+.fear-greed-index.Greed {
+	background-color: #93d900;
+}
+
+.fear-greed-index.Extreme-Greed {
+	background-color: #16c784;
+}
