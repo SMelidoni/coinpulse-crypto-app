@@ -9,8 +9,8 @@ import Topbar from './components/topbar/topbar.component';
 function App() {
 	return (
 		<div className='App'>
-			<Navbar />
 			<Topbar />
+			<Navbar />
 			<Home />
 			<FearGreedIndex />
 		</div>

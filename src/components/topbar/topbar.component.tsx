@@ -45,14 +45,24 @@ const Topbar: FC = () => {
 
 	return (
 		<div className='topbar-container'>
-			{data && (
-				<>
-					<div>Coins: {data.active_cryptocurrencies}</div>
-					<div>Exchanges: {data.markets}</div>
-					<div>Market Cap: £{formatNumber(data.total_market_cap.gbp)}</div>
-					<div>24h Vol: £{formatNumber(data.total_volume.gbp)}</div>
-				</>
-			)}
+			<div className='topbar-content'>
+				<div className='data-content'>
+					{data && (
+						<>
+							<div className='data-item'>
+								Coins: {data.active_cryptocurrencies}
+							</div>
+							<div className='data-item'>Exchanges: {data.markets}</div>
+							<div className='data-item'>
+								Market Cap: £{formatNumber(data.total_market_cap.gbp)}
+							</div>
+							<div className='data-item'>
+								24h Vol: £{formatNumber(data.total_volume.gbp)}
+							</div>
+						</>
+					)}
+				</div>
+			</div>
 		</div>
 	);
 };
