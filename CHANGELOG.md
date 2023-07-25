@@ -7,3 +7,4 @@
 - Added top crypto coins display on Home section (includes: name, price (£), 24h price change)
 - Integrated Fear and Greed Index from alternative.me API
 - Added Navbar component (sticky header)
+- Added Topbar component (sticky header)

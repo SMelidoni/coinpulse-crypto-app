@@ -13,13 +13,13 @@
 - [ ] Create 'Learn' section
   - [ ] What is Cryptocurrency? etc.
 - [ ] Make Website Live (Vercel)
-- [ ] Create Coin Component (Upon clicking on a crpytocurrency icon, new page should be displayed with detailed info) 
+- [ ] Create Coin Component (Upon clicking on a crpytocurrency icon, new page should be displayed with detailed info)
 
 ## Low Priority
 
 - [x] Update Favicon
-- [ ] Create Topbar
-  - [ ] Integrate market data from CoinGecko (Market Cap, 24h Vol etc.)
+- [x] Create Topbar
+  - [x] Integrate market data from CoinGecko (Market Cap, 24h Vol etc.)
 - [ ] Mention CoinGecko on Site (https://www.coingecko.com/en/branding)
 
 # Ideas
