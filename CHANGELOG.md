@@ -8,3 +8,4 @@
 - Integrated Fear and Greed Index from alternative.me API
 - Added Navbar component (sticky header)
 - Added Topbar component (sticky header)
+- Updated mobile navbar 'close' button position
