@@ -22,7 +22,9 @@ const CoinRow: FC<ICoinData> = ({
 		<td>{rank}</td>
 		<td>{name}</td>
 		<td>£{price.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</td>
-		<td>{change24h.toFixed(2)}%</td>
+		<td className={change24h > 0 ? 'increase' : 'decrease'}>
+			{change24h.toFixed(2)}%
+		</td>
 		<td>£{volume24h.toLocaleString('en-GB')}</td>
 		<td>£{marketCap.toLocaleString('en-GB')}</td>
 	</tr>
