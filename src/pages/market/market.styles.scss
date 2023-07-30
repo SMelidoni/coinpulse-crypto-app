@@ -1,38 +1,58 @@
 @import '../../styles/variables.scss';
 
 .market-section {
-	align-items: center;
+	align-items: flex-start;
 	background-color: $background-white;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	min-height: 100vh;
 	padding: 1rem;
 
 	.market-container {
-		align-items: center;
+		align-items: flex-start;
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
-		text-align: center;
+		width: 100%;
+		// padding: 1rem;
+		max-width: 1200px;
+		margin: 0 auto;
 
 		.title {
-			font-size: 70px;
-			font-weight: 500;
+			font-size: 3rem;
+			font-weight: 600;
 			letter-spacing: 1.2px;
 			text-transform: uppercase;
+			margin-bottom: 1rem;
+		}
+
+		.table-container {
+			width: 100%;
+			overflow-x: auto;
+
+			.market-table {
+				width: 100%;
+				border-collapse: collapse;
+				white-space: nowrap;
+
+				th,
+				td {
+					padding: 1rem;
+					text-align: left;
+					border-bottom: 1px solid $primary-text-color;
+				}
+			}
 		}
 	}
 }
 
 @media screen and (max-width: $breakpoint-tablet) {
-	.home-section .home-container .title {
-		font-size: 50px;
+	.market-section .market-container .title {
+		font-size: 2.5rem;
 	}
 }
 
 @media screen and (min-width: 769px) and (max-width: $breakpoint-desktop) {
-	.home-section .home-container .title {
-		font-size: 60px;
+	.market-section .market-container .title {
+		font-size: 2.8rem;
 	}
 }
