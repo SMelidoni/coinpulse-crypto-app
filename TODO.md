@@ -9,7 +9,8 @@
   - [ ] Improve UI (Similar to CMC)
 - [ ] Create 'Market' section
   - [ ] Integrate CoinGecko API
-  - [ ] Add crypto table (responsive)
+  - [x] Add market update table (responsive)
+  - [ ] Add pagination
 - [ ] Create 'Learn' section
   - [ ] What is Cryptocurrency? etc.
 - [ ] Make Website Live (Vercel)
