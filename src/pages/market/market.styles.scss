@@ -1,0 +1,58 @@
+@import '../../styles/variables.scss';
+
+.market-section {
+	align-items: flex-start;
+	background-color: $background-white;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	padding: 1rem;
+
+	.market-container {
+		align-items: flex-start;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		max-width: 1200px;
+		margin: 0 auto;
+
+		.title {
+			font-size: 3rem;
+			font-weight: 600;
+			letter-spacing: 1.2px;
+			text-transform: uppercase;
+			margin-bottom: 1rem;
+		}
+
+		.table-container {
+			width: 100%;
+			overflow-x: auto;
+
+			.market-table {
+				width: 100%;
+				border-collapse: collapse;
+				white-space: nowrap;
+
+				th,
+				td {
+					padding: 1rem;
+					text-align: left;
+					border-bottom: 1px solid $primary-text-color;
+					font-weight: 600;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+	.market-section .market-container .title {
+		font-size: 2.5rem;
+	}
+}
+
+@media screen and (min-width: 769px) and (max-width: $breakpoint-desktop) {
+	.market-section .market-container .title {
+		font-size: 2.8rem;
+	}
+}

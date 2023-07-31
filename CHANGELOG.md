@@ -9,3 +9,4 @@
 - Added Navbar component (sticky header)
 - Added Topbar component (sticky header)
 - Updated mobile navbar 'close' button position
+- Added initial 'Market' section (sample data)
