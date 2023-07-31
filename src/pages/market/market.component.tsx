@@ -23,8 +23,8 @@ const Market: FC = () => (
 						<tr>
 							<th>#</th>
 							<th>Coin</th>
-							<th>Price (£)</th>
-							<th>24h</th>
+							<th>Price</th>
+							<th>24h Change</th>
 							<th>24h Volume</th>
 							<th>Market Cap</th>
 						</tr>
