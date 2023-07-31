@@ -10,6 +10,7 @@
 - [ ] Create 'Market' section
   - [ ] Integrate CoinGecko API
   - [ ] Add crypto table (responsive)
+  - [ ] Add ability to sort asc / desc
 - [ ] Create 'Learn' section
   - [ ] What is Cryptocurrency? etc.
 - [ ] Make Website Live (Vercel)
