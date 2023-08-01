@@ -16,6 +16,7 @@ const Market: FC = () => {
 				(coin: any, index: number) => ({
 					rank: index + 1,
 					name: coin.name,
+					image: coin.image,
 					price: coin.current_price,
 					change24h: coin.price_change_percentage_24h,
 					volume24h: coin.total_volume,

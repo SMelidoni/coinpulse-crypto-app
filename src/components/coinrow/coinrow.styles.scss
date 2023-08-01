@@ -7,3 +7,14 @@
 .decrease {
 	color: $decrease-color;
 }
+
+.coin-container {
+	display: flex;
+	align-items: center;
+}
+
+.coin-icon {
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+}

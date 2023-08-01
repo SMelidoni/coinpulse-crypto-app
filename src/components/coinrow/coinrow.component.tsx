@@ -4,6 +4,7 @@ import React, { FC } from 'react';
 export interface ICoinData {
 	rank: number;
 	name: string;
+	image: string;
 	price: number;
 	change24h: number;
 	volume24h: number;
@@ -13,6 +14,7 @@ export interface ICoinData {
 const CoinRow: FC<ICoinData> = ({
 	rank,
 	name,
+	image,
 	price,
 	change24h,
 	volume24h,
@@ -20,7 +22,12 @@ const CoinRow: FC<ICoinData> = ({
 }) => (
 	<tr>
 		<td>{rank}</td>
-		<td>{name}</td>
+		<td>
+			<div className='coin-container'>
+				<img src={image} alt={name} className='coin-icon' />
+				{name}
+			</div>
+		</td>
 		<td>£{price.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</td>
 		<td className={change24h > 0 ? 'increase' : 'decrease'}>
 			{change24h.toFixed(2)}%
