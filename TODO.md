@@ -8,13 +8,14 @@
   - [ ] Add ToolTip Explaining what the FAG Index is
   - [ ] Improve UI (Similar to CMC)
 - [ ] Create 'Market' section
-  - [ ] Integrate CoinGecko API
-  - [ ] Add crypto table (responsive)
+  - [x] Integrate CoinGecko API
   - [ ] Add ability to sort asc / desc
+  - [x] Add market update table (responsive)
+  - [ ] Add pagination
 - [ ] Create 'Learn' section
   - [ ] What is Cryptocurrency? etc.
 - [ ] Make Website Live (Vercel)
-- [ ] Create Coin Component (Upon clicking on a crpytocurrency icon, new page should be displayed with detailed info)
+- [ ] Create Coin Component (Upon clicking on a cryptocurrency icon, new page should be displayed with detailed info)
 
 ## Low Priority
 
