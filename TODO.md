@@ -11,7 +11,8 @@
   - [x] Integrate CoinGecko API
   - [ ] Add ability to sort asc / desc
   - [x] Add market update table (responsive)
-  - [ ] Add pagination
+  - [x] Add pagination
+  - [ ] Add ability to select how many rows to display
 - [ ] Create 'Learn' section
   - [ ] What is Cryptocurrency? etc.
 - [ ] Make Website Live (Vercel)
