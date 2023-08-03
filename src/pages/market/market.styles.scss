@@ -43,6 +43,49 @@
 			}
 		}
 	}
+
+	.pagination {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		margin: 2rem auto;
+
+		.prev-next,
+		.page-number {
+			align-items: center;
+			background: transparent;
+			border: none;
+			border-radius: 50%;
+			box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+			color: $primary-color;
+			cursor: pointer;
+			display: flex;
+			font-family: inherit;
+			font-size: 15px;
+			font-weight: 600;
+			height: 30px;
+			justify-content: center;
+			margin: 0 5px;
+			padding: 10px;
+			transition: all 0.3s ease;
+			width: 30px;
+
+			&.active-page {
+				color: $secondary-color;
+			}
+
+			&:disabled {
+				color: lighten($primary-color, 20%);
+				cursor: not-allowed;
+				opacity: 0.5;
+			}
+
+			&:hover:not(.active-page):not(:disabled) {
+				background-color: rgba(0, 0, 0, 0.05);
+				color: darken($primary-color, 10%);
+			}
+		}
+	}
 }
 
 @media screen and (max-width: $breakpoint-tablet) {
