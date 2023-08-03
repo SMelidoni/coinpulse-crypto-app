@@ -5,6 +5,12 @@ import axios from 'axios';
 
 const Market: FC = () => {
 	const [coinData, setCoinData] = useState<ICoinData[]>([]);
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const coinsPerPage = 10;
+	const indexOfLastCoin = currentPage * coinsPerPage;
+	const indexOfFirstCoin = indexOfLastCoin - coinsPerPage;
+	const currentCoins = coinData.slice(indexOfFirstCoin, indexOfLastCoin);
 
 	useEffect(() => {
 		const fetchCoinData = async () => {
@@ -30,6 +36,18 @@ const Market: FC = () => {
 		fetchCoinData();
 	}, []);
 
+	const handleNextPage = () => {
+		if (currentPage < 5) setCurrentPage(currentPage + 1);
+	};
+
+	const handlePreviousPage = () => {
+		if (currentPage > 1) setCurrentPage(currentPage - 1);
+	};
+
+	const handlePageClick = (pageNumber: number) => {
+		setCurrentPage(pageNumber);
+	};
+
 	return (
 		<section id='market' className='market-section'>
 			<div className='market-container'>
@@ -47,12 +65,41 @@ const Market: FC = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{coinData.map((coinData, index) => (
+							{currentCoins.map((coinData, index) => (
 								<CoinRow key={index} {...coinData} />
 							))}
 						</tbody>
 					</table>
 				</div>
+			</div>
+			<div className='pagination'>
+				<button
+					onClick={handlePreviousPage}
+					disabled={currentPage === 1}
+					className='prev-next'
+				>
+					&lt;
+				</button>
+				{[1, 2, 3, 4, 5].map((pageNumber) => (
+					<button
+						key={pageNumber}
+						className={
+							currentPage === pageNumber
+								? 'page-number active-page'
+								: 'page-number'
+						}
+						onClick={() => handlePageClick(pageNumber)}
+					>
+						{pageNumber}
+					</button>
+				))}
+				<button
+					onClick={handleNextPage}
+					disabled={currentPage === 5}
+					className='prev-next'
+				>
+					&gt;
+				</button>
 			</div>
 		</section>
 	);
