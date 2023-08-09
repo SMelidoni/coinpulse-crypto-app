@@ -33,12 +33,51 @@
 				border-collapse: collapse;
 				white-space: nowrap;
 
+				th .th-content {
+					display: flex;
+					align-items: center;
+					justify-content: flex-start;
+				}
+
 				th,
 				td {
 					padding: 1rem;
 					text-align: left;
 					border-bottom: 1px solid $primary-text-color;
 					font-weight: 600;
+				}
+
+				.sort-arrows {
+					display: inline-flex;
+					align-items: center;
+					flex-direction: column;
+					cursor: pointer;
+					margin-left: 8px;
+					height: 100%;
+				}
+
+				.arrow-up,
+				.arrow-down {
+					width: 0;
+					height: 0;
+					border-style: solid;
+					display: inline-block;
+					margin: 2px 0;
+					opacity: 0.5;
+				}
+
+				.arrow-up {
+					border-width: 0 5px 5px 5px;
+					border-color: transparent transparent $secondary-color transparent;
+				}
+
+				.arrow-down {
+					border-width: 5px 5px 0 5px;
+					border-color: $secondary-color transparent transparent transparent;
+				}
+
+				.active-arrow {
+					opacity: 1;
 				}
 			}
 		}
