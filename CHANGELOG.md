@@ -13,3 +13,4 @@
   - Integrated the CoinGecko API to populate the 'Market' table with real-time cryptocurrency data
   - Added icon of each cryptocurrency next to its name
 - Added pagination to 'Market' table (displaying 10 coins per page)
+- Added ability to sort market table columns
