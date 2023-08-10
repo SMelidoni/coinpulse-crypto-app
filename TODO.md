@@ -9,7 +9,7 @@
   - [ ] Improve UI (Similar to CMC)
 - [ ] Create 'Market' section
   - [x] Integrate CoinGecko API
-  - [ ] Add ability to sort asc / desc
+  - [x] Add ability to sort asc / desc
   - [x] Add market update table (responsive)
   - [x] Add pagination
   - [ ] Add ability to select how many rows to display
