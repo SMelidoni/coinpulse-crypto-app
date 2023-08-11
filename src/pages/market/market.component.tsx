@@ -97,7 +97,9 @@ const Market: FC = () => {
 							</option>
 						))}
 					</select>
+					<span className='dropdown-arrow' />
 				</div>
+
 				<div className='table-container'>
 					<table className='market-table'>
 						<thead>
