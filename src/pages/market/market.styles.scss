@@ -16,6 +16,45 @@
 		max-width: 1200px;
 		margin: 0 auto;
 
+		.rows-dropdown {
+			width: 95px;
+			margin-bottom: 1rem;
+			background-color: $background-white;
+			border: 1px solid $primary-text-color;
+			border-radius: 4px;
+			padding: 0.5rem 1rem;
+			font-family: inherit;
+			font-weight: 700;
+			color: $primary-text-color;
+			cursor: pointer;
+			appearance: none;
+			transition: border-color 0.3s ease;
+
+			&:hover {
+				border-color: $secondary-color;
+			}
+
+			&:focus {
+				border-color: $secondary-color;
+				outline: none;
+			}
+
+			option {
+				font-weight: 600;
+
+				&:hover,
+				&:focus,
+				&:active,
+				&:checked {
+					color: $primary-text-color;
+				}
+
+				&:checked {
+					color: $primary-text-color;
+				}
+			}
+		}
+
 		.title {
 			font-size: 3rem;
 			font-weight: 600;

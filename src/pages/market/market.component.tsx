@@ -1,5 +1,5 @@
 import './market.styles.scss';
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useRef } from 'react';
 import CoinRow, { ICoinData } from '../../components/coinrow/coinrow.component';
 import axios from 'axios';
 
@@ -8,11 +8,14 @@ const Market: FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 	const [sortField, setSortField] = useState<keyof ICoinData | null>(null);
+	const [rowsPerPage, setRowsPerPage] = useState(10);
 
-	const coinsPerPage = 10;
-	const indexOfLastCoin = currentPage * coinsPerPage;
-	const indexOfFirstCoin = indexOfLastCoin - coinsPerPage;
+	const totalPages = Math.ceil(coinData.length / rowsPerPage);
+	const indexOfLastCoin = currentPage * rowsPerPage;
+	const indexOfFirstCoin = indexOfLastCoin - rowsPerPage;
 	const currentCoins = coinData.slice(indexOfFirstCoin, indexOfLastCoin);
+	const numOptions = [10, 20, 30, 40, 50];
+	const dropdownRef = useRef(null);
 
 	useEffect(() => {
 		const fetchCoinData = async () => {
@@ -73,10 +76,28 @@ const Market: FC = () => {
 		setCoinData(sortedData);
 	};
 
+	const handleRowsChange = (event: any) => {
+		setRowsPerPage(event.target.value);
+		setCurrentPage(1);
+	};
+
 	return (
 		<section id='market' className='market-section'>
 			<div className='market-container'>
 				<h1 className='title'>Market Update</h1>
+				<div className='rows-dropdown-container'>
+					<select
+						className='rows-dropdown'
+						ref={dropdownRef}
+						onChange={handleRowsChange}
+					>
+						{numOptions.map((num) => (
+							<option key={num} value={num}>
+								{num} Rows
+							</option>
+						))}
+					</select>
+				</div>
 				<div className='table-container'>
 					<table className='market-table'>
 						<thead>
@@ -147,22 +168,24 @@ const Market: FC = () => {
 				>
 					&lt;
 				</button>
-				{[1, 2, 3, 4, 5].map((pageNumber) => (
-					<button
-						key={pageNumber}
-						className={
-							currentPage === pageNumber
-								? 'page-number active-page'
-								: 'page-number'
-						}
-						onClick={() => handlePageClick(pageNumber)}
-					>
-						{pageNumber}
-					</button>
-				))}
+				{Array.from({ length: totalPages }, (_, index) => index + 1).map(
+					(pageNumber) => (
+						<button
+							key={pageNumber}
+							className={
+								currentPage === pageNumber
+									? 'page-number active-page'
+									: 'page-number'
+							}
+							onClick={() => handlePageClick(pageNumber)}
+						>
+							{pageNumber}
+						</button>
+					),
+				)}
 				<button
 					onClick={handleNextPage}
-					disabled={currentPage === 5}
+					disabled={currentPage === totalPages}
 					className='prev-next'
 				>
 					&gt;
