@@ -7,12 +7,12 @@
 - [x] Integrate Crypto Fear & Greed Index
   - [ ] Add ToolTip Explaining what the FAG Index is
   - [ ] Improve UI (Similar to CMC)
-- [ ] Create 'Market' section
+- [x] Create 'Market' section
   - [x] Integrate CoinGecko API
   - [x] Add ability to sort asc / desc
   - [x] Add market update table (responsive)
   - [x] Add pagination
-  - [ ] Add ability to select how many rows to display
+  - [x] Add ability to select how many rows to display
 - [ ] Create 'Learn' section
   - [ ] What is Cryptocurrency? etc.
 - [ ] Make Website Live (Vercel)
