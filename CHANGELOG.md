@@ -14,3 +14,4 @@
   - Added icon of each cryptocurrency next to its name
 - Added pagination to 'Market' table (displaying 10 coins per page)
 - Added ability to sort market table columns
+- Added ability to select the number of rows displayed per page via dropdown
