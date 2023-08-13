@@ -1,22 +1,16 @@
 import './learn.styles.scss';
 import React, { FC, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+
+const faqs = [
+	{
+		question: 'What is Blockchain?',
+		answer:
+			'A blockchain is a distributed ledger that is completely open to anyone. They have an interesting property: once some data has been recorded inside a blockchain, it becomes very difficult to change it. This makes blockchains suitable for recording events, medical records, and other records management activities.',
+	},
+];
 
 const Learn: FC = () => {
-	const [openQuestion, setOpenQuestion] = useState<number | null>(null);
-
-	const questionsAnswers = [
-		{
-			question: 'What is blockchain?',
-			answer:
-				'Blockchain is a system of recording information in a way that makes it difficult or impossible to change, hack, or cheat the system.',
-		},
-		{
-			question: 'What is another question?',
-			answer: 'Here is the answer to another question.',
-		},
-	];
+	const [openIndex, setOpenIndex] = useState<number | null>(null);
 
 	return (
 		<section id='learn' className='learn-section'>
@@ -25,33 +19,23 @@ const Learn: FC = () => {
 				<p className='sub-header'>
 					Educational explanations about different concepts in the crypto world.
 				</p>
-
-				{questionsAnswers.map((item, index) => (
-					<div
-						key={index}
-						className={`faq-item ${index === openQuestion ? 'open' : ''}`}
-					>
-						<div className='qa-container'>
-							<button
-								className='question'
-								onClick={() =>
-									setOpenQuestion(index === openQuestion ? null : index)
-								}
+				<div className='faqs'>
+					{faqs.map((faq, index) => (
+						<div className='faq-item' key={index}>
+							<h2
+								className='faq-question'
+								onClick={() => setOpenIndex(openIndex === index ? null : index)}
 							>
-								{item.question}
-								<FontAwesomeIcon
-									icon={index === openQuestion ? faChevronUp : faChevronDown}
-									className={`arrow ${index === openQuestion ? 'open' : ''}`}
-								/>
-							</button>
-							{index === openQuestion ? (
-								<p className={`answer open`}>{item.answer}</p>
-							) : (
-								<p className='answer'>{item.answer}</p>
-							)}
+								{faq.question}
+							</h2>
+							<div
+								className={`faq-answer ${openIndex === index ? 'open' : ''}`}
+							>
+								{faq.answer}
+							</div>
 						</div>
-					</div>
-				))}
+					))}
+				</div>
 			</div>
 		</section>
 	);

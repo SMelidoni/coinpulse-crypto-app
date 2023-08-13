@@ -2,7 +2,7 @@
 
 .learn-section {
 	align-items: flex-start;
-	background-color: lighten($secondary-color, 25%);
+	background-color: lighten($secondary-color, 30%);
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
@@ -22,88 +22,52 @@
 			letter-spacing: 1.2px;
 			margin-bottom: 1rem;
 			text-transform: uppercase;
+			color: $primary-color;
 		}
 
 		.sub-header {
 			font-size: 1.2rem;
 			font-weight: 400;
 			margin-bottom: 2rem;
+			color: $primary-text-color;
+		}
+	}
+}
+
+.faqs {
+	width: 100%;
+	.faq-item {
+		border: 1px solid transparentize($primary-color, 0.8);
+		border-radius: 8px;
+		margin-bottom: 1rem;
+		transition: background-color 0.3s;
+
+		&:hover {
+			background-color: lighten($secondary-color, 35%);
 		}
 
-		.faq-item {
-			margin-bottom: 1rem;
-			width: 100%;
+		.faq-question {
+			cursor: pointer;
+			padding: 1rem;
+			color: $primary-color;
+			transition: color 0.3s;
 
-			// Container for question and answer
-			.qa-container {
-				border-bottom: 1px solid $primary-text-color;
-				transition: padding-bottom 0.3s ease;
-
-				// Default padding for when answer is closed
-				padding-bottom: 0.5rem;
+			&:hover {
+				color: darken($primary-color, 10%);
 			}
+		}
 
-			&.open .qa-container {
-				padding-bottom: 1rem;
-			}
+		.faq-answer {
+			max-height: 0;
+			overflow: hidden;
+			padding: 0 1rem;
+			color: $primary-text-color;
+			transition: max-height 0.3s, padding 0.2s;
 
-			.question {
-				align-items: center;
-				background: none;
-				background-color: transparent;
-				border: none;
-				cursor: pointer;
-				display: flex;
-				font-size: 1.5rem;
-				font-weight: 600;
-				justify-content: space-between;
-				padding: 0.5rem 1rem;
-				text-align: left;
-				transition: all 0.3s ease;
-				width: 100%;
-
-				&:hover {
-					color: $secondary-color;
-				}
-
-				.arrow {
-					transition: transform 0.3s ease;
-					transform: rotate(0deg);
-
-					&.open {
-						transform: rotate(180deg);
-					}
-				}
-			}
-
-			.answer {
-				background-color: lighten($background-white, 5%);
-				border-radius: 4px;
-				font-size: 1.2rem;
-				line-height: 1.5;
-				max-height: 0;
-				opacity: 0;
-				overflow: hidden;
+			&.open {
+				max-height: 200px;
 				padding: 1rem;
-				transition: max-height 0.5s ease, opacity 0.3s ease;
-
-				&.open {
-					max-height: 200px;
-					opacity: 1;
-				}
 			}
 		}
-	}
-}
-
-@media screen and (max-width: $breakpoint-tablet) {
-	.learn-section .learn-container .title {
-		font-size: 2.5rem;
-	}
-}
-
-@media screen and (min-width: 769px) and (max-width: $breakpoint-desktop) {
-	.learn-section .learn-container .title {
-		font-size: 2.8rem;
 	}
 }
