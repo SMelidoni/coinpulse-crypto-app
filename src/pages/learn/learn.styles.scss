@@ -12,16 +12,86 @@
 		align-items: flex-start;
 		display: flex;
 		flex-direction: column;
-		width: 100%;
-		max-width: 1200px;
 		margin: 0 auto;
+		max-width: 1200px;
+		width: 100%;
 
 		.title {
 			font-size: 3rem;
 			font-weight: 600;
 			letter-spacing: 1.2px;
-			text-transform: uppercase;
 			margin-bottom: 1rem;
+			text-transform: uppercase;
+		}
+
+		.sub-header {
+			font-size: 1.2rem;
+			font-weight: 400;
+			margin-bottom: 2rem;
+		}
+
+		.faq-item {
+			margin-bottom: 1rem;
+			width: 100%;
+
+			// Container for question and answer
+			.qa-container {
+				border-bottom: 1px solid $primary-text-color;
+				transition: padding-bottom 0.3s ease;
+
+				// Default padding for when answer is closed
+				padding-bottom: 0.5rem;
+			}
+
+			&.open .qa-container {
+				padding-bottom: 1rem;
+			}
+
+			.question {
+				align-items: center;
+				background: none;
+				background-color: transparent;
+				border: none;
+				cursor: pointer;
+				display: flex;
+				font-size: 1.5rem;
+				font-weight: 600;
+				justify-content: space-between;
+				padding: 0.5rem 1rem;
+				text-align: left;
+				transition: all 0.3s ease;
+				width: 100%;
+
+				&:hover {
+					color: $secondary-color;
+				}
+
+				.arrow {
+					transition: transform 0.3s ease;
+					transform: rotate(0deg);
+
+					&.open {
+						transform: rotate(180deg);
+					}
+				}
+			}
+
+			.answer {
+				background-color: lighten($background-white, 5%);
+				border-radius: 4px;
+				font-size: 1.2rem;
+				line-height: 1.5;
+				max-height: 0;
+				opacity: 0;
+				overflow: hidden;
+				padding: 1rem;
+				transition: max-height 0.5s ease, opacity 0.3s ease;
+
+				&.open {
+					max-height: 200px;
+					opacity: 1;
+				}
+			}
 		}
 	}
 }
