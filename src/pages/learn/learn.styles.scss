@@ -34,10 +34,10 @@
 	}
 }
 
-.faqs {
+.crypto-queries {
 	width: 100%;
 
-	.faq-item {
+	.query-item {
 		border: 1px solid transparentize($primary-color, 0.8);
 		border-radius: 8px;
 		cursor: pointer;
@@ -48,10 +48,9 @@
 			background-color: lighten($secondary-color, 35%);
 		}
 
-		.faq-question {
+		.crypto-question {
 			color: $primary-color;
 			cursor: pointer;
-			padding: 0.5rem;
 			transition: color 0.3s;
 
 			&:hover {
@@ -59,7 +58,7 @@
 			}
 		}
 
-		.faq-answer {
+		.crypto-answer {
 			color: $primary-text-color;
 			max-height: 0;
 			overflow: hidden;

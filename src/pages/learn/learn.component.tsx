@@ -1,7 +1,7 @@
 import './learn.styles.scss';
 import React, { FC, useState, useRef, useEffect } from 'react';
 
-const faqs = [
+const cryptoQuestions = [
 	{
 		question: 'What is Blockchain?',
 		answer:
@@ -33,18 +33,18 @@ const Learn: FC = () => {
 				<p className='sub-header'>
 					Educational explanations about different concepts in the crypto world.
 				</p>
-				<div className='faqs' ref={faqsRef}>
-					{faqs.map((faq, index) => (
+				<div className='crypto-queries' ref={faqsRef}>
+					{cryptoQuestions.map((cryptoQuestion, index) => (
 						<div
-							className='faq-item'
+							className='query-item'
 							key={index}
 							onClick={() => setOpenIndex(openIndex === index ? null : index)}
 						>
-							<h2 className='faq-question'>{faq.question}</h2>
+							<h2 className='crypto-question'>{cryptoQuestion.question}</h2>
 							<div
-								className={`faq-answer ${openIndex === index ? 'open' : ''}`}
+								className={`crypto-answer ${openIndex === index ? 'open' : ''}`}
 							>
-								{faq.answer}
+								{cryptoQuestion.answer}
 							</div>
 						</div>
 					))}
