@@ -1,5 +1,5 @@
 import './learn.styles.scss';
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useRef, useEffect } from 'react';
 
 const faqs = [
 	{
@@ -11,6 +11,20 @@ const faqs = [
 
 const Learn: FC = () => {
 	const [openIndex, setOpenIndex] = useState<number | null>(null);
+	const faqsRef = useRef<HTMLDivElement | null>(null);
+
+	const handleClickOutside = (event: MouseEvent) => {
+		if (faqsRef.current && !faqsRef.current.contains(event.target as Node)) {
+			setOpenIndex(null);
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
 
 	return (
 		<section id='learn' className='learn-section'>
@@ -19,7 +33,7 @@ const Learn: FC = () => {
 				<p className='sub-header'>
 					Educational explanations about different concepts in the crypto world.
 				</p>
-				<div className='faqs'>
+				<div className='faqs' ref={faqsRef}>
 					{faqs.map((faq, index) => (
 						<div className='faq-item' key={index}>
 							<h2
