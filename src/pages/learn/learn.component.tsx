@@ -35,13 +35,12 @@ const Learn: FC = () => {
 				</p>
 				<div className='faqs' ref={faqsRef}>
 					{faqs.map((faq, index) => (
-						<div className='faq-item' key={index}>
-							<h2
-								className='faq-question'
-								onClick={() => setOpenIndex(openIndex === index ? null : index)}
-							>
-								{faq.question}
-							</h2>
+						<div
+							className='faq-item'
+							key={index}
+							onClick={() => setOpenIndex(openIndex === index ? null : index)}
+						>
+							<h2 className='faq-question'>{faq.question}</h2>
 							<div
 								className={`faq-answer ${openIndex === index ? 'open' : ''}`}
 							>
