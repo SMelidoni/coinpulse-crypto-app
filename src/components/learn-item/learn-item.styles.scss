@@ -1,0 +1,36 @@
+@import '../../styles/variables.scss';
+
+.query-item {
+	border: 1px solid transparentize($primary-color, 0.8);
+	border-radius: 8px;
+	cursor: pointer;
+	margin-bottom: 1rem;
+	transition: background-color 0.3s;
+
+	&:hover {
+		background-color: lighten($secondary-color, 35%);
+	}
+
+	.crypto-question {
+		color: $primary-color;
+		cursor: pointer;
+		transition: color 0.3s;
+
+		&:hover {
+			color: darken($primary-color, 10%);
+		}
+	}
+
+	.crypto-answer {
+		color: $primary-text-color;
+		max-height: 0;
+		overflow: hidden;
+		padding: 0 1rem;
+		transition: max-height 0.3s, padding 0.2s;
+
+		&.open {
+			max-height: 200px;
+			padding: 1rem;
+		}
+	}
+}
