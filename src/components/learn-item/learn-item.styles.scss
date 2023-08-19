@@ -12,12 +12,21 @@
 	}
 
 	.crypto-question {
+		align-items: center;
 		color: $primary-color;
 		cursor: pointer;
+		display: flex;
+		justify-content: center;
+		text-align: center;
 		transition: color 0.3s;
 
 		&:hover {
 			color: darken($primary-color, 10%);
+		}
+
+		.crypto-emoji {
+			font-size: 1.5rem;
+			margin-right: 8px;
 		}
 	}
 

@@ -25,8 +25,9 @@ const Learn: FC = () => {
 			<div className='learn-container'>
 				<h1 className='title'>Learn</h1>
 				<p className='sub-header'>
-					Educational explanations about different concepts in the crypto world.
+					Click on a topic below to explore key concepts in the crypto world:
 				</p>
+
 				<div className='crypto-queries' ref={faqsRef}>
 					{cryptoQuestions.map((cryptoQuestion, index) => (
 						<LearnItem
@@ -35,6 +36,7 @@ const Learn: FC = () => {
 							answer={cryptoQuestion.answer}
 							isOpen={openIndex === index}
 							onClick={() => setOpenIndex(openIndex === index ? null : index)}
+							emoji={cryptoQuestion.emoji}
 						/>
 					))}
 				</div>
