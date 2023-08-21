@@ -1,13 +1,7 @@
 import './learn.styles.scss';
 import React, { FC, useState, useRef, useEffect } from 'react';
-
-const cryptoQuestions = [
-	{
-		question: 'What is Blockchain?',
-		answer:
-			'A blockchain is a distributed ledger that is completely open to anyone. They have an interesting property: once some data has been recorded inside a blockchain, it becomes very difficult to change it. This makes blockchains suitable for recording events, medical records, and other records management activities.',
-	},
-];
+import { cryptoQuestions } from '../../data/crypto-questions';
+import LearnItem from '../../components/learn-item/learn-item.component';
 
 const Learn: FC = () => {
 	const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -31,22 +25,19 @@ const Learn: FC = () => {
 			<div className='learn-container'>
 				<h1 className='title'>Learn</h1>
 				<p className='sub-header'>
-					Educational explanations about different concepts in the crypto world.
+					Click on a topic below to explore key concepts in the crypto world:
 				</p>
+
 				<div className='crypto-queries' ref={faqsRef}>
 					{cryptoQuestions.map((cryptoQuestion, index) => (
-						<div
-							className='query-item'
-							key={index}
+						<LearnItem
+							key={cryptoQuestion.question}
+							question={cryptoQuestion.question}
+							answer={cryptoQuestion.answer}
+							isOpen={openIndex === index}
 							onClick={() => setOpenIndex(openIndex === index ? null : index)}
-						>
-							<h2 className='crypto-question'>{cryptoQuestion.question}</h2>
-							<div
-								className={`crypto-answer ${openIndex === index ? 'open' : ''}`}
-							>
-								{cryptoQuestion.answer}
-							</div>
-						</div>
+							emoji={cryptoQuestion.emoji}
+						/>
 					))}
 				</div>
 			</div>

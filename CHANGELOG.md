@@ -16,3 +16,4 @@
 - Added ability to sort market table columns
 - Added ability to select the number of rows displayed per page via dropdown
 - Added initial 'Learn' section
+  - Added clickable dropdowns that show Q&A explaining key cryptocurrency concepts.
