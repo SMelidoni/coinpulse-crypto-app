@@ -12,10 +12,10 @@ export const cryptoQuestions = [
 		emoji: '💰',
 	},
 	{
-		question: 'What is Bitcoin?',
+		question: 'Why use Cryptocurrencies?',
 		answer:
-			'Bitcoin is the first and most well-known cryptocurrency. It’s a decentralised digital currency, meaning no central authority controls it, and transactions are directly between users.',
-		emoji: '🪙',
+			'Some people like the idea of a currency that isn’t controlled by governments. Others appreciate the anonymity in transactions. It can also be an investment or used for online transactions where cryptocurrencies are accepted.',
+		emoji: '🌍',
 	},
 	{
 		question: 'How do I buy Cryptocurrency?',
@@ -24,17 +24,30 @@ export const cryptoQuestions = [
 		emoji: '💸',
 	},
 	{
-		question: 'What is a Digital Wallet?',
-		answer:
-			'A digital wallet is like a virtual bank account. It allows you to send or receive cryptocurrencies and monitor your balance.',
-		emoji: '💼',
-	},
-	{
 		question: 'Why are Cryptocurrencies volatile?',
 		answer:
 			'Their value can change rapidly because of factors like news, regulations, adoption rates, and market speculation.',
 		emoji: '📈',
 	},
+	{
+		question: 'Is Cryptocurrency safe?',
+		answer:
+			'Cryptocurrencies use strong cryptographic techniques for security. However, their safety can depend on how they’re used. While transactions are secure, investments can be risky due to market volatility. Additionally, one must be cautious of scams, secure their digital wallets, and use reputable exchanges.',
+		emoji: '🔒',
+	},
+	{
+		question: 'What is Bitcoin?',
+		answer:
+			'Bitcoin is the first and most well-known cryptocurrency. It’s a decentralised digital currency, meaning no central authority controls it, and transactions are directly between users.',
+		emoji: '🪙',
+	},
+	{
+		question: 'What is a Digital Wallet?',
+		answer:
+			'A digital wallet is like a virtual bank account. It allows you to send or receive cryptocurrencies and monitor your balance.',
+		emoji: '💼',
+	},
+
 	{
 		question: 'What is Mining?',
 		answer:
@@ -46,17 +59,5 @@ export const cryptoQuestions = [
 		answer:
 			'ICO stands for Initial Coin Offering. It’s a way for new cryptocurrencies to raise funding. Think of it as a mix between a crowdfunding campaign and a stock market IPO.',
 		emoji: '🚀',
-	},
-	{
-		question: 'Why use Cryptocurrencies?',
-		answer:
-			'Some people like the idea of a currency that isn’t controlled by governments. Others appreciate the anonymity in transactions. It can also be an investment or used for online transactions where cryptocurrencies are accepted.',
-		emoji: '🌍',
-	},
-	{
-		question: 'Is Cryptocurrency safe?',
-		answer:
-			'Cryptocurrencies use strong cryptographic techniques for security. However, their safety can depend on how they’re used. While transactions are secure, investments can be risky due to market volatility. Additionally, one must be cautious of scams, secure their digital wallets, and use reputable exchanges.',
-		emoji: '🔒',
 	},
 ];
