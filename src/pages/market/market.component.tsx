@@ -9,13 +9,14 @@ const Market: FC = () => {
 	const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 	const [sortField, setSortField] = useState<keyof ICoinData | null>(null);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
+	const [dropdownOpen, setDropdownOpen] = useState(false);
 
 	const totalPages = Math.ceil(coinData.length / rowsPerPage);
 	const indexOfLastCoin = currentPage * rowsPerPage;
 	const indexOfFirstCoin = indexOfLastCoin - rowsPerPage;
 	const currentCoins = coinData.slice(indexOfFirstCoin, indexOfLastCoin);
 	const numOptions = [10, 20, 30, 40, 50];
-	const dropdownRef = useRef(null);
+	const dropdownRef = useRef<HTMLSelectElement | null>(null);
 
 	useEffect(() => {
 		const fetchCoinData = async () => {
@@ -41,16 +42,18 @@ const Market: FC = () => {
 		fetchCoinData();
 	}, []);
 
-	const handleNextPage = () => {
-		if (currentPage < 5) setCurrentPage(currentPage + 1);
+	const handleRowsChange = (event: any) => {
+		setRowsPerPage(event.target.value);
+		setCurrentPage(1);
 	};
 
-	const handlePreviousPage = () => {
-		if (currentPage > 1) setCurrentPage(currentPage - 1);
+	const toggleDropdown = (event: React.MouseEvent<HTMLSelectElement>) => {
+		event.stopPropagation();
+		setDropdownOpen(!dropdownOpen);
 	};
 
-	const handlePageClick = (pageNumber: number) => {
-		setCurrentPage(pageNumber);
+	const handleBlur = () => {
+		setDropdownOpen(false);
 	};
 
 	const handleSort = (field: keyof ICoinData | null) => {
@@ -76,9 +79,16 @@ const Market: FC = () => {
 		setCoinData(sortedData);
 	};
 
-	const handleRowsChange = (event: any) => {
-		setRowsPerPage(event.target.value);
-		setCurrentPage(1);
+	const handlePreviousPage = () => {
+		if (currentPage > 1) setCurrentPage(currentPage - 1);
+	};
+
+	const handlePageClick = (pageNumber: number) => {
+		setCurrentPage(pageNumber);
+	};
+
+	const handleNextPage = () => {
+		if (currentPage < 5) setCurrentPage(currentPage + 1);
 	};
 
 	return (
@@ -90,6 +100,8 @@ const Market: FC = () => {
 						className='rows-dropdown'
 						ref={dropdownRef}
 						onChange={handleRowsChange}
+						onClick={toggleDropdown}
+						onBlur={handleBlur}
 					>
 						{numOptions.map((num) => (
 							<option key={num} value={num}>
@@ -97,7 +109,8 @@ const Market: FC = () => {
 							</option>
 						))}
 					</select>
-					<span className='dropdown-arrow' />
+
+					<span className={`dropdown-arrow ${dropdownOpen ? 'flipped' : ''}`} />
 				</div>
 
 				<div className='table-container'>
