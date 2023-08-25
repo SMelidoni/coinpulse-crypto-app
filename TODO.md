@@ -13,8 +13,8 @@
   - [x] Add market update table (responsive)
   - [x] Add pagination
   - [x] Add ability to select how many rows to display
-- [ ] Create 'Learn' section
-  - [ ] What is Cryptocurrency? etc. (Dropdownn Style)
+- [x] Create 'Learn' section
+  - [x] What is Cryptocurrency? etc. (Dropdownn Style)
   - [ ] Add link to crypto-quiz-app?
 - [ ] Make Website Live (Vercel)
 - [ ] Create Coin Component (Upon clicking on a cryptocurrency icon, new page should be displayed with detailed info)
