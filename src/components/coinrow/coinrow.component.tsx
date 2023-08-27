@@ -28,7 +28,7 @@ const CoinRow: FC<ICoinData> = ({
 	};
 
 	return (
-		<tr onClick={navigateToDetail}>
+		<tr className='coinrow' onClick={navigateToDetail}>
 			<td>{rank}</td>
 			<td>
 				<div className='coin-container'>

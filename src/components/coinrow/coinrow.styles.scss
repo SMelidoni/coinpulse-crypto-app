@@ -1,5 +1,9 @@
 @import '../../styles/variables.scss';
 
+.coinrow {
+	cursor: pointer;
+}
+
 .increase {
 	color: $increase-color;
 }
