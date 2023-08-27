@@ -19,7 +19,7 @@ function App() {
 			<Navbar />
 			<Router>
 				<Routes>
-					<Route path='/crypto/:name' element={<CryptoDetail />} />
+					<Route path='/:name' element={<CryptoDetail />} />
 					<Route
 						path='/'
 						element={
