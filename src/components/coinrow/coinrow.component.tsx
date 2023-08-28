@@ -24,7 +24,7 @@ const CoinRow: FC<ICoinData> = ({
 	const navigate = useNavigate();
 
 	const navigateToDetail = () => {
-		navigate(`/crypto/${name.toLowerCase()}`);
+		navigate(`/${name.toLowerCase()}`);
 	};
 
 	return (

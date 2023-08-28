@@ -1,6 +1,4 @@
-// App.tsx
 import './App.scss';
-
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -12,28 +10,34 @@ import Learn from './pages/learn/learn.component';
 import FearGreedIndex from './components/fear-greed-index/fear-greed-index.component';
 import CryptoDetail from './components/crypto-detail/crypto-detail.component';
 
-function App() {
+function AppContent() {
 	return (
 		<div className='App'>
 			<Topbar />
 			<Navbar />
-			<Router>
-				<Routes>
-					<Route path='/:name' element={<CryptoDetail />} />
-					<Route
-						path='/'
-						element={
-							<>
-								<Home />
-								<Market />
-								<Learn />
-								<FearGreedIndex />
-							</>
-						}
-					/>
-				</Routes>
-			</Router>
+			<Routes>
+				<Route path='/:name' element={<CryptoDetail />} />
+				<Route
+					path='/'
+					element={
+						<>
+							<Home />
+							<Market />
+							<Learn />
+							<FearGreedIndex />
+						</>
+					}
+				/>
+			</Routes>
 		</div>
+	);
+}
+
+function App() {
+	return (
+		<Router>
+			<AppContent />
+		</Router>
 	);
 }
 
