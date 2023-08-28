@@ -1,5 +1,7 @@
 import './home.styles.scss';
+
 import React, { FC, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface CoinData {
 	id: string;
@@ -11,7 +13,13 @@ interface CoinData {
 }
 
 const Home: FC = () => {
+	const navigate = useNavigate();
+
 	const [coins, setCoins] = useState<CoinData[]>([]);
+
+	const navigateToDetail = (name: string) => {
+		navigate(`/${name.toLowerCase()}`);
+	};
 
 	useEffect(() => {
 		fetch(
@@ -27,7 +35,11 @@ const Home: FC = () => {
 				<h1 className='title'>Track Crypto-currencies</h1>
 				<div className='coin-list'>
 					{coins.map((coin) => (
-						<div key={coin.id} className='coin-item'>
+						<div
+							key={coin.id}
+							className='coin-item'
+							onClick={() => navigateToDetail(coin.name)}
+						>
 							<img src={coin.image} alt={coin.name} className='coin-image' />
 							<h2>{coin.name}</h2>
 							<div className='price-info'>
