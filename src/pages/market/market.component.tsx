@@ -24,8 +24,10 @@ const Market: FC = () => {
 				'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false',
 			);
 
+			console.log(result);
 			const mappedResult: ICoinData[] = result.data.map(
 				(coin: any, index: number) => ({
+					id: coin.id,
 					rank: index + 1,
 					name: coin.name,
 					image: coin.image,

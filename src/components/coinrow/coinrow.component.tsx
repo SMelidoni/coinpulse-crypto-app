@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export interface ICoinData {
+	id: string;
 	rank: number;
 	name: string;
 	image: string;
@@ -13,6 +14,7 @@ export interface ICoinData {
 }
 
 const CoinRow: FC<ICoinData> = ({
+	id,
 	rank,
 	name,
 	image,
@@ -24,7 +26,7 @@ const CoinRow: FC<ICoinData> = ({
 	const navigate = useNavigate();
 
 	const navigateToDetail = () => {
-		navigate(`/${name.toLowerCase()}`);
+		navigate(`/${id}`);
 	};
 
 	return (
