@@ -1,6 +1,7 @@
 import './crypto-detail.styles.scss';
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import DOMPurify from 'dompurify';
 
 interface CoinDetail {
 	id: string;
@@ -64,11 +65,13 @@ const CryptoDetail: FC = () => {
 				{coinDetail.market_data.price_change_percentage_24h.toFixed(2)}%
 			</p>
 			<div className='description'>
-				<p>
-					{coinDetail.description.en
-						? coinDetail.description.en
-						: `No Description Available for ${coinDetail.name}`}
-				</p>
+				<p
+					dangerouslySetInnerHTML={{
+						__html: DOMPurify.sanitize(
+							coinDetail.description.en || 'No Information available',
+						),
+					}}
+				></p>
 			</div>
 		</div>
 	);
