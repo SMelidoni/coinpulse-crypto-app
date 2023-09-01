@@ -26,6 +26,7 @@
 - [x] Create Topbar
   - [x] Integrate market data from CoinGecko (Market Cap, 24h Vol etc.)
 - [ ] Mention CoinGecko on Site (https://www.coingecko.com/en/branding)
+- [ ] Add icon for loader (replace 'Loading...')
 
 # Ideas
 
