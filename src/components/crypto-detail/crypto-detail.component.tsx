@@ -55,23 +55,40 @@ const CryptoDetail: FC = () => {
 
 	return (
 		<div className='crypto-detail'>
-			<h1>{capitalizeFirstLetter(coinDetail.name)}</h1>
-			<img src={coinDetail.image.large} alt={coinDetail.name} />
-			<h2>{coinDetail.symbol.toUpperCase()}</h2>
-			<p>Rank: #{coinDetail.market_data.market_cap_rank}</p>
-			<p>Price: £{coinDetail.market_data.current_price.gbp.toLocaleString()}</p>
-			<p>
-				24h Change:{' '}
-				{coinDetail.market_data.price_change_percentage_24h.toFixed(2)}%
-			</p>
-			<div className='description'>
-				<p
+			<div className='top-card'>
+				<img src={coinDetail.image.large} alt={coinDetail.name} />
+				<div className='name-rank'>
+					<h1>{capitalizeFirstLetter(coinDetail.name)}</h1>
+					<p>Rank: #{coinDetail.market_data.market_cap_rank}</p>
+				</div>
+			</div>
+			<div className='stats-bar'>
+				<p>Symbol: {coinDetail.symbol.toUpperCase()}</p>
+				<p>
+					Price: £{coinDetail.market_data.current_price.gbp.toLocaleString()}
+				</p>
+				<p>
+					24h Change:{' '}
+					<span
+						className={
+							coinDetail.market_data.price_change_percentage_24h >= 0
+								? 'change-positive'
+								: 'change-negative'
+						}
+					>
+						{coinDetail.market_data.price_change_percentage_24h.toFixed(2)}%
+					</span>
+				</p>
+			</div>
+			<div className='description-card'>
+				<div
+					className='description'
 					dangerouslySetInnerHTML={{
 						__html: DOMPurify.sanitize(
 							coinDetail.description.en || 'No Information available',
 						),
 					}}
-				></p>
+				></div>
 			</div>
 		</div>
 	);
