@@ -33,6 +33,7 @@
 			border-radius: 50%;
 			height: 80px;
 			width: 80px;
+			animation: heartbeat 3s ease-in-out infinite;
 		}
 
 		.name-rank {
@@ -138,5 +139,15 @@
 		.stats-bar h2 {
 			font-size: 1.2em;
 		}
+	}
+}
+
+@keyframes heartbeat {
+	0%,
+	100% {
+		transform: scale(0.9);
+	}
+	50% {
+		transform: scale(1.1);
 	}
 }

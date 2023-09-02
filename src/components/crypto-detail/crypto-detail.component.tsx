@@ -85,7 +85,7 @@ const CryptoDetail: FC = () => {
 					className='description'
 					dangerouslySetInnerHTML={{
 						__html: DOMPurify.sanitize(
-							coinDetail.description.en || 'No Information available',
+							coinDetail.description.en || 'No information available',
 						),
 					}}
 				></div>
