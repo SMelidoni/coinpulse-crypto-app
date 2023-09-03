@@ -17,3 +17,4 @@
 - Added ability to select the number of rows displayed per page via dropdown
 - Added initial 'Learn' section
   - Added clickable dropdowns that show Q&A explaining key cryptocurrency concepts.
+- Added crypto detail page which displays detailed information for any crypto when clicking on any crypto from the table
