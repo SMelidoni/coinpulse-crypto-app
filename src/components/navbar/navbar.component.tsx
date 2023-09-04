@@ -1,21 +1,39 @@
 import './navbar.styles.scss';
 
 import React, { FC, useState } from 'react';
-import { Link } from 'react-scroll';
+import { useLocation } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link as ScrollLink } from 'react-scroll';
 
 const links = ['home', 'market', 'learn', 'contact'];
 
 const Navbar: FC = () => {
+	const location = useLocation();
+	const isDetailPage = location.pathname !== '/';
+
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	const toggleMenu = () => {
 		setMenuOpen(!menuOpen);
 	};
 
+	if (isDetailPage) {
+		return (
+			<nav className='navbar-container'>
+				<div className='navbar-name'>
+					<RouterLink to='/' className='navbar-name-link'>
+						{' '}
+						<b>CoinPulse</b>
+					</RouterLink>
+				</div>
+			</nav>
+		);
+	}
+
 	return (
 		<nav className='navbar-container'>
 			<div className='navbar-name'>
-				<Link
+				<ScrollLink
 					className='navbar-name-link'
 					to='home'
 					smooth={true}
@@ -23,14 +41,14 @@ const Navbar: FC = () => {
 					duration={500}
 				>
 					<b>CoinPulse</b>
-				</Link>
+				</ScrollLink>
 			</div>
 			<button onClick={toggleMenu} className='menu-button'>
 				☰
 			</button>
 			<div className='navbar-links'>
 				{links.map((link) => (
-					<Link
+					<ScrollLink
 						key={link}
 						activeClass='active'
 						to={link}
@@ -40,7 +58,7 @@ const Navbar: FC = () => {
 						duration={500}
 					>
 						{link.charAt(0).toUpperCase() + link.slice(1)}
-					</Link>
+					</ScrollLink>
 				))}
 			</div>
 			<div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
@@ -50,7 +68,7 @@ const Navbar: FC = () => {
 							&times;
 						</button>
 						{links.map((link) => (
-							<Link
+							<ScrollLink
 								key={link}
 								activeClass='active'
 								to={link}
@@ -61,7 +79,7 @@ const Navbar: FC = () => {
 								onClick={toggleMenu}
 							>
 								{link.charAt(0).toUpperCase() + link.slice(1)}
-							</Link>
+							</ScrollLink>
 						))}
 					</>
 				)}

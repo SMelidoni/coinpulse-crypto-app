@@ -1,5 +1,14 @@
 @import '../../styles/variables.scss';
 
+.coinrow {
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+
+	&:hover {
+		background-color: lighten($secondary-color, 30%);
+	}
+}
+
 .increase {
 	color: $increase-color;
 }

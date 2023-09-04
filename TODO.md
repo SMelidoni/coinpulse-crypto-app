@@ -18,6 +18,7 @@
   - [ ] Add link to crypto-quiz-app?
 - [ ] Make Website Live (Vercel)
 - [ ] Create Coin Component (Upon clicking on a cryptocurrency icon, new page should be displayed with detailed info)
+- [ ] Handle API Failures (e.g. too many request)
 
 ## Low Priority
 
@@ -25,6 +26,7 @@
 - [x] Create Topbar
   - [x] Integrate market data from CoinGecko (Market Cap, 24h Vol etc.)
 - [ ] Mention CoinGecko on Site (https://www.coingecko.com/en/branding)
+- [ ] Add icon for loader (replace 'Loading...')
 
 # Ideas
 
