@@ -49,6 +49,24 @@ const CryptoDetail: FC = () => {
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	};
 
+	const addNewTabSupportToLinks = (htmlContent: string) => {
+		const domParser = new DOMParser();
+		const documentContent = domParser.parseFromString(htmlContent, 'text/html');
+
+		documentContent.querySelectorAll('a').forEach((anchor) => {
+			anchor.setAttribute('target', '_blank');
+			anchor.setAttribute('rel', 'noopener noreferrer');
+		});
+
+		return documentContent.body.innerHTML;
+	};
+
+	const cleanDescription = DOMPurify.sanitize(
+		coinDetail?.description.en || 'No information available',
+	);
+
+	const enhancedDescription = addNewTabSupportToLinks(cleanDescription);
+
 	if (!coinDetail) {
 		return <div>Loading...</div>;
 	}
@@ -83,11 +101,7 @@ const CryptoDetail: FC = () => {
 			<div className='description-card'>
 				<div
 					className='description'
-					dangerouslySetInnerHTML={{
-						__html: DOMPurify.sanitize(
-							coinDetail.description.en || 'No information available',
-						),
-					}}
+					dangerouslySetInnerHTML={{ __html: enhancedDescription }}
 				></div>
 			</div>
 		</div>
