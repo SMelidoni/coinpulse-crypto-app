@@ -16,6 +16,7 @@ const Home: FC = () => {
 	const navigate = useNavigate();
 
 	const [coins, setCoins] = useState<CoinData[]>([]);
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	const navigateToDetail = (name: string) => {
 		navigate(`/${name.toLowerCase()}`);
@@ -26,38 +27,45 @@ const Home: FC = () => {
 			'https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=3&page=1',
 		)
 			.then((response) => response.json())
-			.then((data) => setCoins(data));
+			.then((data) => setCoins(data))
+			.catch(() =>
+				setErrorMessage('Too many requests. Please try again later.'),
+			);
 	}, []);
 
 	return (
 		<section id='home' className='home-section'>
 			<div className='home-container'>
 				<h1 className='title'>Track Crypto-currencies</h1>
-				<div className='coin-list'>
-					{coins.map((coin) => (
-						<div
-							key={coin.id}
-							className='coin-item'
-							onClick={() => navigateToDetail(coin.name)}
-						>
-							<img src={coin.image} alt={coin.name} className='coin-image' />
-							<h2>{coin.name}</h2>
-							<div className='price-info'>
-								<p>£{coin.current_price.toLocaleString()}</p>
-								<span>|</span>
-								<p
-									className={
-										coin.price_change_percentage_24h > 0
-											? 'increase'
-											: 'decrease'
-									}
-								>
-									{coin.price_change_percentage_24h.toFixed(2)}%
-								</p>
+				{errorMessage ? (
+					<div className='error-message'>{errorMessage}</div>
+				) : (
+					<div className='coin-list'>
+						{coins.map((coin) => (
+							<div
+								key={coin.id}
+								className='coin-item'
+								onClick={() => navigateToDetail(coin.name)}
+							>
+								<img src={coin.image} alt={coin.name} className='coin-image' />
+								<h2>{coin.name}</h2>
+								<div className='price-info'>
+									<p>£{coin.current_price.toLocaleString()}</p>
+									<span>|</span>
+									<p
+										className={
+											coin.price_change_percentage_24h > 0
+												? 'increase'
+												: 'decrease'
+										}
+									>
+										{coin.price_change_percentage_24h.toFixed(2)}%
+									</p>
+								</div>
 							</div>
-						</div>
-					))}
-				</div>
+						))}
+					</div>
+				)}
 			</div>
 		</section>
 	);
