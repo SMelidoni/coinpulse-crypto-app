@@ -27,12 +27,31 @@ const CryptoDetail: FC = () => {
 	const { name } = useParams<{ name?: string }>();
 
 	const [coinDetail, setCoinDetail] = useState<CoinDetail | null>(null);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		if (name) {
 			fetch(`https://api.coingecko.com/api/v3/coins/${name}`)
-				.then((res) => res.json())
-				.then((data) => setCoinDetail(data));
+				.then((res) => {
+					if (!res.ok) {
+						console.log(res);
+						if (res.status === 429) {
+							throw new Error('Too many requests. Please try again later.');
+						} else {
+							throw new Error('Failed to fetch coin data');
+						}
+					}
+					return res.json();
+				})
+				.then((data) => {
+					setCoinDetail(data);
+					setLoading(false);
+				})
+				.catch((error) => {
+					setError(error.message);
+					setLoading(false);
+				});
 		}
 	}, [name]);
 
@@ -43,6 +62,28 @@ const CryptoDetail: FC = () => {
 	if (name !== name.toLowerCase()) {
 		navigate(`/${name.toLowerCase()}`);
 		return null;
+	}
+
+	if (error) {
+		return (
+			<>
+				<br />
+				<div className='crypto-detail'>
+					<div className='description-card'>
+						<div>{error}</div>
+					</div>
+				</div>
+			</>
+		);
+	}
+
+	if (!coinDetail || loading) {
+		return (
+			<>
+				<br />
+				<div>Loading...</div>
+			</>
+		);
 	}
 
 	const capitalizeFirstLetter = (string: string): string => {
@@ -66,10 +107,6 @@ const CryptoDetail: FC = () => {
 	);
 
 	const enhancedDescription = addNewTabSupportToLinks(cleanDescription);
-
-	if (!coinDetail) {
-		return <div>Loading...</div>;
-	}
 
 	return (
 		<div className='crypto-detail'>
