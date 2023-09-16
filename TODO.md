@@ -17,8 +17,8 @@
   - [x] What is Cryptocurrency? etc. (Dropdownn Style)
   - [ ] Add link to crypto-quiz-app?
 - [ ] Make Website Live (Vercel)
-- [ ] Create Coin Component (Upon clicking on a cryptocurrency icon, new page should be displayed with detailed info)
-- [ ] Handle API Failures (e.g. too many request)
+- [x] Create Coin Component (Upon clicking on a cryptocurrency icon, new page should be displayed with detailed info)
+- [x] Handle API Failures (e.g. too many request)
 - [ ] Update styling for consistency with different viewports (`<h1>` tags etc.)
 
 ## Low Priority
