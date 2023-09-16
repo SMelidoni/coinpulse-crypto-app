@@ -27,7 +27,7 @@
 
 		.sub-header {
 			color: $primary-text-color;
-			font-size: 1.2rem;
+			font-size: 1.1rem;
 			font-weight: 400;
 			margin-bottom: 2rem;
 		}
@@ -36,4 +36,19 @@
 
 .crypto-queries {
 	width: 100%;
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+	.title {
+		font-size: 2.5rem;
+	}
+	h2 {
+		font-size: 20px;
+	}
+}
+
+@media screen and (min-width: 769px) and (max-width: $breakpoint-desktop) {
+	.title {
+		font-size: 2.8rem;
+	}
 }
