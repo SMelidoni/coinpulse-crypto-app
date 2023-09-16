@@ -19,3 +19,5 @@
   - Added clickable dropdowns that show Q&A explaining key cryptocurrency concepts.
 - Added crypto detail page which displays detailed information for any crypto when clicking on any crypto from the table
   - Updated detailed description links to open in new tab when selected
+- Improved error handling for API interactions in `Home`, `Market` and `CryptoDetail` components.
+  - Gracefully handle rate-limiting scenarios and other potential API issues.
