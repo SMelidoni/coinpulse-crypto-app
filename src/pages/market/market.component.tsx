@@ -10,6 +10,8 @@ const Market: FC = () => {
 	const [sortField, setSortField] = useState<keyof ICoinData | null>(null);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
 	const [dropdownOpen, setDropdownOpen] = useState(false);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
 
 	const totalPages = Math.ceil(coinData.length / rowsPerPage);
 	const indexOfLastCoin = currentPage * rowsPerPage;
@@ -20,25 +22,34 @@ const Market: FC = () => {
 
 	useEffect(() => {
 		const fetchCoinData = async () => {
-			const result = await axios(
-				'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false',
-			);
+			try {
+				const result = await axios(
+					'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false',
+				);
 
-			console.log(result);
-			const mappedResult: ICoinData[] = result.data.map(
-				(coin: any, index: number) => ({
-					id: coin.id,
-					rank: index + 1,
-					name: coin.name,
-					image: coin.image,
-					price: coin.current_price,
-					change24h: coin.price_change_percentage_24h,
-					volume24h: coin.total_volume,
-					marketCap: coin.market_cap,
-				}),
-			);
+				const mappedResult: ICoinData[] = result.data.map(
+					(coin: any, index: number) => ({
+						id: coin.id,
+						rank: index + 1,
+						name: coin.name,
+						image: coin.image,
+						price: coin.current_price,
+						change24h: coin.price_change_percentage_24h,
+						volume24h: coin.total_volume,
+						marketCap: coin.market_cap,
+					}),
+				);
 
-			setCoinData(mappedResult);
+				setCoinData(mappedResult);
+			} catch (error: any) {
+				setError(
+					error.response
+						? error.response.data.message
+						: 'Too many requests. Please try again later.',
+				);
+			} finally {
+				setLoading(false);
+			}
 		};
 
 		fetchCoinData();
@@ -97,116 +108,128 @@ const Market: FC = () => {
 		<section id='market' className='market-section'>
 			<div className='market-container'>
 				<h1 className='title'>Market Update</h1>
-				<div className='rows-dropdown-container'>
-					<select
-						className='rows-dropdown'
-						ref={dropdownRef}
-						onChange={handleRowsChange}
-						onClick={toggleDropdown}
-						onBlur={handleBlur}
-					>
-						{numOptions.map((num) => (
-							<option key={num} value={num}>
-								{num} Rows
-							</option>
-						))}
-					</select>
+				{loading ? (
+					<div className='loading-message'>Loading...</div>
+				) : error ? (
+					<div className='error-message'>{error}</div>
+				) : (
+					<>
+						<div className='rows-dropdown-container'>
+							<select
+								className='rows-dropdown'
+								ref={dropdownRef}
+								onChange={handleRowsChange}
+								onClick={toggleDropdown}
+								onBlur={handleBlur}
+							>
+								{numOptions.map((num) => (
+									<option key={num} value={num}>
+										{num} Rows
+									</option>
+								))}
+							</select>
 
-					<span className={`dropdown-arrow ${dropdownOpen ? 'flipped' : ''}`} />
-				</div>
+							<span
+								className={`dropdown-arrow ${dropdownOpen ? 'flipped' : ''}`}
+							/>
+						</div>
 
-				<div className='table-container'>
-					<table className='market-table'>
-						<thead>
-							<tr>
-								{[
-									'#',
-									'Coin',
-									'Price',
-									'24h Change',
-									'24h Volume',
-									'Market Cap',
-								].map((header, idx) => {
-									const sortFieldMapping: { [key: string]: keyof ICoinData } = {
-										'#': 'rank',
-										Coin: 'name',
-										Price: 'price',
-										'24h Change': 'change24h',
-										'24h Volume': 'volume24h',
-										'Market Cap': 'marketCap',
-									};
+						<div className='table-container'>
+							<table className='market-table'>
+								<thead>
+									<tr>
+										{[
+											'#',
+											'Coin',
+											'Price',
+											'24h Change',
+											'24h Volume',
+											'Market Cap',
+										].map((header, idx) => {
+											const sortFieldMapping: {
+												[key: string]: keyof ICoinData;
+											} = {
+												'#': 'rank',
+												Coin: 'name',
+												Price: 'price',
+												'24h Change': 'change24h',
+												'24h Volume': 'volume24h',
+												'Market Cap': 'marketCap',
+											};
 
-									const currentSortField = sortFieldMapping[header];
+											const currentSortField = sortFieldMapping[header];
 
-									return (
-										<th key={idx}>
-											<div className='th-content'>
-												{header}
-												<span
-													className='sort-arrows'
-													onClick={() => handleSort(currentSortField)}
-												>
-													<div
-														className={
-															sortField === currentSortField &&
-															sortOrder === 'asc'
-																? 'arrow-up active-arrow'
-																: 'arrow-up'
-														}
-													></div>
-													<div
-														className={
-															sortField === currentSortField &&
-															sortOrder === 'desc'
-																? 'arrow-down active-arrow'
-																: 'arrow-down'
-														}
-													></div>
-												</span>
-											</div>
-										</th>
-									);
-								})}
-							</tr>
-						</thead>
-						<tbody>
-							{currentCoins.map((coinData, index) => (
-								<CoinRow key={index} {...coinData} />
-							))}
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div className='pagination'>
-				<button
-					onClick={handlePreviousPage}
-					disabled={currentPage === 1}
-					className='prev-next'
-				>
-					&lt;
-				</button>
-				{Array.from({ length: totalPages }, (_, index) => index + 1).map(
-					(pageNumber) => (
-						<button
-							key={pageNumber}
-							className={
-								currentPage === pageNumber
-									? 'page-number active-page'
-									: 'page-number'
-							}
-							onClick={() => handlePageClick(pageNumber)}
-						>
-							{pageNumber}
-						</button>
-					),
+											return (
+												<th key={idx}>
+													<div className='th-content'>
+														{header}
+														<span
+															className='sort-arrows'
+															onClick={() => handleSort(currentSortField)}
+														>
+															<div
+																className={
+																	sortField === currentSortField &&
+																	sortOrder === 'asc'
+																		? 'arrow-up active-arrow'
+																		: 'arrow-up'
+																}
+															></div>
+															<div
+																className={
+																	sortField === currentSortField &&
+																	sortOrder === 'desc'
+																		? 'arrow-down active-arrow'
+																		: 'arrow-down'
+																}
+															></div>
+														</span>
+													</div>
+												</th>
+											);
+										})}
+									</tr>
+								</thead>
+								<tbody>
+									{currentCoins.map((coinData, index) => (
+										<CoinRow key={index} {...coinData} />
+									))}
+								</tbody>
+							</table>
+						</div>
+						<div className='pagination'>
+							<button
+								onClick={handlePreviousPage}
+								disabled={currentPage === 1}
+								className='prev-next'
+							>
+								&lt;
+							</button>
+							{Array.from({ length: totalPages }, (_, index) => index + 1).map(
+								(pageNumber) => (
+									<button
+										key={pageNumber}
+										className={
+											currentPage === pageNumber
+												? 'page-number active-page'
+												: 'page-number'
+										}
+										onClick={() => handlePageClick(pageNumber)}
+									>
+										{pageNumber}
+									</button>
+								),
+							)}
+							<button
+								onClick={handleNextPage}
+								disabled={currentPage === totalPages}
+								className='prev-next'
+							>
+								&gt;
+							</button>
+						</div>
+					</>
 				)}
-				<button
-					onClick={handleNextPage}
-					disabled={currentPage === totalPages}
-					className='prev-next'
-				>
-					&gt;
-				</button>
 			</div>
 		</section>
 	);
