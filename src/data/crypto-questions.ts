@@ -12,25 +12,25 @@ export const cryptoQuestions = [
 		emoji: '💰',
 	},
 	{
-		question: 'Why use Cryptocurrencies?',
+		question: 'Why use Crypto?',
 		answer:
 			'Some people like the idea of a currency that isn’t controlled by governments. Others appreciate the anonymity in transactions. It can also be an investment or used for online transactions where cryptocurrencies are accepted.',
 		emoji: '🌍',
 	},
 	{
-		question: 'How do I buy Cryptocurrency?',
+		question: 'How do I buy Crypto?',
 		answer:
 			'You can buy cryptocurrencies using online platforms called exchanges. Once purchased, you can store it in a digital wallet.',
 		emoji: '💸',
 	},
 	{
-		question: 'Why are Cryptocurrencies volatile?',
+		question: 'Why is Crypto volatile?',
 		answer:
 			'Their value can change rapidly because of factors like news, regulations, adoption rates, and market speculation.',
 		emoji: '📈',
 	},
 	{
-		question: 'Is Cryptocurrency safe?',
+		question: 'Is Crypto safe?',
 		answer:
 			'Cryptocurrencies use strong cryptographic techniques for security. However, their safety can depend on how they’re used. While transactions are secure, investments can be risky due to market volatility. Additionally, one must be cautious of scams, secure their digital wallets, and use reputable exchanges.',
 		emoji: '🔒',
