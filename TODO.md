@@ -15,11 +15,12 @@
   - [x] Add ability to select how many rows to display
 - [x] Create 'Learn' section
   - [x] What is Cryptocurrency? etc. (Dropdownn Style)
-  - [ ] Add link to crypto-quiz-app?
+  - [ ] And Quiz sub section with coming soon... (below Learn)
+    - [ ] Add link to crypto-quiz-app?
 - [ ] Make Website Live (Vercel)
 - [x] Create Coin Component (Upon clicking on a cryptocurrency icon, new page should be displayed with detailed info)
 - [x] Handle API Failures (e.g. too many request)
-- [ ] Update styling for consistency with different viewports (`<h1>` tags etc.)
+- [x] Update styling for consistency with different viewports (`<h1>` tags etc.)
 
 ## Low Priority
 
