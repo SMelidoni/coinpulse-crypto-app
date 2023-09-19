@@ -21,3 +21,4 @@
   - Updated detailed description links to open in new tab when selected
 - Improved error handling for API interactions in `Home`, `Market` and `CryptoDetail` components.
   - Gracefully handle rate-limiting scenarios and other potential API issues.
+- Added initial quiz sub section
