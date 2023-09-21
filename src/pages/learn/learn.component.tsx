@@ -41,6 +41,22 @@ const Learn: FC = () => {
 					))}
 				</div>
 			</div>
+			<div className='quiz-container'>
+				<h1 className='title'>Quiz</h1>
+				<p className='sub-header'>
+					Test your knowledge on crypto with our interactive quiz.
+				</p>
+				<a
+					// href='https://link-to-your-quiz.com'
+					target='_blank'
+					rel='noopener noreferrer'
+					className='quiz-link'
+				>
+					{/* Take the Quiz */}
+					Coming Soon
+				</a>
+			</div>
+			<br />
 		</section>
 	);
 };

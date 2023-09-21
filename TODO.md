@@ -15,7 +15,7 @@
   - [x] Add ability to select how many rows to display
 - [x] Create 'Learn' section
   - [x] What is Cryptocurrency? etc. (Dropdownn Style)
-  - [ ] And Quiz sub section with coming soon... (below Learn)
+  - [x] And Quiz sub section with coming soon... (below Learn)
     - [ ] Add link to crypto-quiz-app?
 - [ ] Make Website Live (Vercel)
 - [x] Create Coin Component (Upon clicking on a cryptocurrency icon, new page should be displayed with detailed info)
