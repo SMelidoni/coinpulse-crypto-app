@@ -5,8 +5,7 @@
 - [x] Create Homepage
 - [x] Create Navbar
 - [x] Integrate Crypto Fear & Greed Index
-  - [ ] Add ToolTip Explaining what the FAG Index is
-  - [ ] Improve UI (Similar to CMC)
+  - [x] Add ToolTip Explaining what the FAG Index is
 - [x] Create 'Market' section
   - [x] Integrate CoinGecko API
   - [x] Add ability to sort asc / desc
