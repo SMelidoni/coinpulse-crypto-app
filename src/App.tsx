@@ -9,7 +9,6 @@ import Market from './pages/market/market.component';
 import Learn from './pages/learn/learn.component';
 import FearGreedIndex from './components/fear-greed-index/fear-greed-index.component';
 import CryptoDetail from './components/crypto-detail/crypto-detail.component';
-import Footer from './pages/footer/footer.component';
 
 function AppContent() {
 	return (
@@ -26,7 +25,6 @@ function AppContent() {
 							<Market />
 							<Learn />
 							<FearGreedIndex />
-							<Footer />
 						</>
 					}
 				/>

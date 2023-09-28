@@ -2,6 +2,7 @@ import './fear-greed-index.styles.scss';
 
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
+import Footer from '../../pages/footer/footer.component';
 
 type FearGreedData = {
 	value: string;
@@ -82,6 +83,8 @@ const FearGreedIndex = () => {
 				<p>{data?.value_classification}</p>
 			</div>
 			{countDown !== null && <div>Next update in: {timeInHMS(countDown)}</div>}
+			<br></br>
+			<Footer />
 		</div>
 	);
 };
