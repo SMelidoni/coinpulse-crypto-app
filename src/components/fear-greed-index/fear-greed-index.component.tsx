@@ -63,7 +63,20 @@ const FearGreedIndex = () => {
 				'-',
 			)}`}
 		>
-			<h2>Fear & Greed Index</h2>
+			<h2>
+				Fear & Greed Index
+				<div className='tooltip'>
+					<div className='info-circle'>i</div>
+					<span className='tooltiptext'>
+						The Fear & Greed Index offers insight into the current mood of the
+						cryptocurrency market. If the index shows 'Fear', it means many
+						investors are worried, and it might be a good time to buy. On the
+						other hand, if it points to 'Greed', it suggests people might be too
+						excited, and the market could be overpriced potentially signaling a
+						selling opportunity.
+					</span>
+				</div>
+			</h2>
 			<div className='fear-greed-value'>{data?.value}</div>
 			<div className='fear-greed-name'>
 				<p>{data?.value_classification}</p>
