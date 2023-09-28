@@ -68,13 +68,12 @@ const FearGreedIndex = () => {
 				<div className='tooltip'>
 					<div className='info-circle'>i</div>
 					<span className='tooltiptext'>
-						The Fear & Greed Index is used to gauge the current sentiment of the
-						cryptocurrency market. When the index is low (towards Fear), it
-						indicates that investors are scared, potentially signifying a buying
-						opportunity. Conversely, when the index is high (towards Greed),
-						investors might be getting too greedy, which could indicate an
-						overbought market. It's a tool to analyse potential market
-						reversals.
+						The Fear & Greed Index offers insight into the current mood of the
+						cryptocurrency market. If the index shows 'Fear', it means many
+						investors are worried, and it might be a good time to buy. On the
+						other hand, if it points to 'Greed', it suggests people might be too
+						excited, and the market could be overpriced potentially signaling a
+						selling opportunity.
 					</span>
 				</div>
 			</h2>

@@ -1,10 +1,10 @@
 .fear-greed-index {
-	display: flex;
-	flex-direction: column;
 	align-items: center;
 	border-radius: 8px 8px 0 0;
-	padding: 20px;
 	color: white;
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
 
 	h2 {
 		margin-bottom: 20px;
@@ -13,8 +13,8 @@
 		font-size: 3em;
 	}
 	.fear-greed-name {
-		font-weight: 600;
 		font-size: 24px;
+		font-weight: 600;
 	}
 }
 
@@ -39,62 +39,73 @@
 }
 
 .tooltip {
-	position: relative;
-	display: inline-block;
 	cursor: pointer;
+	display: inline-block;
 	margin-left: 10px;
+	position: relative;
 	top: -2px;
 
 	&:hover .tooltiptext {
-		visibility: visible;
 		opacity: 1;
+		visibility: visible;
 	}
 }
 
 .info-circle {
+	align-items: center;
 	background-color: #555;
 	border-radius: 50%;
-	width: 20px;
-	height: 20px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	color: #fff;
+	display: flex;
 	font-size: 14px;
+	height: 20px;
+	justify-content: center;
+	width: 20px;
 }
 
 .tooltiptext {
-	font-size: 12px;
-	visibility: hidden;
-	width: 300px;
 	background-color: #555;
-	color: #fff;
-	text-align: center;
 	border-radius: 6px;
+	bottom: 125%;
+	color: #fff;
+	font-size: 12px;
+	left: 50%;
+	margin-left: -150px;
+	opacity: 0;
 	padding: 5px 0;
 	position: absolute;
-	z-index: 1;
-	bottom: 125%; // adjust this as necessary for positioning
-	left: 50%;
-	margin-left: -150px; // half of the tooltip width
-	opacity: 0;
+	text-align: center;
 	transition: opacity 0.3s;
+	visibility: hidden;
+	width: 300px;
+	z-index: 1;
 
 	&:after {
+		border-color: #555 transparent transparent transparent;
+		border-style: solid;
+		border-width: 5px;
 		content: '';
-		position: absolute;
-		top: 100%;
 		left: 50%;
 		margin-left: -5px;
-		border-width: 5px;
-		border-style: solid;
-		border-color: #555 transparent transparent transparent;
+		position: absolute;
+		top: 100%;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.tooltiptext {
+		font-size: 12px;
+		padding: 4px 0;
+		transform: translateX(-5%);
+		width: 200px;
 	}
 }
 
 @media screen and (max-width: 480px) {
 	.tooltiptext {
-		width: 200px;
-		margin-left: -155px;
+		font-size: 12px;
+		padding: 3px 0;
+		transform: translateX(-1%);
+		width: 150px;
 	}
 }
