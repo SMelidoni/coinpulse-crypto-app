@@ -23,3 +23,4 @@
   - Gracefully handle rate-limiting scenarios and other potential API issues.
 - Added initial quiz sub section
 - Added Tooltip next to FAG index title to explain what the data shows
+- Added footer with social media icon links within FAG component

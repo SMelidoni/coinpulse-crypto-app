@@ -1,0 +1,29 @@
+@import '../../styles/variables.scss';
+
+.footer-section {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 1rem;
+
+	.footer-container {
+		align-items: center;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		gap: 1rem;
+
+		.social-icon-link {
+			color: $primary-text-color;
+			font-size: 1.5rem;
+			transition: color 0.3s ease, transform 0.3s ease;
+			transform: scale(1);
+
+			&:hover {
+				color: $secondary-color;
+				transform: scale(1.1);
+			}
+		}
+	}
+}

@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
 
-const links = ['home', 'market', 'learn', 'contact'];
+const links = ['home', 'market', 'learn', 'social'];
 
 const Navbar: FC = () => {
 	const location = useLocation();
