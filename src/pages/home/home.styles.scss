@@ -1,0 +1,116 @@
+@import '../../styles/variables.scss';
+
+@keyframes float {
+	0% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-10px);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
+
+@keyframes pulse {
+	0%,
+	100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.1);
+	}
+}
+
+.home-section {
+	align-items: center;
+	background-color: $background-primary;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-height: 100vh;
+	padding: 1rem;
+
+	.home-container {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		text-align: center;
+
+		.title {
+			font-size: 70px;
+			font-weight: 600;
+			letter-spacing: 1.2px;
+			text-transform: uppercase;
+		}
+
+		.error-message {
+			font-size: 1.1rem;
+		}
+
+		.coin-list {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+			margin-top: 2rem;
+
+			.coin-item {
+				align-items: center;
+				display: flex;
+				flex-direction: column;
+				margin: 1rem;
+				width: 200px;
+
+				.coin-image {
+					animation: float 3s infinite ease-in-out;
+					cursor: pointer;
+					width: 75px;
+					height: auto;
+					border-radius: 50%;
+					transition: transform 0.3s ease-in-out;
+
+					&:hover {
+						animation: pulse 1.5s infinite ease-in-out;
+					}
+				}
+
+				.price-info {
+					align-items: center;
+					display: flex;
+
+					.decrease {
+						color: $decrease-color;
+					}
+
+					.increase {
+						color: $increase-color;
+					}
+
+					p {
+						font-size: 20px;
+						font-weight: 600;
+						margin: 0 10px;
+					}
+
+					span {
+						color: $primary-color;
+						font-weight: 600;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+	.home-section .home-container .title {
+		font-size: 50px;
+	}
+}
+
+@media screen and (min-width: 769px) and (max-width: $breakpoint-desktop) {
+	.home-section .home-container .title {
+		font-size: 60px;
+	}
+}

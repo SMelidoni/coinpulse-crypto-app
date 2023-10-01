@@ -1,0 +1,93 @@
+@import '../../styles/variables.scss';
+
+.learn-section {
+	align-items: flex-start;
+	background-color: lighten($secondary-color, 30%);
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	padding: 1rem;
+
+	.learn-container,
+	.quiz-container {
+		align-items: flex-start;
+		display: flex;
+		flex-direction: column;
+		margin: 0 auto;
+		max-width: 1200px;
+		width: 100%;
+
+		.title {
+			color: $primary-color;
+			font-size: 3rem;
+			font-weight: 600;
+			letter-spacing: 1.2px;
+			margin-bottom: 1rem;
+			text-transform: uppercase;
+		}
+
+		.sub-header {
+			color: $primary-text-color;
+			font-size: 1.1rem;
+			font-weight: 400;
+			margin-bottom: 2rem;
+		}
+
+		.quiz-link {
+			color: $primary-color;
+			font-weight: 600;
+			text-decoration: none;
+			padding: 0.8rem 1.2rem;
+			border-radius: 5px;
+			border: 2px solid $primary-color;
+			transition: background-color 0.2s ease;
+
+			&:hover {
+				background-color: $primary-color;
+				color: lighten($secondary-color, 30%);
+			}
+		}
+	}
+}
+
+.crypto-queries {
+	width: 100%;
+}
+
+@media screen and (max-width: $breakpoint-mobile) {
+	.quiz-container {
+		text-align: center;
+
+		.quiz-link {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+	.learn-section {
+		.learn-container,
+		.quiz-container {
+			.title {
+				font-size: 2.5rem;
+			}
+		}
+
+		h2 {
+			font-size: 20px;
+		}
+	}
+}
+
+@media screen and (min-width: 769px) and (max-width: $breakpoint-desktop) {
+	.learn-section {
+		.learn-container,
+		.quiz-container {
+			.title {
+				font-size: 2.8rem;
+			}
+		}
+	}
+}

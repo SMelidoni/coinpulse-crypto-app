@@ -1,0 +1,29 @@
+@import '../../styles/variables.scss';
+
+.coinrow {
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+
+	&:hover {
+		background-color: lighten($secondary-color, 30%);
+	}
+}
+
+.increase {
+	color: $increase-color;
+}
+
+.decrease {
+	color: $decrease-color;
+}
+
+.coin-container {
+	display: flex;
+	align-items: center;
+}
+
+.coin-icon {
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+}

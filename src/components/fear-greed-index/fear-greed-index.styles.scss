@@ -1,0 +1,111 @@
+.fear-greed-index {
+	align-items: center;
+	border-radius: 8px 8px 0 0;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+
+	h2 {
+		margin-bottom: 20px;
+	}
+	.fear-greed-value {
+		font-size: 3em;
+	}
+	.fear-greed-name {
+		font-size: 24px;
+		font-weight: 600;
+	}
+}
+
+.fear-greed-index.Extreme-Fear {
+	background-color: #ea3943;
+}
+
+.fear-greed-index.Fear {
+	background-color: #ea8c00;
+}
+
+.fear-greed-index.Neutral {
+	background-color: #f3d42f;
+}
+
+.fear-greed-index.Greed {
+	background-color: #93d900;
+}
+
+.fear-greed-index.Extreme-Greed {
+	background-color: #16c784;
+}
+
+.tooltip {
+	cursor: pointer;
+	display: inline-block;
+	margin-left: 10px;
+	position: relative;
+	top: -2px;
+
+	&:hover .tooltiptext {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+.info-circle {
+	align-items: center;
+	background-color: #555;
+	border-radius: 50%;
+	color: #fff;
+	display: flex;
+	font-size: 14px;
+	height: 20px;
+	justify-content: center;
+	width: 20px;
+}
+
+.tooltiptext {
+	background-color: #555;
+	border-radius: 6px;
+	bottom: 125%;
+	color: #fff;
+	font-size: 12px;
+	left: 50%;
+	margin-left: -150px;
+	opacity: 0;
+	padding: 5px 0;
+	position: absolute;
+	text-align: center;
+	transition: opacity 0.3s;
+	visibility: hidden;
+	width: 300px;
+	z-index: 1;
+
+	&:after {
+		border-color: #555 transparent transparent transparent;
+		border-style: solid;
+		border-width: 5px;
+		content: '';
+		left: 50%;
+		margin-left: -5px;
+		position: absolute;
+		top: 100%;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.tooltiptext {
+		font-size: 12px;
+		padding: 4px 0;
+		transform: translateX(-5%);
+		width: 200px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.tooltiptext {
+		font-size: 12px;
+		padding: 3px 0;
+		transform: translateX(-1%);
+		width: 150px;
+	}
+}
