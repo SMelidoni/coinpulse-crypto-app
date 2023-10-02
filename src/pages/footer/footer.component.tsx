@@ -13,27 +13,27 @@ const socialLinks = [
 	{
 		name: 'Instagram',
 		icon: <FaInstagram />,
-		link: 'http://localhost:3000/',
+		link: 'https://www.instagram.com/',
 	},
 	{
 		name: 'Twitter',
 		icon: <FaTwitter />,
-		link: 'http://localhost:3000/',
+		link: 'https://twitter.com/',
 	},
 	{
 		name: 'Facebook',
 		icon: <FaFacebookF />,
-		link: 'http://localhost:3000/',
+		link: 'https://www.facebook.com/',
 	},
 	{
 		name: 'Discord',
 		icon: <FaDiscord />,
-		link: 'http://localhost:3000/',
+		link: 'https://discord.com/',
 	},
 	{
 		name: 'YouTube',
 		icon: <FaYoutube />,
-		link: 'http://localhost:3000/',
+		link: 'https://www.youtube.com/',
 	},
 ];
 
