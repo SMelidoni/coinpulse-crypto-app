@@ -1,5 +1,7 @@
 # WIP
 
+- Updated social (icon) links
+
 # v1.0.0 - 1st October 2023
 
 - Initial project setup using create-react-app with TypeScript and SASS
