@@ -1,6 +1,7 @@
 # WIP
 
 - Updated social (icon) links
+- Updated FAG index tooltip styles (mobile / tablet)
 
 # v1.0.0 - 1st October 2023
 
