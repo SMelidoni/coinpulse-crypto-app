@@ -5,7 +5,7 @@
 - [x] And Quiz sub section with coming soon... (below Learn)
   - [ ] Add link to crypto-quiz-app?
 - [x] Update social icon links (remove localhost)
-- [ ] Update tooltip style (mobile)
+- [x] Update tooltip style (mobile)
 - [ ] Fix issue when returning back from crypto detail page (reset's number of table rows if > 10)
 
 ## Low Priority
