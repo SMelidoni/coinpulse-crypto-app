@@ -10,9 +10,13 @@
 
 ## Low Priority
 
+- [ ] Create personal crypto watchlist page
 - [ ] Mention CoinGecko on Site (https://www.coingecko.com/en/branding)
 - [ ] Add icon for loader (replace 'Loading...')
 
 # Ideas
 
-- Light / Dark Mode Toggle
+- [ ] Light / Dark Mode Toggle
+- [ ] Research Keycloak Authentication
+  - [ ] Add login page?
+ 
