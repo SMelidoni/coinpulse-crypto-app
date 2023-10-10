@@ -216,13 +216,8 @@ const Market: FC<MarketProps> = ({
 									</tr>
 								</thead>
 								<tbody>
-									{currentCoins.map((coinData, index) => (
-										<CoinRow
-											key={index}
-											{...coinData}
-											rowsPerPage={rowsPerPage}
-											currentPage={currentPage}
-										/>
+									{currentCoins.map((coinData) => (
+										<CoinRow key={coinData.id} {...coinData} />
 									))}
 								</tbody>
 							</table>
