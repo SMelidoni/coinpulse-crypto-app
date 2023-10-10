@@ -1,5 +1,5 @@
 import './App.scss';
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Home from './pages/home/home.component';
@@ -11,6 +11,9 @@ import FearGreedIndex from './components/fear-greed-index/fear-greed-index.compo
 import CryptoDetail from './components/crypto-detail/crypto-detail.component';
 
 function AppContent() {
+	const [marketRowsPerPage, setMarketRowsPerPage] = useState(10);
+	const [marketCurrentPage, setMarketCurrentPage] = useState(1);
+
 	return (
 		<div className='App'>
 			<Topbar />
@@ -22,7 +25,12 @@ function AppContent() {
 					element={
 						<>
 							<Home />
-							<Market />
+							<Market
+								rowsPerPage={marketRowsPerPage}
+								setRowsPerPage={setMarketRowsPerPage}
+								currentPage={marketCurrentPage}
+								setCurrentPage={setMarketCurrentPage}
+							/>
 							<Learn />
 							<FearGreedIndex />
 						</>

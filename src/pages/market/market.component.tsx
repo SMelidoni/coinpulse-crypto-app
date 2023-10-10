@@ -1,14 +1,25 @@
 import './market.styles.scss';
 import React, { FC, useState, useEffect, useRef } from 'react';
 import CoinRow, { ICoinData } from '../../components/coinrow/coinrow.component';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-const Market: FC = () => {
+interface MarketProps {
+	rowsPerPage: number;
+	setRowsPerPage: React.Dispatch<React.SetStateAction<number>>;
+	currentPage: number;
+	setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const Market: FC<MarketProps> = ({
+	rowsPerPage,
+	setRowsPerPage,
+	currentPage,
+	setCurrentPage,
+}) => {
 	const [coinData, setCoinData] = useState<ICoinData[]>([]);
-	const [currentPage, setCurrentPage] = useState(1);
 	const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 	const [sortField, setSortField] = useState<keyof ICoinData | null>(null);
-	const [rowsPerPage, setRowsPerPage] = useState(10);
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -19,6 +30,20 @@ const Market: FC = () => {
 	const currentCoins = coinData.slice(indexOfFirstCoin, indexOfLastCoin);
 	const numOptions = [10, 20, 30, 40, 50];
 	const dropdownRef = useRef<HTMLSelectElement | null>(null);
+
+	const location = useLocation();
+	const typedLocationState = location.state as {
+		fromMarket: boolean;
+		rowsPerPage: number;
+		currentPage: number;
+	};
+
+	useEffect(() => {
+		if (typedLocationState?.fromMarket) {
+			setRowsPerPage(typedLocationState.rowsPerPage);
+			setCurrentPage(typedLocationState.currentPage);
+		}
+	}, [typedLocationState]);
 
 	useEffect(() => {
 		const fetchCoinData = async () => {
@@ -192,7 +217,12 @@ const Market: FC = () => {
 								</thead>
 								<tbody>
 									{currentCoins.map((coinData, index) => (
-										<CoinRow key={index} {...coinData} />
+										<CoinRow
+											key={index}
+											{...coinData}
+											rowsPerPage={rowsPerPage}
+											currentPage={currentPage}
+										/>
 									))}
 								</tbody>
 							</table>

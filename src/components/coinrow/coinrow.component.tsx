@@ -11,6 +11,8 @@ export interface ICoinData {
 	change24h: number;
 	volume24h: number;
 	marketCap: number;
+	rowsPerPage: number;
+	currentPage: number;
 }
 
 const CoinRow: FC<ICoinData> = ({
@@ -22,11 +24,15 @@ const CoinRow: FC<ICoinData> = ({
 	change24h,
 	volume24h,
 	marketCap,
+	rowsPerPage,
+	currentPage,
 }) => {
 	const navigate = useNavigate();
 
 	const navigateToDetail = () => {
-		navigate(`/${id}`);
+		navigate(`/${id}`, {
+			state: { fromMarket: true, rowsPerPage, currentPage },
+		});
 	};
 
 	return (
