@@ -43,7 +43,7 @@ const Market: FC<MarketProps> = ({
 			setRowsPerPage(typedLocationState.rowsPerPage);
 			setCurrentPage(typedLocationState.currentPage);
 		}
-	}, [typedLocationState]);
+	}, [typedLocationState, setCurrentPage, setRowsPerPage]);
 
 	useEffect(() => {
 		const fetchCoinData = async () => {
