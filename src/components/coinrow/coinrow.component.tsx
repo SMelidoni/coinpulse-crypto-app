@@ -29,14 +29,22 @@ const CoinRow: FC<ICoinData> = ({
 }) => {
 	const navigate = useNavigate();
 
-	const navigateToDetail = () => {
+	const navigateToDetail = (rowsPerPage: number, currentPage: number) => {
 		navigate(`/${id}`, {
 			state: { fromMarket: true, rowsPerPage, currentPage },
 		});
 	};
 
 	return (
-		<tr className='coinrow' onClick={navigateToDetail}>
+		<tr
+			className='coinrow'
+			onClick={() => navigateToDetail(rowsPerPage, currentPage)}
+			role='button'
+			tabIndex={0}
+			onKeyDown={(e) =>
+				e.key === 'Enter' && navigateToDetail(rowsPerPage, currentPage)
+			}
+		>
 			<td>{rank}</td>
 			<td>
 				<div className='coin-container'>

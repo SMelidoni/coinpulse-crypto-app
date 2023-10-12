@@ -43,7 +43,7 @@ const Market: FC<MarketProps> = ({
 			setRowsPerPage(typedLocationState.rowsPerPage);
 			setCurrentPage(typedLocationState.currentPage);
 		}
-	}, [typedLocationState]);
+	}, [typedLocationState, setCurrentPage, setRowsPerPage]);
 
 	useEffect(() => {
 		const fetchCoinData = async () => {
@@ -216,13 +216,8 @@ const Market: FC<MarketProps> = ({
 									</tr>
 								</thead>
 								<tbody>
-									{currentCoins.map((coinData, index) => (
-										<CoinRow
-											key={index}
-											{...coinData}
-											rowsPerPage={rowsPerPage}
-											currentPage={currentPage}
-										/>
+									{currentCoins.map((coinData) => (
+										<CoinRow key={coinData.id} {...coinData} />
 									))}
 								</tbody>
 							</table>
