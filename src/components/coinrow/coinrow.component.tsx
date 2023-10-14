@@ -1,6 +1,7 @@
 import './coinrow.styles.scss';
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useScrollPosition } from '../../contexts/scroll-position-context';
 
 export interface ICoinData {
 	id: string;
@@ -29,16 +30,23 @@ const CoinRow: FC<ICoinData> = ({
 }) => {
 	const navigate = useNavigate();
 
+	const { setPosition } = useScrollPosition();
+
 	const navigateToDetail = (rowsPerPage: number, currentPage: number) => {
 		navigate(`/${id}`, {
 			state: { fromMarket: true, rowsPerPage, currentPage },
 		});
 	};
 
+	const handleRowClick = () => {
+		setPosition(window.scrollY);
+		navigateToDetail(rowsPerPage, currentPage);
+	};
+
 	return (
 		<tr
 			className='coinrow'
-			onClick={() => navigateToDetail(rowsPerPage, currentPage)}
+			onClick={handleRowClick}
 			role='button'
 			tabIndex={0}
 			onKeyDown={(e) =>

@@ -2,6 +2,7 @@ import './home.styles.scss';
 
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useScrollPosition } from '../../contexts/scroll-position-context';
 
 interface CoinData {
 	id: string;
@@ -18,7 +19,10 @@ const Home: FC = () => {
 	const [coins, setCoins] = useState<CoinData[]>([]);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-	const navigateToDetail = (name: string) => {
+	const { setPosition } = useScrollPosition();
+
+	const handleCoinClick = (name: string) => {
+		setPosition(window.scrollY);
 		navigate(`/${name.toLowerCase()}`);
 	};
 
@@ -45,7 +49,7 @@ const Home: FC = () => {
 							<div
 								key={coin.id}
 								className='coin-item'
-								onClick={() => navigateToDetail(coin.name)}
+								onClick={() => handleCoinClick(coin.name)}
 							>
 								<img src={coin.image} alt={coin.name} className='coin-image' />
 								<h2>{coin.name}</h2>

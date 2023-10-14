@@ -3,6 +3,7 @@
 - Updated social (icon) links
 - Updated FAG index tooltip styles (mobile / tablet)
 - Updated 'Market' section to store row and page number state when returning from other page
+- Enhanced user navigation with scroll position retention for coin list
 
 # v1.0.0 - 1st October 2023
 

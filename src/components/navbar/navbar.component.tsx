@@ -4,6 +4,7 @@ import React, { FC, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
+import { useScrollPosition } from '../../contexts/scroll-position-context';
 
 const links = ['home', 'market', 'learn', 'social'];
 
@@ -13,6 +14,14 @@ const Navbar: FC = () => {
 
 	const [menuOpen, setMenuOpen] = useState(false);
 
+	const { position } = useScrollPosition();
+
+	const handleNameClick = () => {
+		if (isDetailPage) {
+			window.scrollTo(0, position);
+		}
+	};
+
 	const toggleMenu = () => {
 		setMenuOpen(!menuOpen);
 	};
@@ -20,7 +29,7 @@ const Navbar: FC = () => {
 	if (isDetailPage) {
 		return (
 			<nav className='navbar-container'>
-				<div className='navbar-name'>
+				<div className='navbar-name' onClick={handleNameClick}>
 					<RouterLink to='/' className='navbar-name-link'>
 						{' '}
 						<b>CoinPulse</b>
