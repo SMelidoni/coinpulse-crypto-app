@@ -7,6 +7,7 @@
 - [x] Update social icon links (remove localhost)
 - [x] Update tooltip style (mobile)
 - [x] Fix issue when returning back from crypto detail page (reset's number of table rows if > 10)
+- [ ] Reduce number of API calls to CoinGecko API
 
 ## Low Priority
 
