@@ -46,6 +46,7 @@ const Learn: FC = () => {
 				<p className='sub-header'>
 					Test your knowledge on crypto with our interactive quiz.
 				</p>
+				{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
 				<a
 					// href='https://link-to-your-quiz.com'
 					target='_blank'
