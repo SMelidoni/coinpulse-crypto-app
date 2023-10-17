@@ -1,8 +1,8 @@
 import './market.styles.scss';
-import React, { FC, useState, useEffect, useRef } from 'react';
+import React, { FC, useState, useEffect, useRef, useContext } from 'react';
 import CoinRow, { ICoinData } from '../../components/coinrow/coinrow.component';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+import { CoinGeckoContext } from '../../contexts/coingecko-context';
 
 interface MarketProps {
 	rowsPerPage: number;
@@ -21,8 +21,6 @@ const Market: FC<MarketProps> = ({
 	const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 	const [sortField, setSortField] = useState<keyof ICoinData | null>(null);
 	const [dropdownOpen, setDropdownOpen] = useState(false);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
 
 	const totalPages = Math.ceil(coinData.length / rowsPerPage);
 	const indexOfLastCoin = currentPage * rowsPerPage;
@@ -45,40 +43,35 @@ const Market: FC<MarketProps> = ({
 		}
 	}, [typedLocationState, setCurrentPage, setRowsPerPage]);
 
+	const context = useContext(CoinGeckoContext);
+
+	if (!context) {
+		throw new Error('Market component must be used within CoinGeckoProvider');
+	}
+
+	const { coinData: contextCoinData, errorMessage: contextErrorMessage } =
+		context;
+
 	useEffect(() => {
-		const fetchCoinData = async () => {
-			try {
-				const result = await axios(
-					'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false',
-				);
+		if (contextCoinData && contextCoinData.length > 0) {
+			const mappedResult: ICoinData[] = contextCoinData.map(
+				(coin: any, index: number) => ({
+					id: coin.id,
+					rank: index + 1,
+					name: coin.name,
+					image: coin.image,
+					price: coin.current_price,
+					change24h: coin.price_change_percentage_24h,
+					volume24h: coin.total_volume,
+					marketCap: coin.market_cap,
+					rowsPerPage,
+					currentPage,
+				}),
+			);
 
-				const mappedResult: ICoinData[] = result.data.map(
-					(coin: any, index: number) => ({
-						id: coin.id,
-						rank: index + 1,
-						name: coin.name,
-						image: coin.image,
-						price: coin.current_price,
-						change24h: coin.price_change_percentage_24h,
-						volume24h: coin.total_volume,
-						marketCap: coin.market_cap,
-					}),
-				);
-
-				setCoinData(mappedResult);
-			} catch (error: any) {
-				setError(
-					error.response
-						? error.response.data.message
-						: 'Too many requests. Please try again later.',
-				);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchCoinData();
-	}, []);
+			setCoinData(mappedResult);
+		}
+	}, [contextCoinData, rowsPerPage, currentPage]);
 
 	const handleRowsChange = (event: any) => {
 		setRowsPerPage(event.target.value);
@@ -133,10 +126,8 @@ const Market: FC<MarketProps> = ({
 		<section id='market' className='market-section'>
 			<div className='market-container'>
 				<h1 className='title'>Market Update</h1>
-				{loading ? (
-					<div className='loading-message'>Loading...</div>
-				) : error ? (
-					<div className='error-message'>{error}</div>
+				{contextErrorMessage ? (
+					<div className='error-message'>{contextErrorMessage}</div>
 				) : (
 					<>
 						<div className='rows-dropdown-container'>

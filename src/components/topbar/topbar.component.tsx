@@ -12,10 +12,6 @@ type TopbarData = {
 	total_volume: {
 		gbp: number;
 	};
-	market_cap_percentage: {
-		btc: number;
-		eth: number;
-	};
 };
 
 const Topbar: FC = () => {

@@ -15,6 +15,7 @@ import Learn from './pages/learn/learn.component';
 import FearGreedIndex from './components/fear-greed-index/fear-greed-index.component';
 import CryptoDetail from './components/crypto-detail/crypto-detail.component';
 import ScrollPositionContext from './contexts/scroll-position-context';
+import CoinGeckoProvider from './contexts/coingecko-context';
 
 function AppContent() {
 	const location = useLocation();
@@ -39,13 +40,15 @@ function AppContent() {
 						path='/'
 						element={
 							<>
-								<Home />
-								<Market
-									rowsPerPage={marketRowsPerPage}
-									setRowsPerPage={setMarketRowsPerPage}
-									currentPage={marketCurrentPage}
-									setCurrentPage={setMarketCurrentPage}
-								/>
+								<CoinGeckoProvider>
+									<Home />
+									<Market
+										rowsPerPage={marketRowsPerPage}
+										setRowsPerPage={setMarketRowsPerPage}
+										currentPage={marketCurrentPage}
+										setCurrentPage={setMarketCurrentPage}
+									/>
+								</CoinGeckoProvider>
 								<Learn />
 								<FearGreedIndex />
 							</>

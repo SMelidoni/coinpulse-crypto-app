@@ -7,8 +7,13 @@ import App from './App';
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement,
 );
-root.render(
-	<React.StrictMode>
-		<App />
-	</React.StrictMode>,
-);
+
+// Temporarily disabled StrictMode during development to prevent double API calls.
+// Uncomment before major releases or periodic checks.
+// root.render(
+// 	<React.StrictMode>
+// 		<App />
+// 	</React.StrictMode>,
+// );
+
+root.render(<App />);
