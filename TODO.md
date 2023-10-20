@@ -4,10 +4,6 @@
 
 - [x] And Quiz sub section with coming soon... (below Learn)
   - [ ] Add link to crypto-quiz-app?
-- [x] Update social icon links (remove localhost)
-- [x] Update tooltip style (mobile)
-- [x] Fix issue when returning back from crypto detail page (reset's number of table rows if > 10)
-- [x] Reduce number of API calls to CoinGecko API
 
 ## Low Priority
 
