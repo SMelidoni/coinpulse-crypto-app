@@ -1,5 +1,7 @@
 # WIP
 
+# v1.1.0 - 20th October 2023
+
 - Updated social (icon) links
 - Updated FAG index tooltip styles (mobile / tablet)
 - Updated 'Market' section to store row and page number state when returning from other page
