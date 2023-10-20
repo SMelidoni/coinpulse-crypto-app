@@ -137,6 +137,7 @@ const Market: FC<MarketProps> = ({
 								onChange={handleRowsChange}
 								onClick={toggleDropdown}
 								onBlur={handleBlur}
+								value={rowsPerPage}
 							>
 								{numOptions.map((num) => (
 									<option key={num} value={num}>
@@ -144,12 +145,10 @@ const Market: FC<MarketProps> = ({
 									</option>
 								))}
 							</select>
-
 							<span
 								className={`dropdown-arrow ${dropdownOpen ? 'flipped' : ''}`}
 							/>
 						</div>
-
 						<div className='table-container'>
 							<table className='market-table'>
 								<thead>
