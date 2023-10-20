@@ -1,6 +1,7 @@
 import './coinrow.styles.scss';
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useScrollPosition } from '../../contexts/scroll-position-context';
 
 export interface ICoinData {
 	id: string;
@@ -11,6 +12,8 @@ export interface ICoinData {
 	change24h: number;
 	volume24h: number;
 	marketCap: number;
+	rowsPerPage: number;
+	currentPage: number;
 }
 
 const CoinRow: FC<ICoinData> = ({
@@ -22,15 +25,34 @@ const CoinRow: FC<ICoinData> = ({
 	change24h,
 	volume24h,
 	marketCap,
+	rowsPerPage,
+	currentPage,
 }) => {
 	const navigate = useNavigate();
 
-	const navigateToDetail = () => {
-		navigate(`/${id}`);
+	const { setPosition } = useScrollPosition();
+
+	const navigateToDetail = (rowsPerPage: number, currentPage: number) => {
+		navigate(`/${id}`, {
+			state: { fromMarket: true, rowsPerPage, currentPage },
+		});
+	};
+
+	const handleRowClick = () => {
+		setPosition(window.scrollY);
+		navigateToDetail(rowsPerPage, currentPage);
 	};
 
 	return (
-		<tr className='coinrow' onClick={navigateToDetail}>
+		<tr
+			className='coinrow'
+			onClick={handleRowClick}
+			role='button'
+			tabIndex={0}
+			onKeyDown={(e) =>
+				e.key === 'Enter' && navigateToDetail(rowsPerPage, currentPage)
+			}
+		>
 			<td>{rank}</td>
 			<td>
 				<div className='coin-container'>

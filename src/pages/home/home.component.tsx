@@ -1,37 +1,26 @@
 import './home.styles.scss';
 
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-interface CoinData {
-	id: string;
-	symbol: string;
-	name: string;
-	image: string;
-	current_price: number;
-	price_change_percentage_24h: number;
-}
+import { useScrollPosition } from '../../contexts/scroll-position-context';
+import { CoinGeckoContext } from '../../contexts/coingecko-context';
 
 const Home: FC = () => {
 	const navigate = useNavigate();
+	const { setPosition } = useScrollPosition();
 
-	const [coins, setCoins] = useState<CoinData[]>([]);
-	const [errorMessage, setErrorMessage] = useState<string | null>(null);
+	const context = useContext(CoinGeckoContext);
 
-	const navigateToDetail = (name: string) => {
+	if (!context) {
+		throw new Error('Home component must be wrapped within CoinGeckoProvider');
+	}
+
+	const { coinData, errorMessage } = context;
+
+	const handleCoinClick = (name: string) => {
+		setPosition(window.scrollY);
 		navigate(`/${name.toLowerCase()}`);
 	};
-
-	useEffect(() => {
-		fetch(
-			'https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=3&page=1',
-		)
-			.then((response) => response.json())
-			.then((data) => setCoins(data))
-			.catch(() =>
-				setErrorMessage('Too many requests. Please try again later.'),
-			);
-	}, []);
 
 	return (
 		<section id='home' className='home-section'>
@@ -41,11 +30,11 @@ const Home: FC = () => {
 					<div className='error-message'>{errorMessage}</div>
 				) : (
 					<div className='coin-list'>
-						{coins.map((coin) => (
+						{coinData.slice(0, 3).map((coin) => (
 							<div
 								key={coin.id}
 								className='coin-item'
-								onClick={() => navigateToDetail(coin.name)}
+								onClick={() => handleCoinClick(coin.name)}
 							>
 								<img src={coin.image} alt={coin.name} className='coin-image' />
 								<h2>{coin.name}</h2>

@@ -1,17 +1,26 @@
 import './market.styles.scss';
-import React, { FC, useState, useEffect, useRef } from 'react';
+import React, { FC, useState, useEffect, useRef, useContext } from 'react';
 import CoinRow, { ICoinData } from '../../components/coinrow/coinrow.component';
-import axios from 'axios';
+import { useLocation } from 'react-router-dom';
+import { CoinGeckoContext } from '../../contexts/coingecko-context';
 
-const Market: FC = () => {
+interface MarketProps {
+	rowsPerPage: number;
+	setRowsPerPage: React.Dispatch<React.SetStateAction<number>>;
+	currentPage: number;
+	setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const Market: FC<MarketProps> = ({
+	rowsPerPage,
+	setRowsPerPage,
+	currentPage,
+	setCurrentPage,
+}) => {
 	const [coinData, setCoinData] = useState<ICoinData[]>([]);
-	const [currentPage, setCurrentPage] = useState(1);
 	const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 	const [sortField, setSortField] = useState<keyof ICoinData | null>(null);
-	const [rowsPerPage, setRowsPerPage] = useState(10);
 	const [dropdownOpen, setDropdownOpen] = useState(false);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
 
 	const totalPages = Math.ceil(coinData.length / rowsPerPage);
 	const indexOfLastCoin = currentPage * rowsPerPage;
@@ -20,40 +29,49 @@ const Market: FC = () => {
 	const numOptions = [10, 20, 30, 40, 50];
 	const dropdownRef = useRef<HTMLSelectElement | null>(null);
 
+	const location = useLocation();
+	const typedLocationState = location.state as {
+		fromMarket: boolean;
+		rowsPerPage: number;
+		currentPage: number;
+	};
+
 	useEffect(() => {
-		const fetchCoinData = async () => {
-			try {
-				const result = await axios(
-					'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false',
-				);
+		if (typedLocationState?.fromMarket) {
+			setRowsPerPage(typedLocationState.rowsPerPage);
+			setCurrentPage(typedLocationState.currentPage);
+		}
+	}, [typedLocationState, setCurrentPage, setRowsPerPage]);
 
-				const mappedResult: ICoinData[] = result.data.map(
-					(coin: any, index: number) => ({
-						id: coin.id,
-						rank: index + 1,
-						name: coin.name,
-						image: coin.image,
-						price: coin.current_price,
-						change24h: coin.price_change_percentage_24h,
-						volume24h: coin.total_volume,
-						marketCap: coin.market_cap,
-					}),
-				);
+	const context = useContext(CoinGeckoContext);
 
-				setCoinData(mappedResult);
-			} catch (error: any) {
-				setError(
-					error.response
-						? error.response.data.message
-						: 'Too many requests. Please try again later.',
-				);
-			} finally {
-				setLoading(false);
-			}
-		};
+	if (!context) {
+		throw new Error('Market component must be used within CoinGeckoProvider');
+	}
 
-		fetchCoinData();
-	}, []);
+	const { coinData: contextCoinData, errorMessage: contextErrorMessage } =
+		context;
+
+	useEffect(() => {
+		if (contextCoinData && contextCoinData.length > 0) {
+			const mappedResult: ICoinData[] = contextCoinData.map(
+				(coin: any, index: number) => ({
+					id: coin.id,
+					rank: index + 1,
+					name: coin.name,
+					image: coin.image,
+					price: coin.current_price,
+					change24h: coin.price_change_percentage_24h,
+					volume24h: coin.total_volume,
+					marketCap: coin.market_cap,
+					rowsPerPage,
+					currentPage,
+				}),
+			);
+
+			setCoinData(mappedResult);
+		}
+	}, [contextCoinData, rowsPerPage, currentPage]);
 
 	const handleRowsChange = (event: any) => {
 		setRowsPerPage(event.target.value);
@@ -108,10 +126,8 @@ const Market: FC = () => {
 		<section id='market' className='market-section'>
 			<div className='market-container'>
 				<h1 className='title'>Market Update</h1>
-				{loading ? (
-					<div className='loading-message'>Loading...</div>
-				) : error ? (
-					<div className='error-message'>{error}</div>
+				{contextErrorMessage ? (
+					<div className='error-message'>{contextErrorMessage}</div>
 				) : (
 					<>
 						<div className='rows-dropdown-container'>
@@ -121,6 +137,7 @@ const Market: FC = () => {
 								onChange={handleRowsChange}
 								onClick={toggleDropdown}
 								onBlur={handleBlur}
+								value={rowsPerPage}
 							>
 								{numOptions.map((num) => (
 									<option key={num} value={num}>
@@ -128,12 +145,10 @@ const Market: FC = () => {
 									</option>
 								))}
 							</select>
-
 							<span
 								className={`dropdown-arrow ${dropdownOpen ? 'flipped' : ''}`}
 							/>
 						</div>
-
 						<div className='table-container'>
 							<table className='market-table'>
 								<thead>
@@ -191,8 +206,8 @@ const Market: FC = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{currentCoins.map((coinData, index) => (
-										<CoinRow key={index} {...coinData} />
+									{currentCoins.map((coinData) => (
+										<CoinRow key={coinData.id} {...coinData} />
 									))}
 								</tbody>
 							</table>
