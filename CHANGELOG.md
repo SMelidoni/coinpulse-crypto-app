@@ -1,5 +1,9 @@
 # WIP
 
+-
+
+# v1.1.1 - 31st October 2023
+
 - Minor style updates to home and `.title`
 
 # v1.1.0 - 20th October 2023
