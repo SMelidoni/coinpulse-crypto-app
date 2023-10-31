@@ -33,6 +33,7 @@
 
 .navbar-container a,
 .mobile-menu a {
+	color: $primary-color;
 	cursor: pointer;
 	transition: color 0.3s ease;
 }

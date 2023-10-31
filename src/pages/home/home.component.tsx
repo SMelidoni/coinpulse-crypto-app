@@ -25,7 +25,8 @@ const Home: FC = () => {
 	return (
 		<section id='home' className='home-section'>
 			<div className='home-container'>
-				<h1 className='title'>Track Crypto-currencies</h1>
+				<h1 className='title'>CoinPulse Crypto App</h1>
+				<p className='subtitle'>Insights into the World of Cryptocurrency</p>
 				{errorMessage ? (
 					<div className='error-message'>{errorMessage}</div>
 				) : (
