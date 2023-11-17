@@ -39,8 +39,12 @@
 }
 
 .navbar-container a:hover,
-.mobile-menu a:hover,
-.active {
+.mobile-menu a:hover {
+	color: $secondary-color;
+}
+
+.navbar-container a.active,
+.mobile-menu a.active {
 	color: $secondary-color;
 }
 
