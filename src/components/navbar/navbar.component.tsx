@@ -1,6 +1,6 @@
 import './navbar.styles.scss';
 
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
@@ -13,6 +13,11 @@ const Navbar: FC = () => {
 	const isDetailPage = location.pathname !== '/';
 
 	const [menuOpen, setMenuOpen] = useState(false);
+	const [activeLink, setActiveLink] = useState('home');
+
+	useEffect(() => {
+		setActiveLink('home');
+	}, []);
 
 	const { position } = useScrollPosition();
 
@@ -59,12 +64,14 @@ const Navbar: FC = () => {
 				{links.map((link) => (
 					<ScrollLink
 						key={link}
+						className={link === activeLink ? 'active' : ''}
 						activeClass='active'
 						to={link}
 						spy={true}
 						smooth={true}
 						offset={-70}
 						duration={500}
+						onSetActive={() => setActiveLink(link)}
 					>
 						{link.charAt(0).toUpperCase() + link.slice(1)}
 					</ScrollLink>
@@ -79,13 +86,14 @@ const Navbar: FC = () => {
 						{links.map((link) => (
 							<ScrollLink
 								key={link}
+								className={link === activeLink ? 'active' : ''}
 								activeClass='active'
 								to={link}
 								spy={true}
 								smooth={true}
 								offset={-70}
 								duration={500}
-								onClick={toggleMenu}
+								onSetActive={() => setActiveLink(link)}
 							>
 								{link.charAt(0).toUpperCase() + link.slice(1)}
 							</ScrollLink>
