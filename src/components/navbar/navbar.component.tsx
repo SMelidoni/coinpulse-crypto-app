@@ -94,6 +94,7 @@ const Navbar: FC = () => {
 								offset={-70}
 								duration={500}
 								onSetActive={() => setActiveLink(link)}
+								onClick={toggleMenu}
 							>
 								{link.charAt(0).toUpperCase() + link.slice(1)}
 							</ScrollLink>
