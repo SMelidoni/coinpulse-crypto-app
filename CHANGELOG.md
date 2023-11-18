@@ -1,5 +1,9 @@
 # WIP
 
+-
+
+# v1.1.2 - 18th November 2023
+
 - Fixed active navbar link colour issue
 - Updated Navbar to set 'Home' as default active link
 - Fixed mobile navbar to close on section click
