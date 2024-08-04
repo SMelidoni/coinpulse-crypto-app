@@ -1,6 +1,6 @@
 # WIP
 
--
+- Added colour guide for the Fear and Greed index
 
 # v1.1.2 - 18th November 2023
 
