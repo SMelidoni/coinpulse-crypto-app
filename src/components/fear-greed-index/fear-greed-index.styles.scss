@@ -38,6 +38,53 @@
 	background-color: #16c784;
 }
 
+.color-guide-container {
+	margin-top: 20px;
+}
+
+.color-guide {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
+	font-size: 14px;
+}
+
+.color-box {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	margin-right: 8px;
+	border-radius: 2px;
+	border: 1px solid black;
+}
+
+.extreme-fear-box {
+	background-color: #ea3943;
+}
+
+.fear-box {
+	background-color: #ea8c00;
+}
+
+.neutral-box {
+	background-color: #f3d42f;
+}
+
+.greed-box {
+	background-color: #93d900;
+}
+
+.extreme-greed-box {
+	background-color: #16c784;
+}
+
+.color-guide div {
+	display: flex;
+	align-items: center;
+	margin: 0 12px;
+}
+
 .tooltip {
 	cursor: pointer;
 	display: inline-block;
