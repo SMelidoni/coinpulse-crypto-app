@@ -1,6 +1,12 @@
 # WIP
 
--
+- Added colour guide for the Fear and Greed index
+
+# v1.1.3 - 24th March 2024
+
+- Added the following dependencies resolving application vulnerabilities:
+  - nth-check
+  - webpack-dev-middleware
 
 # v1.1.2 - 18th November 2023
 

@@ -1,3 +1,9 @@
+$extreme-fear-colour: #ea3943;
+$fear-colour: #ea8c00;
+$neutral-colour: #f3d42f;
+$greed-colour: #93d900;
+$extreme-greed-colour: #16c784;
+
 .fear-greed-index {
 	align-items: center;
 	border-radius: 8px 8px 0 0;
@@ -19,23 +25,70 @@
 }
 
 .fear-greed-index.Extreme-Fear {
-	background-color: #ea3943;
+	background-color: $extreme-fear-colour;
 }
 
 .fear-greed-index.Fear {
-	background-color: #ea8c00;
+	background-color: $fear-colour;
 }
 
 .fear-greed-index.Neutral {
-	background-color: #f3d42f;
+	background-color: $neutral-colour;
 }
 
 .fear-greed-index.Greed {
-	background-color: #93d900;
+	background-color: $greed-colour;
 }
 
 .fear-greed-index.Extreme-Greed {
-	background-color: #16c784;
+	background-color: $extreme-greed-colour;
+}
+
+.color-guide-container {
+	margin-top: 20px;
+}
+
+.color-guide {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
+	font-size: 14px;
+}
+
+.color-box {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	margin-right: 8px;
+	border-radius: 2px;
+	border: 1px solid black;
+}
+
+.extreme-fear-box {
+	background-color: $extreme-fear-colour;
+}
+
+.fear-box {
+	background-color: $fear-colour;
+}
+
+.neutral-box {
+	background-color: $neutral-colour;
+}
+
+.greed-box {
+	background-color: $greed-colour;
+}
+
+.extreme-greed-box {
+	background-color: $extreme-greed-colour;
+}
+
+.color-guide div {
+	display: flex;
+	align-items: center;
+	margin: 0 12px;
 }
 
 .tooltip {
