@@ -83,7 +83,26 @@ const FearGreedIndex = () => {
 				<p>{data?.value_classification}</p>
 			</div>
 			{countDown !== null && <div>Next update in: {timeInHMS(countDown)}</div>}
-			<br></br>
+			<div className='color-guide-container'>
+				<div className='color-guide'>
+					<div>
+						<span className='color-box extreme-fear-box'></span>Extreme Fear
+					</div>
+					<div>
+						<span className='color-box fear-box'></span>Fear
+					</div>
+					<div>
+						<span className='color-box neutral-box'></span>Neutral
+					</div>
+					<div>
+						<span className='color-box greed-box'></span>Greed
+					</div>
+					<div>
+						<span className='color-box extreme-greed-box'></span>Extreme Greed
+					</div>
+				</div>
+			</div>
+			<br />
 			<Footer />
 		</div>
 	);
