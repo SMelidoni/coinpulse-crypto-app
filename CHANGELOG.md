@@ -1,6 +1,6 @@
-# WIP
+# v1.1.5 - 26th September 2024
 
--
+- Hide colour guide when on mobile device
 
 # v1.1.4 - 8th August 2024
 
