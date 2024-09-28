@@ -2,7 +2,7 @@
 
 .learn-section {
 	align-items: flex-start;
-	background-color: lighten($secondary-color, 30%);
+	background-color: $secondary-color-light;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
@@ -44,7 +44,7 @@
 
 			&:hover {
 				background-color: $primary-color;
-				color: lighten($secondary-color, 30%);
+				color: $secondary-color-light;
 			}
 		}
 	}

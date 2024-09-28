@@ -5,7 +5,7 @@
 	transition: background-color 0.3s ease;
 
 	&:hover {
-		background-color: lighten($secondary-color, 30%);
+		background-color: $secondary-color-light;
 	}
 }
 
