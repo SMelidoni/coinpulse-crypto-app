@@ -1,3 +1,9 @@
+# WIP
+
+- Fixed vulnerabilities
+- Refactored to remove deprecated style functions (lighten, darken, transparentize)
+- Improved accessibility of pagination buttons
+
 # v1.1.5 - 26th September 2024
 
 - Hide colour guide when on mobile device
