@@ -97,7 +97,7 @@
 				text-decoration: none;
 
 				&:hover {
-					color: lighten($secondary-color, 10%);
+					color: $secondary-color-light;
 				}
 			}
 
