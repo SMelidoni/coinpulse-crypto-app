@@ -217,6 +217,7 @@ const Market: FC<MarketProps> = ({
 								onClick={handlePreviousPage}
 								disabled={currentPage === 1}
 								className='prev-next'
+								aria-label='Previous page'
 							>
 								&lt;
 							</button>
@@ -230,6 +231,8 @@ const Market: FC<MarketProps> = ({
 												: 'page-number'
 										}
 										onClick={() => handlePageClick(pageNumber)}
+										aria-label={`Page ${pageNumber}`}
+										tabIndex={0}
 									>
 										{pageNumber}
 									</button>
@@ -239,6 +242,7 @@ const Market: FC<MarketProps> = ({
 								onClick={handleNextPage}
 								disabled={currentPage === totalPages}
 								className='prev-next'
+								aria-label='Next page'
 							>
 								&gt;
 							</button>

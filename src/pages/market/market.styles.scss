@@ -189,7 +189,6 @@
 
 			&:hover:not(.active-page):not(:disabled) {
 				background-color: rgba(0, 0, 0, 0.05);
-				color: darken($primary-color, 10%);
 			}
 		}
 	}
