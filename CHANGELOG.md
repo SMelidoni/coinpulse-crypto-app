@@ -1,3 +1,7 @@
+# WIP
+
+- Update Navbar icons (menu and close) on mobile using react-icons for alignment and visual consistency
+
 # v1.1.6 - 28th September 2024
 
 - Fixed vulnerabilities
