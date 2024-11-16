@@ -1,6 +1,8 @@
 # WIP
 
 - Update Navbar icons (menu and close) on mobile using react-icons for alignment and visual consistency
+- Resolved 3 vulnerabilities highlighted by Dependabot:
+  - Upgraded `cookie`, `express`, `http-proxy-middleware` to secure version.
 
 # v1.1.6 - 28th September 2024
 
