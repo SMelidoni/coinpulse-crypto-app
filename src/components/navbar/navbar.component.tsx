@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
 import { useScrollPosition } from '../../contexts/scroll-position-context';
+import { MdMenu, MdClose } from 'react-icons/md';
 
 const links = ['home', 'market', 'learn', 'social'];
 
@@ -58,7 +59,7 @@ const Navbar: FC = () => {
 				</ScrollLink>
 			</div>
 			<button onClick={toggleMenu} className='menu-button'>
-				☰
+				<MdMenu size={32} />
 			</button>
 			<div className='navbar-links'>
 				{links.map((link) => (
@@ -81,7 +82,7 @@ const Navbar: FC = () => {
 				{menuOpen && (
 					<>
 						<button onClick={toggleMenu} className='close-button'>
-							&times;
+							<MdClose size={32} />
 						</button>
 						{links.map((link) => (
 							<ScrollLink
