@@ -3,6 +3,7 @@ import React, { FC, useState, useEffect, useRef, useContext } from 'react';
 import CoinRow, { ICoinData } from '../../components/coinrow/coinrow.component';
 import { useLocation } from 'react-router-dom';
 import { CoinGeckoContext } from '../../contexts/coingecko-context';
+import { IoIosArrowDown } from 'react-icons/io';
 
 interface MarketProps {
 	rowsPerPage: number;
@@ -20,7 +21,6 @@ const Market: FC<MarketProps> = ({
 	const [coinData, setCoinData] = useState<ICoinData[]>([]);
 	const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 	const [sortField, setSortField] = useState<keyof ICoinData | null>(null);
-	const [dropdownOpen, setDropdownOpen] = useState(false);
 
 	const totalPages = Math.ceil(coinData.length / rowsPerPage);
 	const indexOfLastCoin = currentPage * rowsPerPage;
@@ -78,15 +78,6 @@ const Market: FC<MarketProps> = ({
 		setCurrentPage(1);
 	};
 
-	const toggleDropdown = (event: React.MouseEvent<HTMLSelectElement>) => {
-		event.stopPropagation();
-		setDropdownOpen(!dropdownOpen);
-	};
-
-	const handleBlur = () => {
-		setDropdownOpen(false);
-	};
-
 	const handleSort = (field: keyof ICoinData | null) => {
 		if (!field) return;
 
@@ -131,23 +122,22 @@ const Market: FC<MarketProps> = ({
 				) : (
 					<>
 						<div className='rows-dropdown-container'>
-							<select
-								className='rows-dropdown'
-								ref={dropdownRef}
-								onChange={handleRowsChange}
-								onClick={toggleDropdown}
-								onBlur={handleBlur}
-								value={rowsPerPage}
-							>
-								{numOptions.map((num) => (
-									<option key={num} value={num}>
-										{num} Rows
-									</option>
-								))}
-							</select>
-							<span
-								className={`dropdown-arrow ${dropdownOpen ? 'flipped' : ''}`}
-							/>
+							<div className='rows-dropdown'>
+								<select
+									ref={dropdownRef}
+									onChange={handleRowsChange}
+									value={rowsPerPage}
+								>
+									{numOptions.map((num) => (
+										<option key={num} value={num}>
+											{num} Rows
+										</option>
+									))}
+								</select>
+								<span className='dropdown-arrow'>
+									<IoIosArrowDown size={16} />
+								</span>
+							</div>
 						</div>
 						<div className='table-container'>
 							<table className='market-table'>
