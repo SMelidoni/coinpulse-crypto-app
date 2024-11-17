@@ -17,65 +17,53 @@
 		margin: 0 auto;
 
 		.rows-dropdown-container {
-			display: inline-block;
 			position: relative;
+			display: inline-block;
+			width: 120px;
+			font-family: inherit;
 
 			.rows-dropdown {
-				-moz-appearance: none;
-				-webkit-appearance: none;
-				appearance: none;
-				background-color: $background-white;
-				border: 1px solid $primary-text-color;
-				border-radius: 4px;
-				color: $primary-text-color;
-				cursor: pointer;
-				font-family: inherit;
-				font-weight: 700;
-				margin-bottom: 1rem;
-				padding: 0.5rem 1rem;
-				transition: border-color 0.3s ease;
-				width: 100px;
+				position: relative;
 
-				&:hover {
-					border-color: $secondary-color;
-				}
-
-				&:focus {
-					border-color: $secondary-color;
+				select {
+					-moz-appearance: none;
+					-webkit-appearance: none;
+					appearance: none;
+					background-color: $background-white;
+					border: 1px solid $secondary-color-light;
+					border-radius: 8px;
+					box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
+					color: $primary-text-color;
+					cursor: pointer;
+					font-family: inherit;
+					font-size: 14px;
+					font-weight: 700;
+					padding: 0.5rem 2rem 0.5rem 1rem;
+					width: 100%;
+					transition: box-shadow 0.2s ease, transform 0.2s ease,
+						background-color 0.2s ease;
 					outline: none;
-				}
 
-				option {
-					font-weight: 600;
-
-					&:active,
-					&:checked,
-					&:focus,
 					&:hover {
-						color: $primary-text-color;
-					}
-
-					&:checked {
-						color: $primary-text-color;
+						background-color: $background-primary;
+						box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+						transform: translateY(-2px);
 					}
 				}
-			}
 
-			.dropdown-arrow {
-				border: solid $primary-text-color;
-				border-width: 0 2px 2px 0;
-				cursor: pointer;
-				display: inline-block;
-				padding: 3px;
-				position: absolute;
-				right: 12px;
-				top: 12px;
-				transform: rotate(45deg);
-				transition: transform 0.3s ease;
+				.dropdown-arrow {
+					position: absolute;
+					top: 50%;
+					right: 1rem;
+					transform: translateY(-50%);
+					color: $primary-text-color;
+					font-size: 1.2rem;
+					pointer-events: none;
+					transition: transform 0.2s ease;
 
-				&.flipped {
-					top: 15px;
-					transform: rotate(-135deg);
+					.rows-dropdown select:hover + & {
+						transform: translateY(-50%) scale(1.1); // Minimal arrow interaction
+					}
 				}
 			}
 		}
