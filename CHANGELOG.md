@@ -9,6 +9,15 @@
 
 # v1.1.6 - 28th September 2024
 
+- Update Navbar icons (menu and close) on mobile using react-icons for alignment and visual consistency
+- Resolved 3 vulnerabilities highlighted by Dependabot:
+  - Upgraded `cookie`, `express`, `http-proxy-middleware` to secure version.
+- Refactored Market component row dropdown style
+  - Replaced the custom arrow icon with react-icons (IoIosArrowDown)
+  - Updated dropdown styles to adopt a minimal modern design with enhanced hover effects
+
+# v1.1.6 - 28th September 2024
+
 - Fixed vulnerabilities
 - Refactored to remove deprecated style functions (lighten, darken, transparentize)
 - Improved accessibility of pagination buttons
