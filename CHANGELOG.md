@@ -1,4 +1,4 @@
-# WIP
+# v1.2.0 - 17th November 2024
 
 - Update Navbar icons (menu and close) on mobile using react-icons for alignment and visual consistency
 - Resolved 3 vulnerabilities highlighted by Dependabot:
