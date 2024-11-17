@@ -62,7 +62,7 @@
 					transition: transform 0.2s ease;
 
 					.rows-dropdown select:hover + & {
-						transform: translateY(-50%) scale(1.1); // Minimal arrow interaction
+						transform: translateY(-50%) scale(1.1);
 					}
 				}
 			}
