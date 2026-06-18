@@ -6,6 +6,7 @@
 - Added a dev-only loader preview mode using `?loader=true` and `?loader=error`
 - Added market data freshness messaging and a demo/educational-use disclaimer
 - Fixed market and home views to handle missing CoinGecko values without crashing
+- Added Vercel configuration for Vite deployments and React Router URL rewrites
 
 # v1.2.0 - 17th November 2024
 
