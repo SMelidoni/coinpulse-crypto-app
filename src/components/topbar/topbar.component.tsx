@@ -1,7 +1,7 @@
 import './topbar.styles.scss';
 
 import React, { FC, useEffect, useState } from 'react';
-import axios from 'axios';
+import { getCachedJson } from '../../utils/api-cache';
 
 type TopbarData = {
 	active_cryptocurrencies: number;
@@ -12,6 +12,10 @@ type TopbarData = {
 	total_volume: {
 		gbp: number;
 	};
+};
+
+type TopbarResponse = {
+	data: TopbarData;
 };
 
 const Topbar: FC = () => {
@@ -26,17 +30,27 @@ const Topbar: FC = () => {
 	};
 
 	useEffect(() => {
+		let isMounted = true;
+
 		const fetchData = async () => {
 			try {
-				const response = await axios.get(
+				const response = await getCachedJson<TopbarResponse>(
 					'https://api.coingecko.com/api/v3/global',
+					{ ttlMs: 5 * 60 * 1000 },
 				);
-				setData(response.data.data);
+				if (isMounted) {
+					setData(response.data);
+				}
 			} catch (error) {
 				console.error(error);
 			}
 		};
+
 		fetchData();
+
+		return () => {
+			isMounted = false;
+		};
 	}, []);
 
 	return (

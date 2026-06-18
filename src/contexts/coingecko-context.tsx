@@ -1,4 +1,5 @@
 import React, { createContext, FC, useState, useEffect } from 'react';
+import { ApiRequestError, getCachedJson } from '../utils/api-cache';
 
 interface CoinData {
 	id: string;
@@ -32,15 +33,31 @@ const CoinGeckoProvider: FC<CoinGeckoProviderProps> = ({ children }) => {
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	useEffect(() => {
+		let isMounted = true;
 		const fetchURL =
 			'https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=50&page=1&sparkline=false';
 
-		fetch(fetchURL)
-			.then((response) => response.json())
-			.then((data) => setCoinData(data))
-			.catch(() =>
-				setErrorMessage('Too many requests. Please try again later.'),
-			);
+		getCachedJson<CoinData[]>(fetchURL, { ttlMs: 5 * 60 * 1000 })
+			.then((data) => {
+				if (isMounted) {
+					setCoinData(data);
+				}
+			})
+			.catch((error) => {
+				if (!isMounted) {
+					return;
+				}
+
+				setErrorMessage(
+					error instanceof ApiRequestError && error.status === 429
+						? 'Too many requests. Please try again later.'
+						: 'Unable to load market data. Please try again later.',
+				);
+			});
+
+		return () => {
+			isMounted = false;
+		};
 	}, []);
 
 	return (

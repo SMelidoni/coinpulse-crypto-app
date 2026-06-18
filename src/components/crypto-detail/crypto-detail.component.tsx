@@ -2,6 +2,7 @@ import './crypto-detail.styles.scss';
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
+import { ApiRequestError, getCachedJson } from '../../utils/api-cache';
 
 interface CoinDetail {
 	id: string;
@@ -31,28 +32,39 @@ const CryptoDetail: FC = () => {
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		if (name) {
-			fetch(`https://api.coingecko.com/api/v3/coins/${name}`)
-				.then((res) => {
-					if (!res.ok) {
-						console.log(res);
-						if (res.status === 429) {
-							throw new Error('Too many requests. Please try again later.');
-						} else {
-							throw new Error('Failed to fetch coin data');
-						}
-					}
-					return res.json();
-				})
+		let isMounted = true;
+
+		if (name && name === name.toLowerCase()) {
+			setLoading(true);
+			setError(null);
+
+			getCachedJson<CoinDetail>(
+				`https://api.coingecko.com/api/v3/coins/${name}`,
+				{ ttlMs: 30 * 60 * 1000 },
+			)
 				.then((data) => {
-					setCoinDetail(data);
-					setLoading(false);
+					if (isMounted) {
+						setCoinDetail(data);
+						setLoading(false);
+					}
 				})
 				.catch((error) => {
-					setError(error.message);
+					if (!isMounted) {
+						return;
+					}
+
+					setError(
+						error instanceof ApiRequestError && error.status === 429
+							? 'Too many requests. Please try again later.'
+							: 'Failed to fetch coin data',
+					);
 					setLoading(false);
 				});
 		}
+
+		return () => {
+			isMounted = false;
+		};
 	}, [name]);
 
 	if (!name) {
