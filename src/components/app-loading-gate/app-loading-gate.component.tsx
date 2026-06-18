@@ -112,12 +112,26 @@ const AppLoadingGate: FC<AppLoadingGateProps> = ({ children }) => {
 	const location = useLocation();
 	const [state, setState] = useState<LoadingState>('loading');
 	const [retryCount, setRetryCount] = useState(0);
+	const loaderPreview = import.meta.env.DEV
+		? new URLSearchParams(location.search).get('loader')
+		: null;
+	const forcedLoadingPreview =
+		loaderPreview === 'true' || loaderPreview === 'loading';
+	const forcedErrorPreview = loaderPreview === 'error';
 
 	useEffect(() => {
 		let isMounted = true;
 		const startedAt = Date.now();
 
 		setState('loading');
+
+		if (forcedLoadingPreview || forcedErrorPreview) {
+			setState(forcedErrorPreview ? 'error' : 'loading');
+
+			return () => {
+				isMounted = false;
+			};
+		}
 
 		const prepareApp = async () => {
 			try {
@@ -147,7 +161,12 @@ const AppLoadingGate: FC<AppLoadingGateProps> = ({ children }) => {
 		return () => {
 			isMounted = false;
 		};
-	}, [location.pathname, retryCount]);
+	}, [
+		forcedErrorPreview,
+		forcedLoadingPreview,
+		location.pathname,
+		retryCount,
+	]);
 
 	if (state !== 'ready') {
 		return (
