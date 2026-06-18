@@ -6,6 +6,16 @@
 	flex-direction: column;
 	justify-content: center;
 	padding: 1rem;
+	text-align: center;
+
+	.footer-disclaimer {
+		color: rgba(33, 37, 41, 0.72);
+		font-size: 0.9rem;
+		font-weight: 600;
+		line-height: 1.5;
+		margin: 0 auto 1rem;
+		max-width: 760px;
+	}
 
 	.footer-container {
 		align-items: center;

@@ -3,11 +3,18 @@ const CACHE_PREFIX = 'coinpulse-api-cache:';
 type CacheEntry<T> = {
 	data: T;
 	expiresAt: number;
+	updatedAt?: number;
 };
 
 type CachedJsonOptions = {
 	ttlMs: number;
 	useStaleOnError?: boolean;
+};
+
+export type CacheMetadata = {
+	expiresAt: number;
+	isStale: boolean;
+	updatedAt: number | null;
 };
 
 const inFlightRequests = new Map<string, Promise<unknown>>();
@@ -50,6 +57,20 @@ export const getCachedData = <T>(url: string): T | null => {
 	return readCache<T>(url)?.data ?? null;
 };
 
+export const getCacheMetadata = (url: string): CacheMetadata | null => {
+	const cachedEntry = readCache<unknown>(url);
+
+	if (!cachedEntry) {
+		return null;
+	}
+
+	return {
+		expiresAt: cachedEntry.expiresAt,
+		isStale: cachedEntry.expiresAt <= Date.now(),
+		updatedAt: cachedEntry.updatedAt ?? null,
+	};
+};
+
 export const getCachedJson = async <T>(
 	url: string,
 	{ ttlMs, useStaleOnError = true }: CachedJsonOptions,
@@ -58,6 +79,13 @@ export const getCachedJson = async <T>(
 	const cachedEntry = readCache<T>(url);
 
 	if (cachedEntry && cachedEntry.expiresAt > now) {
+		if (!cachedEntry.updatedAt) {
+			writeCache(url, {
+				...cachedEntry,
+				updatedAt: cachedEntry.expiresAt - ttlMs,
+			});
+		}
+
 		return cachedEntry.data;
 	}
 
@@ -75,9 +103,11 @@ export const getCachedJson = async <T>(
 			}
 
 			const data = (await response.json()) as T;
+			const updatedAt = Date.now();
 			writeCache(url, {
 				data,
-				expiresAt: Date.now() + ttlMs,
+				expiresAt: updatedAt + ttlMs,
+				updatedAt,
 			});
 
 			return data;

@@ -12,6 +12,38 @@ interface MarketProps {
 	setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
+const formatMarketDataUpdatedAt = (updatedAt: number | null) => {
+	if (!updatedAt) {
+		return 'not available';
+	}
+
+	const updatedDate = new Date(updatedAt);
+	const now = new Date();
+	const yesterday = new Date(now);
+	yesterday.setDate(now.getDate() - 1);
+
+	const time = new Intl.DateTimeFormat(undefined, {
+		hour: '2-digit',
+		minute: '2-digit',
+	}).format(updatedDate);
+
+	if (updatedDate.toDateString() === now.toDateString()) {
+		return `Today at ${time}`;
+	}
+
+	if (updatedDate.toDateString() === yesterday.toDateString()) {
+		return `Yesterday at ${time}`;
+	}
+
+	return new Intl.DateTimeFormat(undefined, {
+		day: 'numeric',
+		month: 'short',
+		year: 'numeric',
+		hour: '2-digit',
+		minute: '2-digit',
+	}).format(updatedDate);
+};
+
 const Market: FC<MarketProps> = ({
 	rowsPerPage,
 	setRowsPerPage,
@@ -51,6 +83,9 @@ const Market: FC<MarketProps> = ({
 
 	const { coinData: contextCoinData, errorMessage: contextErrorMessage } =
 		context;
+	const formattedMarketDataUpdatedAt = formatMarketDataUpdatedAt(
+		context.dataUpdatedAt,
+	);
 
 	useEffect(() => {
 		if (contextCoinData && contextCoinData.length > 0) {
@@ -117,6 +152,10 @@ const Market: FC<MarketProps> = ({
 		<section id='market' className='market-section'>
 			<div className='market-container'>
 				<h1 className='title'>Market Update</h1>
+				<p className='market-data-note'>
+					Market data is cached and may be delayed. Last updated:{' '}
+					<span>{formattedMarketDataUpdatedAt}</span>.
+				</p>
 				{contextErrorMessage ? (
 					<div className='error-message'>{contextErrorMessage}</div>
 				) : (

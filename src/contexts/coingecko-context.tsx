@@ -1,6 +1,7 @@
 import React, { createContext, FC, useState, useEffect } from 'react';
 import {
 	ApiRequestError,
+	getCacheMetadata,
 	getCachedData,
 	getCachedJson,
 } from '../utils/api-cache';
@@ -12,6 +13,7 @@ import {
 
 interface CoinGeckoContextProps {
 	coinData: CoinData[];
+	dataUpdatedAt: number | null;
 	errorMessage: string | null;
 }
 
@@ -27,6 +29,9 @@ const CoinGeckoProvider: FC<CoinGeckoProviderProps> = ({ children }) => {
 	const [coinData, setCoinData] = useState<CoinData[]>(
 		() => getCachedData<CoinData[]>(COINGECKO_MARKETS_URL) ?? [],
 	);
+	const [dataUpdatedAt, setDataUpdatedAt] = useState<number | null>(
+		() => getCacheMetadata(COINGECKO_MARKETS_URL)?.updatedAt ?? null,
+	);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	useEffect(() => {
@@ -38,6 +43,9 @@ const CoinGeckoProvider: FC<CoinGeckoProviderProps> = ({ children }) => {
 			.then((data) => {
 				if (isMounted) {
 					setCoinData(data);
+					setDataUpdatedAt(
+						getCacheMetadata(COINGECKO_MARKETS_URL)?.updatedAt ?? null,
+					);
 				}
 			})
 			.catch((error) => {
@@ -58,7 +66,9 @@ const CoinGeckoProvider: FC<CoinGeckoProviderProps> = ({ children }) => {
 	}, []);
 
 	return (
-		<CoinGeckoContext.Provider value={{ coinData, errorMessage }}>
+		<CoinGeckoContext.Provider
+			value={{ coinData, dataUpdatedAt, errorMessage }}
+		>
 			{children}
 		</CoinGeckoContext.Provider>
 	);
