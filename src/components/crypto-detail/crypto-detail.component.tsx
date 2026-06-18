@@ -2,46 +2,43 @@ import './crypto-detail.styles.scss';
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
-import { ApiRequestError, getCachedJson } from '../../utils/api-cache';
-
-interface CoinDetail {
-	id: string;
-	name: string;
-	symbol: string;
-	description: {
-		en: string;
-	};
-	image: {
-		large: string;
-	};
-	market_data: {
-		current_price: {
-			gbp: number;
-		};
-		market_cap_rank: number;
-		price_change_percentage_24h: number;
-	};
-}
+import {
+	ApiRequestError,
+	getCachedData,
+	getCachedJson,
+} from '../../utils/api-cache';
+import {
+	COIN_DETAIL_TTL_MS,
+	CoinDetail,
+	getCoinDetailUrl,
+} from '../../utils/api-endpoints';
 
 const CryptoDetail: FC = () => {
 	const navigate = useNavigate();
 	const { name } = useParams<{ name?: string }>();
+	const coinUrl = name ? getCoinDetailUrl(name.toLowerCase()) : null;
 
-	const [coinDetail, setCoinDetail] = useState<CoinDetail | null>(null);
-	const [loading, setLoading] = useState(true);
+	const [coinDetail, setCoinDetail] = useState<CoinDetail | null>(
+		() => (coinUrl ? getCachedData<CoinDetail>(coinUrl) : null),
+	);
+	const [loading, setLoading] = useState(!coinDetail);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		let isMounted = true;
 
 		if (name && name === name.toLowerCase()) {
-			setLoading(true);
+			const cachedCoinDetail = coinUrl
+				? getCachedData<CoinDetail>(coinUrl)
+				: null;
+
+			setCoinDetail(cachedCoinDetail);
+			setLoading(!cachedCoinDetail);
 			setError(null);
 
-			getCachedJson<CoinDetail>(
-				`https://api.coingecko.com/api/v3/coins/${name}`,
-				{ ttlMs: 30 * 60 * 1000 },
-			)
+			getCachedJson<CoinDetail>(getCoinDetailUrl(name), {
+				ttlMs: COIN_DETAIL_TTL_MS,
+			})
 				.then((data) => {
 					if (isMounted) {
 						setCoinDetail(data);
@@ -65,7 +62,7 @@ const CryptoDetail: FC = () => {
 		return () => {
 			isMounted = false;
 		};
-	}, [name]);
+	}, [coinUrl, name]);
 
 	if (!name) {
 		return <div>Error: Name not provided.</div>;

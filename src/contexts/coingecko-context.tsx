@@ -1,19 +1,14 @@
 import React, { createContext, FC, useState, useEffect } from 'react';
-import { ApiRequestError, getCachedJson } from '../utils/api-cache';
-
-interface CoinData {
-	id: string;
-	symbol: string;
-	name: string;
-	image: string;
-	current_price: number;
-	price_change_percentage_24h: number;
-	rank?: number;
-	price?: number;
-	change24h?: number;
-	volume24h?: number;
-	marketCap?: number;
-}
+import {
+	ApiRequestError,
+	getCachedData,
+	getCachedJson,
+} from '../utils/api-cache';
+import {
+	COINGECKO_MARKETS_URL,
+	CoinData,
+	MARKET_DATA_TTL_MS,
+} from '../utils/api-endpoints';
 
 interface CoinGeckoContextProps {
 	coinData: CoinData[];
@@ -29,15 +24,17 @@ interface CoinGeckoProviderProps {
 }
 
 const CoinGeckoProvider: FC<CoinGeckoProviderProps> = ({ children }) => {
-	const [coinData, setCoinData] = useState<CoinData[]>([]);
+	const [coinData, setCoinData] = useState<CoinData[]>(
+		() => getCachedData<CoinData[]>(COINGECKO_MARKETS_URL) ?? [],
+	);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	useEffect(() => {
 		let isMounted = true;
-		const fetchURL =
-			'https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=50&page=1&sparkline=false';
 
-		getCachedJson<CoinData[]>(fetchURL, { ttlMs: 5 * 60 * 1000 })
+		getCachedJson<CoinData[]>(COINGECKO_MARKETS_URL, {
+			ttlMs: MARKET_DATA_TTL_MS,
+		})
 			.then((data) => {
 				if (isMounted) {
 					setCoinData(data);

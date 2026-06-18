@@ -1,25 +1,18 @@
 import './topbar.styles.scss';
 
 import React, { FC, useEffect, useState } from 'react';
-import { getCachedJson } from '../../utils/api-cache';
-
-type TopbarData = {
-	active_cryptocurrencies: number;
-	markets: number;
-	total_market_cap: {
-		gbp: number;
-	};
-	total_volume: {
-		gbp: number;
-	};
-};
-
-type TopbarResponse = {
-	data: TopbarData;
-};
+import { getCachedData, getCachedJson } from '../../utils/api-cache';
+import {
+	COINGECKO_GLOBAL_URL,
+	GLOBAL_DATA_TTL_MS,
+	TopbarData,
+	TopbarResponse,
+} from '../../utils/api-endpoints';
 
 const Topbar: FC = () => {
-	const [data, setData] = useState<TopbarData | null>(null);
+	const [data, setData] = useState<TopbarData | null>(
+		() => getCachedData<TopbarResponse>(COINGECKO_GLOBAL_URL)?.data ?? null,
+	);
 
 	const formatNumber = (num: number) => {
 		if (num >= 1.0e12) return (num / 1.0e12).toFixed(2) + 'T';
@@ -35,8 +28,8 @@ const Topbar: FC = () => {
 		const fetchData = async () => {
 			try {
 				const response = await getCachedJson<TopbarResponse>(
-					'https://api.coingecko.com/api/v3/global',
-					{ ttlMs: 5 * 60 * 1000 },
+					COINGECKO_GLOBAL_URL,
+					{ ttlMs: GLOBAL_DATA_TTL_MS },
 				);
 				if (isMounted) {
 					setData(response.data);

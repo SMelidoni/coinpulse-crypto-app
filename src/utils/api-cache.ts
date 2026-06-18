@@ -46,6 +46,10 @@ const writeCache = <T>(url: string, entry: CacheEntry<T>) => {
 	}
 };
 
+export const getCachedData = <T>(url: string): T | null => {
+	return readCache<T>(url)?.data ?? null;
+};
+
 export const getCachedJson = async <T>(
 	url: string,
 	{ ttlMs, useStaleOnError = true }: CachedJsonOptions,
