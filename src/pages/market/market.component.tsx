@@ -90,7 +90,7 @@ const Market: FC<MarketProps> = ({
 	useEffect(() => {
 		if (contextCoinData && contextCoinData.length > 0) {
 			const mappedResult: ICoinData[] = contextCoinData.map(
-				(coin: any, index: number) => ({
+				(coin, index: number) => ({
 					id: coin.id,
 					rank: index + 1,
 					name: coin.name,
@@ -108,8 +108,8 @@ const Market: FC<MarketProps> = ({
 		}
 	}, [contextCoinData, rowsPerPage, currentPage]);
 
-	const handleRowsChange = (event: any) => {
-		setRowsPerPage(event.target.value);
+	const handleRowsChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		setRowsPerPage(Number(event.target.value));
 		setCurrentPage(1);
 	};
 
@@ -119,6 +119,11 @@ const Market: FC<MarketProps> = ({
 		const newSortOrder =
 			sortField === field ? (sortOrder === 'asc' ? 'desc' : 'asc') : 'asc';
 
+		const getSortableNumber = (value: number | null) =>
+			typeof value === 'number' && Number.isFinite(value)
+				? value
+				: Number.NEGATIVE_INFINITY;
+
 		const sortedData = [...coinData].sort((a, b) => {
 			if (field === 'name') {
 				return newSortOrder === 'asc'
@@ -126,8 +131,10 @@ const Market: FC<MarketProps> = ({
 					: b[field].localeCompare(a[field]);
 			} else {
 				return newSortOrder === 'asc'
-					? (a[field] as number) - (b[field] as number)
-					: (b[field] as number) - (a[field] as number);
+					? getSortableNumber(a[field] as number | null) -
+							getSortableNumber(b[field] as number | null)
+					: getSortableNumber(b[field] as number | null) -
+							getSortableNumber(a[field] as number | null);
 			}
 		});
 
@@ -145,7 +152,7 @@ const Market: FC<MarketProps> = ({
 	};
 
 	const handleNextPage = () => {
-		if (currentPage < 5) setCurrentPage(currentPage + 1);
+		if (currentPage < totalPages) setCurrentPage(currentPage + 1);
 	};
 
 	return (

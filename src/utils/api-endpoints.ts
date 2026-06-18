@@ -16,13 +16,15 @@ export type CoinData = {
 	symbol: string;
 	name: string;
 	image: string;
-	current_price: number;
-	price_change_percentage_24h: number;
+	current_price: number | null;
+	price_change_percentage_24h: number | null;
+	total_volume: number | null;
+	market_cap: number | null;
 	rank?: number;
-	price?: number;
-	change24h?: number;
-	volume24h?: number;
-	marketCap?: number;
+	price?: number | null;
+	change24h?: number | null;
+	volume24h?: number | null;
+	marketCap?: number | null;
 };
 
 export type CoinDetail = {

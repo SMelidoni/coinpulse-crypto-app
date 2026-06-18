@@ -8,13 +8,43 @@ export interface ICoinData {
 	rank: number;
 	name: string;
 	image: string;
-	price: number;
-	change24h: number;
-	volume24h: number;
-	marketCap: number;
+	price: number | null;
+	change24h: number | null;
+	volume24h: number | null;
+	marketCap: number | null;
 	rowsPerPage: number;
 	currentPage: number;
 }
+
+const isValidNumber = (value: number | null): value is number =>
+	typeof value === 'number' && Number.isFinite(value);
+
+const formatCurrency = (
+	value: number | null,
+	options?: Intl.NumberFormatOptions,
+) => {
+	if (!isValidNumber(value)) {
+		return 'N/A';
+	}
+
+	return `£${value.toLocaleString('en-GB', options)}`;
+};
+
+const formatPercentage = (value: number | null) => {
+	if (!isValidNumber(value)) {
+		return 'N/A';
+	}
+
+	return `${value.toFixed(2)}%`;
+};
+
+const getChangeClassName = (value: number | null) => {
+	if (!isValidNumber(value)) {
+		return 'neutral';
+	}
+
+	return value > 0 ? 'increase' : 'decrease';
+};
 
 const CoinRow: FC<ICoinData> = ({
 	id,
@@ -60,12 +90,16 @@ const CoinRow: FC<ICoinData> = ({
 					{name}
 				</div>
 			</td>
-			<td>£{price.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</td>
-			<td className={change24h > 0 ? 'increase' : 'decrease'}>
-				{change24h.toFixed(2)}%
+			<td>
+				{formatCurrency(price, {
+					minimumFractionDigits: 2,
+				})}
 			</td>
-			<td>£{volume24h.toLocaleString('en-GB')}</td>
-			<td>£{marketCap.toLocaleString('en-GB')}</td>
+			<td className={getChangeClassName(change24h)}>
+				{formatPercentage(change24h)}
+			</td>
+			<td>{formatCurrency(volume24h)}</td>
+			<td>{formatCurrency(marketCap)}</td>
 		</tr>
 	);
 };
