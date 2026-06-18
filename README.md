@@ -9,6 +9,7 @@ CoinPulse utilises the CoinGecko API to fetch real-time and historical market da
 - React.js
 - TypeScript
 - SCSS
+- Vite
 - [CoinGecko API](https://www.coingecko.com/en/api/documentation)
 
 ## Features
@@ -63,7 +64,7 @@ npm install
 npm start
 ```
 
-You can then access the application by opening your web browser and navigating to `http://localhost:3000`.
+You can then access the application by opening your web browser and navigating to `http://localhost:5173`.
 
 ## Contributing
 
