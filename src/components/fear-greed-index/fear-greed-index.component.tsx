@@ -78,6 +78,17 @@ const FearGreedIndex = () => {
 		}
 	}, [countDown, fetchData]);
 
+	const sentimentClassName = data?.value_classification
+		? data.value_classification.replace(' ', '-')
+		: '';
+	const rootClassName = [
+		'fear-greed-index',
+		isInfoOpen ? 'info-open' : '',
+		sentimentClassName,
+	]
+		.filter(Boolean)
+		.join(' ');
+
 	useEffect(() => {
 		if (!isInfoOpen) {
 			return;
@@ -108,11 +119,7 @@ const FearGreedIndex = () => {
 	}, [isInfoOpen]);
 
 	return (
-		<div
-			className={`fear-greed-index ${
-				isInfoOpen ? 'info-open' : ''
-			} ${data?.value_classification.replace(' ', '-')}`}
-		>
+		<div className={rootClassName}>
 			<div className='fear-greed-heading'>
 				<h2>Fear & Greed Index</h2>
 				<div className='fear-greed-info' ref={infoPopoverRef}>
