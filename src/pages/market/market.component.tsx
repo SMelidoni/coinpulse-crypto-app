@@ -4,6 +4,7 @@ import CoinRow, { ICoinData } from '../../components/coinrow/coinrow.component';
 import { useLocation } from 'react-router-dom';
 import { CoinGeckoContext } from '../../contexts/coingecko-context';
 import { IoIosArrowDown } from 'react-icons/io';
+import { formatRelativeDateTime } from '../../utils/formatters';
 
 interface MarketProps {
 	rowsPerPage: number;
@@ -11,38 +12,6 @@ interface MarketProps {
 	currentPage: number;
 	setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
-
-const formatMarketDataUpdatedAt = (updatedAt: number | null) => {
-	if (!updatedAt) {
-		return 'not available';
-	}
-
-	const updatedDate = new Date(updatedAt);
-	const now = new Date();
-	const yesterday = new Date(now);
-	yesterday.setDate(now.getDate() - 1);
-
-	const time = new Intl.DateTimeFormat(undefined, {
-		hour: '2-digit',
-		minute: '2-digit',
-	}).format(updatedDate);
-
-	if (updatedDate.toDateString() === now.toDateString()) {
-		return `Today at ${time}`;
-	}
-
-	if (updatedDate.toDateString() === yesterday.toDateString()) {
-		return `Yesterday at ${time}`;
-	}
-
-	return new Intl.DateTimeFormat(undefined, {
-		day: 'numeric',
-		month: 'short',
-		year: 'numeric',
-		hour: '2-digit',
-		minute: '2-digit',
-	}).format(updatedDate);
-};
 
 const Market: FC<MarketProps> = ({
 	rowsPerPage,
@@ -83,7 +52,7 @@ const Market: FC<MarketProps> = ({
 
 	const { coinData: contextCoinData, errorMessage: contextErrorMessage } =
 		context;
-	const formattedMarketDataUpdatedAt = formatMarketDataUpdatedAt(
+	const formattedMarketDataUpdatedAt = formatRelativeDateTime(
 		context.dataUpdatedAt,
 	);
 
