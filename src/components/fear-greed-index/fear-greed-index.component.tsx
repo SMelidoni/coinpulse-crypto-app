@@ -83,7 +83,7 @@ const FearGreedIndex = () => {
 			return;
 		}
 
-		const handlePointerDown = (event: MouseEvent) => {
+		const handlePointerDown = (event: PointerEvent) => {
 			if (
 				infoPopoverRef.current &&
 				!infoPopoverRef.current.contains(event.target as Node)
@@ -98,11 +98,11 @@ const FearGreedIndex = () => {
 			}
 		};
 
-		document.addEventListener('mousedown', handlePointerDown);
+		document.addEventListener('pointerdown', handlePointerDown);
 		document.addEventListener('keydown', handleKeyDown);
 
 		return () => {
-			document.removeEventListener('mousedown', handlePointerDown);
+			document.removeEventListener('pointerdown', handlePointerDown);
 			document.removeEventListener('keydown', handleKeyDown);
 		};
 	}, [isInfoOpen]);
