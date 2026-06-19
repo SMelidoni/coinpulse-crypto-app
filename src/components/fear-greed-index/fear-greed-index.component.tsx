@@ -32,10 +32,14 @@ const FearGreedIndex = () => {
 	const infoPopoverRef = useRef<HTMLDivElement | null>(null);
 
 	const timeInHMS = (seconds: number | null) => {
-		if (!seconds) return;
-		const hours = Math.floor(seconds / 3600);
-		const minutes = Math.floor((seconds - hours * 3600) / 60);
-		const remainingSeconds = seconds - hours * 3600 - minutes * 60;
+		if (seconds === null || !Number.isFinite(seconds)) {
+			return 'not available';
+		}
+
+		const normalizedSeconds = Math.max(0, seconds);
+		const hours = Math.floor(normalizedSeconds / 3600);
+		const minutes = Math.floor((normalizedSeconds - hours * 3600) / 60);
+		const remainingSeconds = normalizedSeconds - hours * 3600 - minutes * 60;
 		return `${hours}h ${minutes}m ${remainingSeconds}s`;
 	};
 
