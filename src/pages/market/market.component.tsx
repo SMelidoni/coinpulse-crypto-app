@@ -119,10 +119,32 @@ const Market: FC<MarketProps> = ({
 		const newSortOrder =
 			sortField === field ? (sortOrder === 'asc' ? 'desc' : 'asc') : 'asc';
 
-		const getSortableNumber = (value: number | null) =>
-			typeof value === 'number' && Number.isFinite(value)
-				? value
-				: Number.NEGATIVE_INFINITY;
+		const isSortableNumber = (value: unknown): value is number =>
+			typeof value === 'number' && Number.isFinite(value);
+
+		const compareNullableNumbers = (
+			firstValue: number | null,
+			secondValue: number | null,
+		) => {
+			const firstHasValue = isSortableNumber(firstValue);
+			const secondHasValue = isSortableNumber(secondValue);
+
+			if (!firstHasValue && !secondHasValue) {
+				return 0;
+			}
+
+			if (!firstHasValue) {
+				return 1;
+			}
+
+			if (!secondHasValue) {
+				return -1;
+			}
+
+			return newSortOrder === 'asc'
+				? firstValue - secondValue
+				: secondValue - firstValue;
+		};
 
 		const sortedData = [...coinData].sort((a, b) => {
 			if (field === 'name') {
@@ -130,11 +152,10 @@ const Market: FC<MarketProps> = ({
 					? a[field].localeCompare(b[field])
 					: b[field].localeCompare(a[field]);
 			} else {
-				return newSortOrder === 'asc'
-					? getSortableNumber(a[field] as number | null) -
-							getSortableNumber(b[field] as number | null)
-					: getSortableNumber(b[field] as number | null) -
-							getSortableNumber(a[field] as number | null);
+				return compareNullableNumbers(
+					a[field] as number | null,
+					b[field] as number | null,
+				);
 			}
 		});
 
