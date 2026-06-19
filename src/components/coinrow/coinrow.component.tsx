@@ -37,15 +37,24 @@ const CoinRow: FC<ICoinData> = ({
 
 	const { setPosition } = useScrollPosition();
 
-	const navigateToDetail = (rowsPerPage: number, currentPage: number) => {
+	const navigateToDetail = () => {
+		setPosition(window.scrollY);
 		navigate(`/${id}`, {
 			state: { fromMarket: true, rowsPerPage, currentPage },
 		});
 	};
 
 	const handleRowClick = () => {
-		setPosition(window.scrollY);
-		navigateToDetail(rowsPerPage, currentPage);
+		navigateToDetail();
+	};
+
+	const handleRowKeyDown = (event: React.KeyboardEvent<HTMLTableRowElement>) => {
+		if (event.key !== 'Enter' && event.key !== ' ') {
+			return;
+		}
+
+		event.preventDefault();
+		navigateToDetail();
 	};
 
 	return (
@@ -54,9 +63,8 @@ const CoinRow: FC<ICoinData> = ({
 			onClick={handleRowClick}
 			role='button'
 			tabIndex={0}
-			onKeyDown={(e) =>
-				e.key === 'Enter' && navigateToDetail(rowsPerPage, currentPage)
-			}
+			aria-label={`View ${name} details`}
+			onKeyDown={handleRowKeyDown}
 		>
 			<td>{rank}</td>
 			<td>

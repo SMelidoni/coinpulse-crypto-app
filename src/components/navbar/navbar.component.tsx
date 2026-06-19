@@ -4,7 +4,6 @@ import React, { FC, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
-import { useScrollPosition } from '../../contexts/scroll-position-context';
 import { MdMenu, MdClose } from 'react-icons/md';
 
 const links = ['home', 'market', 'learn', 'social'];
@@ -17,16 +16,69 @@ const Navbar: FC = () => {
 	const [activeLink, setActiveLink] = useState('home');
 
 	useEffect(() => {
-		setActiveLink('home');
-	}, []);
-
-	const { position } = useScrollPosition();
-
-	const handleNameClick = () => {
 		if (isDetailPage) {
-			window.scrollTo(0, position);
+			setMenuOpen(false);
 		}
-	};
+	}, [isDetailPage]);
+
+	useEffect(() => {
+		if (isDetailPage) {
+			return;
+		}
+
+		let animationFrameId = 0;
+		const stickyHeaderOffset = 120;
+
+		const updateActiveLink = () => {
+			const currentLink =
+				links.find((link) => {
+					const sectionElement = document.getElementById(link);
+
+					if (!sectionElement) {
+						return false;
+					}
+
+					const sectionBounds = sectionElement.getBoundingClientRect();
+
+					return (
+						sectionBounds.top <= stickyHeaderOffset &&
+						sectionBounds.bottom > stickyHeaderOffset
+					);
+				}) ??
+				links.reduce((activeSection, link) => {
+					const sectionElement = document.getElementById(link);
+
+					if (!sectionElement) {
+						return activeSection;
+					}
+
+					const sectionBounds = sectionElement.getBoundingClientRect();
+
+					return sectionBounds.top <= stickyHeaderOffset
+						? link
+						: activeSection;
+				}, 'home');
+
+			setActiveLink(currentLink);
+		};
+
+		const scheduleActiveLinkUpdate = () => {
+			window.cancelAnimationFrame(animationFrameId);
+			animationFrameId = window.requestAnimationFrame(updateActiveLink);
+		};
+
+		scheduleActiveLinkUpdate();
+		window.addEventListener('scroll', scheduleActiveLinkUpdate, {
+			passive: true,
+		});
+		window.addEventListener('resize', scheduleActiveLinkUpdate);
+
+		return () => {
+			window.cancelAnimationFrame(animationFrameId);
+			window.removeEventListener('scroll', scheduleActiveLinkUpdate);
+			window.removeEventListener('resize', scheduleActiveLinkUpdate);
+		};
+	}, [isDetailPage]);
 
 	const toggleMenu = () => {
 		setMenuOpen(!menuOpen);
@@ -35,7 +87,7 @@ const Navbar: FC = () => {
 	if (isDetailPage) {
 		return (
 			<nav className='navbar-container'>
-				<div className='navbar-name' onClick={handleNameClick}>
+				<div className='navbar-name'>
 					<RouterLink to='/' className='navbar-name-link'>
 						{' '}
 						<b>CoinPulse</b>
@@ -58,43 +110,52 @@ const Navbar: FC = () => {
 					<b>CoinPulse</b>
 				</ScrollLink>
 			</div>
-			<button onClick={toggleMenu} className='menu-button'>
-				<MdMenu size={32} />
+			<button
+				type='button'
+				onClick={toggleMenu}
+				className='menu-button'
+				aria-label='Open navigation menu'
+				aria-expanded={menuOpen}
+				aria-controls='mobile-navigation'
+			>
+				<MdMenu size={32} aria-hidden='true' />
 			</button>
 			<div className='navbar-links'>
 				{links.map((link) => (
 					<ScrollLink
 						key={link}
 						className={link === activeLink ? 'active' : ''}
-						activeClass='active'
 						to={link}
-						spy={true}
 						smooth={true}
 						offset={-70}
 						duration={500}
-						onSetActive={() => setActiveLink(link)}
 					>
 						{link.charAt(0).toUpperCase() + link.slice(1)}
 					</ScrollLink>
 				))}
 			</div>
-			<div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
+			<div
+				id='mobile-navigation'
+				className={`mobile-menu ${menuOpen ? 'open' : ''}`}
+			>
 				{menuOpen && (
 					<>
-						<button onClick={toggleMenu} className='close-button'>
-							<MdClose size={32} />
+						<button
+							type='button'
+							onClick={toggleMenu}
+							className='close-button'
+							aria-label='Close navigation menu'
+						>
+							<MdClose size={32} aria-hidden='true' />
 						</button>
 						{links.map((link) => (
 							<ScrollLink
 								key={link}
 								className={link === activeLink ? 'active' : ''}
-								activeClass='active'
 								to={link}
-								spy={true}
 								smooth={true}
 								offset={-70}
 								duration={500}
-								onSetActive={() => setActiveLink(link)}
 								onClick={toggleMenu}
 							>
 								{link.charAt(0).toUpperCase() + link.slice(1)}
