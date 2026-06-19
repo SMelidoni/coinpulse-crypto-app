@@ -4,33 +4,11 @@ import React, { FC, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useScrollPosition } from '../../contexts/scroll-position-context';
 import { CoinGeckoContext } from '../../contexts/coingecko-context';
-
-const isValidNumber = (value: number | null): value is number =>
-	typeof value === 'number' && Number.isFinite(value);
-
-const formatCurrency = (value: number | null) => {
-	if (!isValidNumber(value)) {
-		return 'N/A';
-	}
-
-	return `£${value.toLocaleString()}`;
-};
-
-const formatPercentage = (value: number | null) => {
-	if (!isValidNumber(value)) {
-		return 'N/A';
-	}
-
-	return `${value.toFixed(2)}%`;
-};
-
-const getChangeClassName = (value: number | null) => {
-	if (!isValidNumber(value)) {
-		return 'neutral';
-	}
-
-	return value > 0 ? 'increase' : 'decrease';
-};
+import {
+	formatCurrency,
+	formatPercentage,
+	getChangeClassName,
+} from '../../utils/formatters';
 
 const Home: FC = () => {
 	const navigate = useNavigate();

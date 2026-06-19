@@ -2,6 +2,11 @@ import './coinrow.styles.scss';
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useScrollPosition } from '../../contexts/scroll-position-context';
+import {
+	formatCurrency,
+	formatPercentage,
+	getChangeClassName,
+} from '../../utils/formatters';
 
 export interface ICoinData {
 	id: string;
@@ -15,36 +20,6 @@ export interface ICoinData {
 	rowsPerPage: number;
 	currentPage: number;
 }
-
-const isValidNumber = (value: number | null): value is number =>
-	typeof value === 'number' && Number.isFinite(value);
-
-const formatCurrency = (
-	value: number | null,
-	options?: Intl.NumberFormatOptions,
-) => {
-	if (!isValidNumber(value)) {
-		return 'N/A';
-	}
-
-	return `£${value.toLocaleString('en-GB', options)}`;
-};
-
-const formatPercentage = (value: number | null) => {
-	if (!isValidNumber(value)) {
-		return 'N/A';
-	}
-
-	return `${value.toFixed(2)}%`;
-};
-
-const getChangeClassName = (value: number | null) => {
-	if (!isValidNumber(value)) {
-		return 'neutral';
-	}
-
-	return value > 0 ? 'increase' : 'decrease';
-};
 
 const CoinRow: FC<ICoinData> = ({
 	id,

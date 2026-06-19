@@ -1,63 +1,62 @@
 export const cryptoQuestions = [
 	{
-		question: 'What is Blockchain?',
+		question: 'What is cryptocurrency?',
 		answer:
-			'Blockchain is like a digital ledger where transactions are recorded in a secure, transparent, and unchangeable way. Imagine it as a chain of blocks, each holding a list of transactions.',
-		emoji: '🔗',
-	},
-	{
-		question: 'What is Cryptocurrency?',
-		answer:
-			'Cryptocurrency is a type of digital or virtual money. Unlike traditional money, it is not physical and is secured using complex computer techniques called cryptography.',
+			'Cryptocurrency is digital money secured by cryptography. It usually runs on decentralised networks instead of being issued by a bank or government.',
 		emoji: '💰',
 	},
 	{
-		question: 'Why use Crypto?',
+		question: 'What is blockchain?',
 		answer:
-			'Some people like the idea of a currency that isn’t controlled by governments. Others appreciate the anonymity in transactions. It can also be an investment or used for online transactions where cryptocurrencies are accepted.',
-		emoji: '🌍',
-	},
-	{
-		question: 'How do I buy Crypto?',
-		answer:
-			'You can buy cryptocurrencies using online platforms called exchanges. Once purchased, you can store it in a digital wallet.',
-		emoji: '💸',
-	},
-	{
-		question: 'Why is Crypto volatile?',
-		answer:
-			'Their value can change rapidly because of factors like news, regulations, adoption rates, and market speculation.',
-		emoji: '📈',
-	},
-	{
-		question: 'Is Crypto safe?',
-		answer:
-			'Cryptocurrencies use strong cryptographic techniques for security. However, their safety can depend on how they’re used. While transactions are secure, investments can be risky due to market volatility. Additionally, one must be cautious of scams, secure their digital wallets, and use reputable exchanges.',
-		emoji: '🔒',
+			'Blockchain is a shared record of transactions. Each new group of transactions is linked to the previous one, making the history difficult to alter.',
+		emoji: '🔗',
 	},
 	{
 		question: 'What is Bitcoin?',
 		answer:
-			'Bitcoin is the first and most well-known cryptocurrency. It’s a decentralised digital currency, meaning no central authority controls it, and transactions are directly between users.',
+			'Bitcoin is the first and most recognised cryptocurrency. It was designed as a decentralised payment network with a limited supply.',
 		emoji: '🪙',
 	},
 	{
-		question: 'What is a Digital Wallet?',
+		question: 'What is market cap?',
 		answer:
-			'A digital wallet is like a virtual bank account. It allows you to send or receive cryptocurrencies and monitor your balance.',
+			'Market cap estimates the total value of a cryptocurrency. It is usually calculated by multiplying the current price by the number of coins in circulation.',
+		emoji: '📊',
+	},
+	{
+		question: 'What does 24h volume mean?',
+		answer:
+			'24h volume shows how much of a cryptocurrency was traded over the last day. Higher volume can suggest stronger market interest or liquidity.',
+		emoji: '🔄',
+	},
+	{
+		question: 'What does 24h change mean?',
+		answer:
+			'24h change compares the current price with the price from roughly one day ago. It is a quick snapshot of recent movement, not a prediction.',
+		emoji: '📈',
+	},
+	{
+		question: 'Why are crypto prices volatile?',
+		answer:
+			'Crypto prices can move quickly because markets trade constantly and react to news, regulation, liquidity, adoption, and speculation.',
+		emoji: '⚡',
+	},
+	{
+		question: 'What is a crypto exchange?',
+		answer:
+			'A crypto exchange is a platform for buying, selling, and trading cryptocurrencies. Exchanges can vary in fees, available coins, security, and regulation.',
+		emoji: '💸',
+	},
+	{
+		question: 'What is a digital wallet?',
+		answer:
+			'A digital wallet stores the keys used to access cryptocurrency. Some wallets are managed by exchanges, while others give the user direct control.',
 		emoji: '💼',
 	},
-
 	{
-		question: 'What is Mining?',
+		question: 'What is mining?',
 		answer:
-			'Mining is a process where powerful computers solve complex problems. When they solve it, they are rewarded with new cryptocurrency coins. It’s also how new transactions are added to a blockchain.',
+			'Mining is one way some blockchains validate transactions and create new coins. It uses specialised computing power to secure the network.',
 		emoji: '⛏️',
-	},
-	{
-		question: 'What is an ICO?',
-		answer:
-			'ICO stands for Initial Coin Offering. It’s a way for new cryptocurrencies to raise funding. Think of it as a mix between a crowdfunding campaign and a stock market IPO.',
-		emoji: '🚀',
 	},
 ];

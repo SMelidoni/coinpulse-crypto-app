@@ -7,6 +7,12 @@
 - Added market data freshness messaging and a demo/educational-use disclaimer
 - Fixed market and home views to handle missing CoinGecko values without crashing
 - Added Vercel configuration for Vite deployments and React Router URL rewrites
+- Improved Learn section copy and converted tiles into accessible accordion controls
+- Replaced the Fear & Greed hover tooltip with a dismissible info popover
+- Refreshed the Fear & Greed sentiment guide with a compact mobile summary and rounded desktop status pills
+- Added an app-level error boundary to show a recovery screen instead of a blank page if rendering fails
+- Added shared formatting helpers for currency, percentages, compact values, change labels, and update timestamps
+- Removed the unfinished quiz placeholder from the Learn section
 
 # v1.2.0 - 17th November 2024
 

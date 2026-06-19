@@ -12,6 +12,11 @@ import {
 	CoinDetail,
 	getCoinDetailUrl,
 } from '../../utils/api-endpoints';
+import {
+	formatCurrency,
+	formatPercentage,
+	getChangeClassName,
+} from '../../utils/formatters';
 
 const CryptoDetail: FC = () => {
 	const navigate = useNavigate();
@@ -128,19 +133,22 @@ const CryptoDetail: FC = () => {
 			</div>
 			<div className='stats-bar'>
 				<p>Symbol: {coinDetail.symbol.toUpperCase()}</p>
-				<p>
-					Price: £{coinDetail.market_data.current_price.gbp.toLocaleString()}
-				</p>
+				<p>Price: {formatCurrency(coinDetail.market_data.current_price.gbp)}</p>
 				<p>
 					24h Change:{' '}
 					<span
-						className={
-							coinDetail.market_data.price_change_percentage_24h >= 0
-								? 'change-positive'
-								: 'change-negative'
-						}
+						className={getChangeClassName(
+							coinDetail.market_data.price_change_percentage_24h,
+							{
+								increaseClassName: 'change-positive',
+								decreaseClassName: 'change-negative',
+								zeroClassName: 'change-positive',
+							},
+						)}
 					>
-						{coinDetail.market_data.price_change_percentage_24h.toFixed(2)}%
+						{formatPercentage(
+							coinDetail.market_data.price_change_percentage_24h,
+						)}
 					</span>
 				</p>
 			</div>

@@ -1,6 +1,7 @@
 import './fear-greed-index.styles.scss';
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { MdClose, MdInfoOutline } from 'react-icons/md';
 import Footer from '../../pages/footer/footer.component';
 import { getCachedData, getCachedJson } from '../../utils/api-cache';
 import {
@@ -9,6 +10,14 @@ import {
 	FearGreedData,
 	FearGreedResponse,
 } from '../../utils/api-endpoints';
+
+const sentimentSegments = [
+	{ label: 'Extreme Fear', className: 'extreme-fear' },
+	{ label: 'Fear', className: 'fear' },
+	{ label: 'Neutral', className: 'neutral' },
+	{ label: 'Greed', className: 'greed' },
+	{ label: 'Extreme Greed', className: 'extreme-greed' },
+];
 
 const FearGreedIndex = () => {
 	const cachedFearGreedData =
@@ -19,12 +28,18 @@ const FearGreedIndex = () => {
 			? parseInt(cachedFearGreedData.time_until_update, 10)
 			: null,
 	);
+	const [isInfoOpen, setIsInfoOpen] = useState(false);
+	const infoPopoverRef = useRef<HTMLDivElement | null>(null);
 
 	const timeInHMS = (seconds: number | null) => {
-		if (!seconds) return;
-		const hours = Math.floor(seconds / 3600);
-		const minutes = Math.floor((seconds - hours * 3600) / 60);
-		const remainingSeconds = seconds - hours * 3600 - minutes * 60;
+		if (seconds === null || !Number.isFinite(seconds)) {
+			return 'not available';
+		}
+
+		const normalizedSeconds = Math.max(0, seconds);
+		const hours = Math.floor(normalizedSeconds / 3600);
+		const minutes = Math.floor((normalizedSeconds - hours * 3600) / 60);
+		const remainingSeconds = normalizedSeconds - hours * 3600 - minutes * 60;
 		return `${hours}h ${minutes}m ${remainingSeconds}s`;
 	};
 
@@ -63,49 +78,138 @@ const FearGreedIndex = () => {
 		}
 	}, [countDown, fetchData]);
 
+	const sentimentClassName = data?.value_classification
+		? data.value_classification.replace(' ', '-')
+		: '';
+	const rootClassName = [
+		'fear-greed-index',
+		isInfoOpen ? 'info-open' : '',
+		sentimentClassName,
+	]
+		.filter(Boolean)
+		.join(' ');
+
+	useEffect(() => {
+		if (!isInfoOpen) {
+			return;
+		}
+
+		const handlePointerDown = (event: PointerEvent) => {
+			if (
+				infoPopoverRef.current &&
+				!infoPopoverRef.current.contains(event.target as Node)
+			) {
+				setIsInfoOpen(false);
+			}
+		};
+
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === 'Escape') {
+				setIsInfoOpen(false);
+			}
+		};
+
+		document.addEventListener('pointerdown', handlePointerDown);
+		document.addEventListener('keydown', handleKeyDown);
+
+		return () => {
+			document.removeEventListener('pointerdown', handlePointerDown);
+			document.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [isInfoOpen]);
+
 	return (
-		<div
-			className={`fear-greed-index ${data?.value_classification.replace(
-				' ',
-				'-',
-			)}`}
-		>
-			<h2>
-				Fear & Greed Index
-				<div className='tooltip'>
-					<div className='info-circle'>i</div>
-					<span className='tooltiptext'>
-						The Fear & Greed Index offers insight into the current mood of the
-						cryptocurrency market. If the index shows 'Fear', it means many
-						investors are worried, and it might be a good time to buy. On the
-						other hand, if it points to 'Greed', it suggests people might be too
-						excited, and the market could be overpriced potentially signaling a
-						selling opportunity.
-					</span>
+		<div className={rootClassName}>
+			<div className='fear-greed-heading'>
+				<h2>Fear & Greed Index</h2>
+				<div className='fear-greed-info' ref={infoPopoverRef}>
+					<button
+						type='button'
+						className='info-button'
+						aria-label='Show Fear and Greed Index information'
+						aria-expanded={isInfoOpen}
+						aria-controls='fear-greed-info-panel'
+						onClick={() => setIsInfoOpen((currentValue) => !currentValue)}
+					>
+						<MdInfoOutline aria-hidden />
+					</button>
+					{isInfoOpen && (
+						<div
+							id='fear-greed-info-panel'
+							className='info-popover'
+							role='dialog'
+							aria-label='About the Fear and Greed Index'
+						>
+							<div className='info-popover-header'>
+								<h3>What this means</h3>
+								<button
+									type='button'
+									className='info-close-button'
+									aria-label='Close information panel'
+									onClick={() => setIsInfoOpen(false)}
+								>
+									<MdClose aria-hidden />
+								</button>
+							</div>
+							<p>
+								The index summarises crypto market sentiment on a 0 to 100
+								scale.
+							</p>
+							<p>
+								Lower values suggest fear. Higher values suggest greed. Treat it
+								as context, not financial advice.
+							</p>
+						</div>
+					)}
 				</div>
-			</h2>
+			</div>
 			<div className='fear-greed-value'>{data?.value}</div>
+			{data && (
+				<div className='fear-greed-status-pill'>
+					{data.value} · {data.value_classification}
+				</div>
+			)}
 			<div className='fear-greed-name'>
 				<p>{data?.value_classification}</p>
 			</div>
 			{countDown !== null && <div>Next update in: {timeInHMS(countDown)}</div>}
+			{data && (
+				<div
+					className='mobile-sentiment-guide'
+					aria-label={`Current sentiment: ${data.value_classification}`}
+				>
+					{sentimentSegments.map((segment) => (
+						<span
+							key={segment.label}
+							className={`mobile-sentiment-segment ${
+								segment.className
+							} ${
+								data.value_classification === segment.label ? 'active' : ''
+							}`}
+							aria-hidden='true'
+						></span>
+					))}
+				</div>
+			)}
 			<div className='color-guide-container'>
 				<div className='color-guide'>
-					<div>
-						<span className='color-box extreme-fear-box'></span>Extreme Fear
-					</div>
-					<div>
-						<span className='color-box fear-box'></span>Fear
-					</div>
-					<div>
-						<span className='color-box neutral-box'></span>Neutral
-					</div>
-					<div>
-						<span className='color-box greed-box'></span>Greed
-					</div>
-					<div>
-						<span className='color-box extreme-greed-box'></span>Extreme Greed
-					</div>
+					{sentimentSegments.map((segment) => {
+						const isActive = data?.value_classification === segment.label;
+
+						return (
+							<div
+								key={segment.label}
+								className={`color-guide-item ${isActive ? 'active' : ''}`}
+								aria-current={isActive ? 'true' : undefined}
+							>
+								<span
+									className={`color-box ${segment.className}`}
+									aria-hidden='true'
+								></span>
+								{segment.label}
+							</div>
+						);
+					})}
 				</div>
 			</div>
 			<br />
