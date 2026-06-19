@@ -1,0 +1,143 @@
+@import '../../styles/variables.scss';
+
+.app-error-screen {
+	align-items: center;
+	background-color: $background-primary;
+	color: $primary-text-color;
+	display: flex;
+	justify-content: center;
+	min-height: 100svh;
+	min-height: 100vh;
+	padding: 24px;
+}
+
+.app-error-panel {
+	align-items: center;
+	background-color: $background-white;
+	border: 1px solid rgba($primary-color, 0.12);
+	border-radius: 8px;
+	box-shadow: 0 18px 45px rgba($primary-color, 0.12);
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	max-width: 520px;
+	padding: 32px;
+	text-align: center;
+	width: 100%;
+
+	h1 {
+		font-size: 32px;
+		line-height: 1.1;
+		margin: 0 0 10px;
+	}
+
+	p {
+		color: $muted-text-color;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 1.5;
+		margin: 0;
+	}
+}
+
+.app-error-eyebrow {
+	color: $secondary-color;
+	font-size: 14px;
+	font-weight: 700;
+	margin-bottom: 8px;
+	text-transform: uppercase;
+}
+
+.app-error-mark {
+	align-items: center;
+	background-color: rgba($decrease-color, 0.1);
+	border-radius: 50%;
+	color: $decrease-color;
+	display: flex;
+	font-size: 34px;
+	height: 72px;
+	justify-content: center;
+	width: 72px;
+}
+
+.app-error-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
+
+	button {
+		align-items: center;
+		background-color: $primary-color;
+		border: 1px solid $primary-color;
+		border-radius: 6px;
+		color: $background-white;
+		cursor: pointer;
+		display: inline-flex;
+		font-family: inherit;
+		font-size: 15px;
+		font-weight: 700;
+		justify-content: center;
+		min-height: 42px;
+		padding: 0 18px;
+		transition: background-color 0.2s ease, border-color 0.2s ease,
+			color 0.2s ease, transform 0.2s ease;
+
+		&:hover,
+		&:focus-visible {
+			background-color: $secondary-color;
+			border-color: $secondary-color;
+			transform: translateY(-1px);
+		}
+
+		&:focus-visible {
+			outline: 3px solid rgba($secondary-color, 0.35);
+			outline-offset: 2px;
+		}
+	}
+}
+
+.app-error-details {
+	border-top: 1px solid rgba($primary-color, 0.1);
+	color: $subtle-text-color;
+	font-size: 13px;
+	padding-top: 16px;
+	text-align: left;
+	width: 100%;
+
+	summary {
+		cursor: pointer;
+		font-weight: 700;
+	}
+
+	pre {
+		background-color: $background-primary;
+		border-radius: 6px;
+		color: $primary-text-color;
+		line-height: 1.4;
+		margin: 12px 0 0;
+		max-height: 180px;
+		overflow: auto;
+		padding: 12px;
+		white-space: pre-wrap;
+		word-break: break-word;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.app-error-panel {
+		padding: 26px 20px;
+
+		h1 {
+			font-size: 28px;
+		}
+	}
+
+	.app-error-actions {
+		width: 100%;
+
+		button {
+			width: 100%;
+		}
+	}
+}

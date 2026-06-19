@@ -10,6 +10,7 @@
 - Improved Learn section copy and converted tiles into accessible accordion controls
 - Replaced the Fear & Greed hover tooltip with a dismissible info popover
 - Refreshed the Fear & Greed sentiment guide with a compact mobile summary and rounded desktop status pills
+- Added an app-level error boundary to show a recovery screen instead of a blank page if rendering fails
 
 # v1.2.0 - 17th November 2024
 
