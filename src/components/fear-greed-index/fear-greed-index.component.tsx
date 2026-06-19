@@ -1,20 +1,24 @@
 import './fear-greed-index.styles.scss';
 
 import React, { useEffect, useState, useCallback } from 'react';
-import axios from 'axios';
 import Footer from '../../pages/footer/footer.component';
-
-type FearGreedData = {
-	value: string;
-	value_classification: string;
-	time_until_update: string;
-};
+import { getCachedData, getCachedJson } from '../../utils/api-cache';
+import {
+	FEAR_GREED_TTL_MS,
+	FEAR_GREED_URL,
+	FearGreedData,
+	FearGreedResponse,
+} from '../../utils/api-endpoints';
 
 const FearGreedIndex = () => {
-	const [data, setData] = useState<FearGreedData | null>(null);
-	const [countDown, setCountDown] = useState<number | null>(null);
-
-	const url = `https://api.alternative.me/fng/?limit=0`;
+	const cachedFearGreedData =
+		getCachedData<FearGreedResponse>(FEAR_GREED_URL)?.data[0] ?? null;
+	const [data, setData] = useState<FearGreedData | null>(cachedFearGreedData);
+	const [countDown, setCountDown] = useState<number | null>(() =>
+		cachedFearGreedData?.time_until_update
+			? parseInt(cachedFearGreedData.time_until_update, 10)
+			: null,
+	);
 
 	const timeInHMS = (seconds: number | null) => {
 		if (!seconds) return;
@@ -26,16 +30,18 @@ const FearGreedIndex = () => {
 
 	const fetchData = useCallback(async () => {
 		try {
-			const response = await axios.get(url);
-			const fearGreedData: FearGreedData = response.data.data[0];
+			const response = await getCachedJson<FearGreedResponse>(FEAR_GREED_URL, {
+				ttlMs: FEAR_GREED_TTL_MS,
+			});
+			const fearGreedData = response.data[0];
 			setData(fearGreedData);
 			if (fearGreedData.time_until_update) {
-				setCountDown(parseInt(fearGreedData.time_until_update));
+				setCountDown(parseInt(fearGreedData.time_until_update, 10));
 			}
 		} catch (error) {
 			console.error(error);
 		}
-	}, [url]);
+	}, []);
 
 	useEffect(() => {
 		fetchData();

@@ -5,6 +5,33 @@ import { useNavigate } from 'react-router-dom';
 import { useScrollPosition } from '../../contexts/scroll-position-context';
 import { CoinGeckoContext } from '../../contexts/coingecko-context';
 
+const isValidNumber = (value: number | null): value is number =>
+	typeof value === 'number' && Number.isFinite(value);
+
+const formatCurrency = (value: number | null) => {
+	if (!isValidNumber(value)) {
+		return 'N/A';
+	}
+
+	return `£${value.toLocaleString()}`;
+};
+
+const formatPercentage = (value: number | null) => {
+	if (!isValidNumber(value)) {
+		return 'N/A';
+	}
+
+	return `${value.toFixed(2)}%`;
+};
+
+const getChangeClassName = (value: number | null) => {
+	if (!isValidNumber(value)) {
+		return 'neutral';
+	}
+
+	return value > 0 ? 'increase' : 'decrease';
+};
+
 const Home: FC = () => {
 	const navigate = useNavigate();
 	const { setPosition } = useScrollPosition();
@@ -40,16 +67,14 @@ const Home: FC = () => {
 								<img src={coin.image} alt={coin.name} className='coin-image' />
 								<h2>{coin.name}</h2>
 								<div className='price-info'>
-									<p>£{coin.current_price.toLocaleString()}</p>
+									<p>{formatCurrency(coin.current_price)}</p>
 									<span>|</span>
 									<p
-										className={
-											coin.price_change_percentage_24h > 0
-												? 'increase'
-												: 'decrease'
-										}
+										className={getChangeClassName(
+											coin.price_change_percentage_24h,
+										)}
 									>
-										{coin.price_change_percentage_24h.toFixed(2)}%
+										{formatPercentage(coin.price_change_percentage_24h)}
 									</p>
 								</div>
 							</div>

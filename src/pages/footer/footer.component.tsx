@@ -40,6 +40,11 @@ const socialLinks = [
 const Footer: FC = () => {
 	return (
 		<section id='social' className='footer-section'>
+			<p className='footer-disclaimer'>
+				CoinPulse is a demo project for educational purposes only. Cryptocurrency
+				data may be delayed, cached, or incomplete and should not be used for
+				financial decisions.
+			</p>
 			<div className='footer-container'>
 				{socialLinks.map((link) => (
 					<a
