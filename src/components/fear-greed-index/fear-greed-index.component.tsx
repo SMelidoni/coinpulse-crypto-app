@@ -11,6 +11,14 @@ import {
 	FearGreedResponse,
 } from '../../utils/api-endpoints';
 
+const sentimentSegments = [
+	{ label: 'Extreme Fear', className: 'extreme-fear' },
+	{ label: 'Fear', className: 'fear' },
+	{ label: 'Neutral', className: 'neutral' },
+	{ label: 'Greed', className: 'greed' },
+	{ label: 'Extreme Greed', className: 'extreme-greed' },
+];
+
 const FearGreedIndex = () => {
 	const cachedFearGreedData =
 		getCachedData<FearGreedResponse>(FEAR_GREED_URL)?.data[0] ?? null;
@@ -145,10 +153,33 @@ const FearGreedIndex = () => {
 				</div>
 			</div>
 			<div className='fear-greed-value'>{data?.value}</div>
+			{data && (
+				<div className='fear-greed-status-pill'>
+					{data.value} · {data.value_classification}
+				</div>
+			)}
 			<div className='fear-greed-name'>
 				<p>{data?.value_classification}</p>
 			</div>
 			{countDown !== null && <div>Next update in: {timeInHMS(countDown)}</div>}
+			{data && (
+				<div
+					className='mobile-sentiment-guide'
+					aria-label={`Current sentiment: ${data.value_classification}`}
+				>
+					{sentimentSegments.map((segment) => (
+						<span
+							key={segment.label}
+							className={`mobile-sentiment-segment ${
+								segment.className
+							} ${
+								data.value_classification === segment.label ? 'active' : ''
+							}`}
+							aria-hidden='true'
+						></span>
+					))}
+				</div>
+			)}
 			<div className='color-guide-container'>
 				<div className='color-guide'>
 					<div>
