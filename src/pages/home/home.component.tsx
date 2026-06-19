@@ -4,6 +4,11 @@ import React, { FC, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useScrollPosition } from '../../contexts/scroll-position-context';
 import { CoinGeckoContext } from '../../contexts/coingecko-context';
+import {
+	formatCurrency,
+	formatPercentage,
+	getChangeClassName,
+} from '../../utils/formatters';
 
 const Home: FC = () => {
 	const navigate = useNavigate();
@@ -40,16 +45,14 @@ const Home: FC = () => {
 								<img src={coin.image} alt={coin.name} className='coin-image' />
 								<h2>{coin.name}</h2>
 								<div className='price-info'>
-									<p>£{coin.current_price.toLocaleString()}</p>
+									<p>{formatCurrency(coin.current_price)}</p>
 									<span>|</span>
 									<p
-										className={
-											coin.price_change_percentage_24h > 0
-												? 'increase'
-												: 'decrease'
-										}
+										className={getChangeClassName(
+											coin.price_change_percentage_24h,
+										)}
 									>
-										{coin.price_change_percentage_24h.toFixed(2)}%
+										{formatPercentage(coin.price_change_percentage_24h)}
 									</p>
 								</div>
 							</div>

@@ -1,21 +1,19 @@
 import React, { createContext, FC, useState, useEffect } from 'react';
-
-interface CoinData {
-	id: string;
-	symbol: string;
-	name: string;
-	image: string;
-	current_price: number;
-	price_change_percentage_24h: number;
-	rank?: number;
-	price?: number;
-	change24h?: number;
-	volume24h?: number;
-	marketCap?: number;
-}
+import {
+	ApiRequestError,
+	getCacheMetadata,
+	getCachedData,
+	getCachedJson,
+} from '../utils/api-cache';
+import {
+	COINGECKO_MARKETS_URL,
+	CoinData,
+	MARKET_DATA_TTL_MS,
+} from '../utils/api-endpoints';
 
 interface CoinGeckoContextProps {
 	coinData: CoinData[];
+	dataUpdatedAt: number | null;
 	errorMessage: string | null;
 }
 
@@ -28,23 +26,49 @@ interface CoinGeckoProviderProps {
 }
 
 const CoinGeckoProvider: FC<CoinGeckoProviderProps> = ({ children }) => {
-	const [coinData, setCoinData] = useState<CoinData[]>([]);
+	const [coinData, setCoinData] = useState<CoinData[]>(
+		() => getCachedData<CoinData[]>(COINGECKO_MARKETS_URL) ?? [],
+	);
+	const [dataUpdatedAt, setDataUpdatedAt] = useState<number | null>(
+		() => getCacheMetadata(COINGECKO_MARKETS_URL)?.updatedAt ?? null,
+	);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	useEffect(() => {
-		const fetchURL =
-			'https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=50&page=1&sparkline=false';
+		let isMounted = true;
 
-		fetch(fetchURL)
-			.then((response) => response.json())
-			.then((data) => setCoinData(data))
-			.catch(() =>
-				setErrorMessage('Too many requests. Please try again later.'),
-			);
+		getCachedJson<CoinData[]>(COINGECKO_MARKETS_URL, {
+			ttlMs: MARKET_DATA_TTL_MS,
+		})
+			.then((data) => {
+				if (isMounted) {
+					setCoinData(data);
+					setDataUpdatedAt(
+						getCacheMetadata(COINGECKO_MARKETS_URL)?.updatedAt ?? null,
+					);
+				}
+			})
+			.catch((error) => {
+				if (!isMounted) {
+					return;
+				}
+
+				setErrorMessage(
+					error instanceof ApiRequestError && error.status === 429
+						? 'Too many requests. Please try again later.'
+						: 'Unable to load market data. Please try again later.',
+				);
+			});
+
+		return () => {
+			isMounted = false;
+		};
 	}, []);
 
 	return (
-		<CoinGeckoContext.Provider value={{ coinData, errorMessage }}>
+		<CoinGeckoContext.Provider
+			value={{ coinData, dataUpdatedAt, errorMessage }}
+		>
 			{children}
 		</CoinGeckoContext.Provider>
 	);

@@ -1,3 +1,19 @@
+# v1.3.0 - 19th June 2026
+
+- Migrated the project from Create React App to Vite and removed unused dependencies to reduce audit noise and package footprint
+- Added client-side API caching for CoinGecko and Fear & Greed requests to reduce rate-limit issues
+- Added an initial loading gate so fonts and required API data load before the page is shown
+- Added a dev-only loader preview mode using `?loader=true` and `?loader=error`
+- Added market data freshness messaging and a demo/educational-use disclaimer
+- Fixed market and home views to handle missing CoinGecko values without crashing
+- Added Vercel configuration for Vite deployments and React Router URL rewrites
+- Improved Learn section copy and converted tiles into accessible accordion controls
+- Replaced the Fear & Greed hover tooltip with a dismissible info popover
+- Refreshed the Fear & Greed sentiment guide with a compact mobile summary and rounded desktop status pills
+- Added an app-level error boundary to show a recovery screen instead of a blank page if rendering fails
+- Added shared formatting helpers for currency, percentages, compact values, change labels, and update timestamps
+- Removed the unfinished quiz placeholder from the Learn section
+
 # v1.2.0 - 17th November 2024
 
 - Update Navbar icons (menu and close) on mobile using react-icons for alignment and visual consistency

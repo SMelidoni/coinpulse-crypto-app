@@ -2,58 +2,72 @@ import './crypto-detail.styles.scss';
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
-
-interface CoinDetail {
-	id: string;
-	name: string;
-	symbol: string;
-	description: {
-		en: string;
-	};
-	image: {
-		large: string;
-	};
-	market_data: {
-		current_price: {
-			gbp: number;
-		};
-		market_cap_rank: number;
-		price_change_percentage_24h: number;
-	};
-}
+import {
+	ApiRequestError,
+	getCachedData,
+	getCachedJson,
+} from '../../utils/api-cache';
+import {
+	COIN_DETAIL_TTL_MS,
+	CoinDetail,
+	getCoinDetailUrl,
+} from '../../utils/api-endpoints';
+import {
+	formatCurrency,
+	formatPercentage,
+	getChangeClassName,
+} from '../../utils/formatters';
 
 const CryptoDetail: FC = () => {
 	const navigate = useNavigate();
 	const { name } = useParams<{ name?: string }>();
+	const coinUrl = name ? getCoinDetailUrl(name.toLowerCase()) : null;
 
-	const [coinDetail, setCoinDetail] = useState<CoinDetail | null>(null);
-	const [loading, setLoading] = useState(true);
+	const [coinDetail, setCoinDetail] = useState<CoinDetail | null>(
+		() => (coinUrl ? getCachedData<CoinDetail>(coinUrl) : null),
+	);
+	const [loading, setLoading] = useState(!coinDetail);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		if (name) {
-			fetch(`https://api.coingecko.com/api/v3/coins/${name}`)
-				.then((res) => {
-					if (!res.ok) {
-						console.log(res);
-						if (res.status === 429) {
-							throw new Error('Too many requests. Please try again later.');
-						} else {
-							throw new Error('Failed to fetch coin data');
-						}
-					}
-					return res.json();
-				})
+		let isMounted = true;
+
+		if (name && name === name.toLowerCase()) {
+			const cachedCoinDetail = coinUrl
+				? getCachedData<CoinDetail>(coinUrl)
+				: null;
+
+			setCoinDetail(cachedCoinDetail);
+			setLoading(!cachedCoinDetail);
+			setError(null);
+
+			getCachedJson<CoinDetail>(getCoinDetailUrl(name), {
+				ttlMs: COIN_DETAIL_TTL_MS,
+			})
 				.then((data) => {
-					setCoinDetail(data);
-					setLoading(false);
+					if (isMounted) {
+						setCoinDetail(data);
+						setLoading(false);
+					}
 				})
 				.catch((error) => {
-					setError(error.message);
+					if (!isMounted) {
+						return;
+					}
+
+					setError(
+						error instanceof ApiRequestError && error.status === 429
+							? 'Too many requests. Please try again later.'
+							: 'Failed to fetch coin data',
+					);
 					setLoading(false);
 				});
 		}
-	}, [name]);
+
+		return () => {
+			isMounted = false;
+		};
+	}, [coinUrl, name]);
 
 	if (!name) {
 		return <div>Error: Name not provided.</div>;
@@ -119,19 +133,22 @@ const CryptoDetail: FC = () => {
 			</div>
 			<div className='stats-bar'>
 				<p>Symbol: {coinDetail.symbol.toUpperCase()}</p>
-				<p>
-					Price: £{coinDetail.market_data.current_price.gbp.toLocaleString()}
-				</p>
+				<p>Price: {formatCurrency(coinDetail.market_data.current_price.gbp)}</p>
 				<p>
 					24h Change:{' '}
 					<span
-						className={
-							coinDetail.market_data.price_change_percentage_24h >= 0
-								? 'change-positive'
-								: 'change-negative'
-						}
+						className={getChangeClassName(
+							coinDetail.market_data.price_change_percentage_24h,
+							{
+								increaseClassName: 'change-positive',
+								decreaseClassName: 'change-negative',
+								zeroClassName: 'change-positive',
+							},
+						)}
 					>
-						{coinDetail.market_data.price_change_percentage_24h.toFixed(2)}%
+						{formatPercentage(
+							coinDetail.market_data.price_change_percentage_24h,
+						)}
 					</span>
 				</p>
 			</div>

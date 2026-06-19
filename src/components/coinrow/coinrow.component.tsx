@@ -2,16 +2,21 @@ import './coinrow.styles.scss';
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useScrollPosition } from '../../contexts/scroll-position-context';
+import {
+	formatCurrency,
+	formatPercentage,
+	getChangeClassName,
+} from '../../utils/formatters';
 
 export interface ICoinData {
 	id: string;
 	rank: number;
 	name: string;
 	image: string;
-	price: number;
-	change24h: number;
-	volume24h: number;
-	marketCap: number;
+	price: number | null;
+	change24h: number | null;
+	volume24h: number | null;
+	marketCap: number | null;
 	rowsPerPage: number;
 	currentPage: number;
 }
@@ -60,12 +65,16 @@ const CoinRow: FC<ICoinData> = ({
 					{name}
 				</div>
 			</td>
-			<td>£{price.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</td>
-			<td className={change24h > 0 ? 'increase' : 'decrease'}>
-				{change24h.toFixed(2)}%
+			<td>
+				{formatCurrency(price, {
+					minimumFractionDigits: 2,
+				})}
 			</td>
-			<td>£{volume24h.toLocaleString('en-GB')}</td>
-			<td>£{marketCap.toLocaleString('en-GB')}</td>
+			<td className={getChangeClassName(change24h)}>
+				{formatPercentage(change24h)}
+			</td>
+			<td>{formatCurrency(volume24h)}</td>
+			<td>{formatCurrency(marketCap)}</td>
 		</tr>
 	);
 };

@@ -1,79 +1,92 @@
-# CoinPulse Crypto App 🪙
+# CoinPulse Crypto App
 
-Welcome to CoinPulse! We provide real-time data on the top 50 cryptocurrencies in the market. With CoinPulse, you can monitor price movements, market trends, and volume changes, all in one convenient and user-friendly application.
+CoinPulse is a small demo project for browsing cryptocurrency market data. It shows the top 50 coins from CoinGecko, basic coin detail pages, beginner learning content, and the Fear & Greed Index.
 
-CoinPulse utilises the CoinGecko API to fetch real-time and historical market data, ensuring the information you receive is always accurate and up-to-date. This technical integration with CoinGecko's comprehensive API facilitates a seamless data retrieval process, contributing to the reliability and robustness of CoinPulse.
+This project is for educational purposes only. Cryptocurrency data may be delayed, cached, incomplete, or unavailable because it comes from third-party APIs. It should not be used for financial decisions.
+
+## Live Site
+
+https://coinpulse-crypto-app.vercel.app/
 
 ## Built With
 
-- React.js
+- React
 - TypeScript
 - SCSS
+- Vite
 - [CoinGecko API](https://www.coingecko.com/en/api/documentation)
+- [Alternative.me Fear & Greed Index API](https://alternative.me/crypto/fear-and-greed-index/)
 
 ## Features
 
-- Real-time updates on the top 50 cryptocurrencies 📈
-- Detailed view of price trends, volume changes, and market cap 🔍
-- User-friendly interface for easy monitoring 👁️‍🗨️
+- Top 50 cryptocurrency market table
+- Coin detail pages with price, rank, symbol, and description
+- Client-side API caching to reduce free API rate-limit issues
+- Market data freshness messaging and educational-use disclaimer
+- Beginner Learn section with accessible accordion tiles
+- Fear & Greed Index with mobile and desktop sentiment summaries
+- Initial loading gate and app-level error recovery screen
 
-## Live Production
+## Data Notes
 
-Check out the live version of the CoinPulse Crypto App: https://coinpulse-crypto-app.vercel.app/
+CoinPulse uses public third-party API data and caches responses in the browser. Cached data helps avoid rate-limit issues, but it also means values may not reflect the latest market state.
+
+API data can be delayed, missing, or temporarily unavailable. The app displays unavailable values as `N/A` where possible.
 
 ## Getting Started
 
-These instructions will help you set up the project on your local machine for development and testing purposes.
-
 ### Prerequisites
 
-Before running the CoinPulse Crypto App, make sure you have the following software and tools installed on your machine:
-
 - Node.js v18.16.0 or later
-- npm (Node Package Manager) - this comes bundled with Node.js
-- Visual Studio Code (or any other code editor of your choice)
+- npm
 
 ### Installation
 
-To set up a local copy of the project, follow these steps:
-
-1. Clone the repository from the `main` branch to your local machine:
+Clone the repository:
 
 ```sh
 git clone https://github.com/SMelidoni/coinpulse-crypto-app.git
-```
-
-Note: By default, the `develop` branch will be checked out. However, if you want to use the most stable version, please check out the `main` branch by running: `git checkout main`
-
-2. Navigate into the project directory:
-
-```sh
 cd coinpulse-crypto-app
 ```
 
-3. Install the dependencies:
+Install dependencies:
 
 ```sh
 npm install
 ```
 
-4. Run the application:
+Run the local dev server:
 
 ```sh
-npm start
+npm run dev
 ```
 
-You can then access the application by opening your web browser and navigating to `http://localhost:3000`.
+Open `http://localhost:5173` in your browser.
 
-## Contributing
+## Available Scripts
 
-I welcome contributions from the community. If you'd like to contribute, please follow these steps:
+```sh
+npm run dev
+```
 
-1. Fork the repository
-2. Create a new feature branch `git checkout -b feature/new-feature`
-3. Make your changes
-4. Commit your changes: `git commit -am 'Add some feature'`
-5. Push the branch: `git push origin feature/new-feature`
-6. Submit a pull request
+Starts the Vite dev server.
 
-Thank you for checking out the CoinPulse Crypto App!
+```sh
+npm run build
+```
+
+Runs TypeScript checks and builds the production app.
+
+```sh
+npm run preview
+```
+
+Serves the production build locally.
+
+## Deployment
+
+The app is configured for Vercel with `vercel.json`. Vite builds to `dist`, and React Router routes are rewritten to `index.html`.
+
+## Maintenance
+
+This is an older demo project that has been cleaned up for stability and easier deployment. Ongoing feature work is not planned, but dependency/security updates may still be applied.

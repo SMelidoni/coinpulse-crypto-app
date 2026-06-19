@@ -4,6 +4,7 @@ import CoinRow, { ICoinData } from '../../components/coinrow/coinrow.component';
 import { useLocation } from 'react-router-dom';
 import { CoinGeckoContext } from '../../contexts/coingecko-context';
 import { IoIosArrowDown } from 'react-icons/io';
+import { formatRelativeDateTime } from '../../utils/formatters';
 
 interface MarketProps {
 	rowsPerPage: number;
@@ -51,11 +52,14 @@ const Market: FC<MarketProps> = ({
 
 	const { coinData: contextCoinData, errorMessage: contextErrorMessage } =
 		context;
+	const formattedMarketDataUpdatedAt = formatRelativeDateTime(
+		context.dataUpdatedAt,
+	);
 
 	useEffect(() => {
 		if (contextCoinData && contextCoinData.length > 0) {
 			const mappedResult: ICoinData[] = contextCoinData.map(
-				(coin: any, index: number) => ({
+				(coin, index: number) => ({
 					id: coin.id,
 					rank: index + 1,
 					name: coin.name,
@@ -73,8 +77,8 @@ const Market: FC<MarketProps> = ({
 		}
 	}, [contextCoinData, rowsPerPage, currentPage]);
 
-	const handleRowsChange = (event: any) => {
-		setRowsPerPage(event.target.value);
+	const handleRowsChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		setRowsPerPage(Number(event.target.value));
 		setCurrentPage(1);
 	};
 
@@ -84,15 +88,43 @@ const Market: FC<MarketProps> = ({
 		const newSortOrder =
 			sortField === field ? (sortOrder === 'asc' ? 'desc' : 'asc') : 'asc';
 
+		const isSortableNumber = (value: unknown): value is number =>
+			typeof value === 'number' && Number.isFinite(value);
+
+		const compareNullableNumbers = (
+			firstValue: number | null,
+			secondValue: number | null,
+		) => {
+			const firstHasValue = isSortableNumber(firstValue);
+			const secondHasValue = isSortableNumber(secondValue);
+
+			if (!firstHasValue && !secondHasValue) {
+				return 0;
+			}
+
+			if (!firstHasValue) {
+				return 1;
+			}
+
+			if (!secondHasValue) {
+				return -1;
+			}
+
+			return newSortOrder === 'asc'
+				? firstValue - secondValue
+				: secondValue - firstValue;
+		};
+
 		const sortedData = [...coinData].sort((a, b) => {
 			if (field === 'name') {
 				return newSortOrder === 'asc'
 					? a[field].localeCompare(b[field])
 					: b[field].localeCompare(a[field]);
 			} else {
-				return newSortOrder === 'asc'
-					? (a[field] as number) - (b[field] as number)
-					: (b[field] as number) - (a[field] as number);
+				return compareNullableNumbers(
+					a[field] as number | null,
+					b[field] as number | null,
+				);
 			}
 		});
 
@@ -110,13 +142,17 @@ const Market: FC<MarketProps> = ({
 	};
 
 	const handleNextPage = () => {
-		if (currentPage < 5) setCurrentPage(currentPage + 1);
+		if (currentPage < totalPages) setCurrentPage(currentPage + 1);
 	};
 
 	return (
 		<section id='market' className='market-section'>
 			<div className='market-container'>
 				<h1 className='title'>Market Update</h1>
+				<p className='market-data-note'>
+					Market data is cached and may be delayed. Last updated:{' '}
+					<span>{formattedMarketDataUpdatedAt}</span>.
+				</p>
 				{contextErrorMessage ? (
 					<div className='error-message'>{contextErrorMessage}</div>
 				) : (

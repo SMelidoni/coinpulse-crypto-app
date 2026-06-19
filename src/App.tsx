@@ -16,6 +16,8 @@ import FearGreedIndex from './components/fear-greed-index/fear-greed-index.compo
 import CryptoDetail from './components/crypto-detail/crypto-detail.component';
 import ScrollPositionContext from './contexts/scroll-position-context';
 import CoinGeckoProvider from './contexts/coingecko-context';
+import AppLoadingGate from './components/app-loading-gate/app-loading-gate.component';
+import AppErrorBoundary from './components/app-error-boundary/app-error-boundary.component';
 
 function AppContent() {
 	const location = useLocation();
@@ -31,31 +33,35 @@ function AppContent() {
 
 	return (
 		<ScrollPositionContext.Provider value={{ position, setPosition }}>
-			<div className='App'>
-				<Topbar />
-				<Navbar />
-				<Routes>
-					<Route path='/:name' element={<CryptoDetail />} />
-					<Route
-						path='/'
-						element={
-							<>
-								<CoinGeckoProvider>
-									<Home />
-									<Market
-										rowsPerPage={marketRowsPerPage}
-										setRowsPerPage={setMarketRowsPerPage}
-										currentPage={marketCurrentPage}
-										setCurrentPage={setMarketCurrentPage}
-									/>
-								</CoinGeckoProvider>
-								<Learn />
-								<FearGreedIndex />
-							</>
-						}
-					/>
-				</Routes>
-			</div>
+			<AppErrorBoundary resetKey={`${location.pathname}${location.search}`}>
+				<AppLoadingGate>
+					<div className='App'>
+						<Topbar />
+						<Navbar />
+						<Routes>
+							<Route path='/:name' element={<CryptoDetail />} />
+							<Route
+								path='/'
+								element={
+									<>
+										<CoinGeckoProvider>
+											<Home />
+											<Market
+												rowsPerPage={marketRowsPerPage}
+												setRowsPerPage={setMarketRowsPerPage}
+												currentPage={marketCurrentPage}
+												setCurrentPage={setMarketCurrentPage}
+											/>
+										</CoinGeckoProvider>
+										<Learn />
+										<FearGreedIndex />
+									</>
+								}
+							/>
+						</Routes>
+					</div>
+				</AppLoadingGate>
+			</AppErrorBoundary>
 		</ScrollPositionContext.Provider>
 	);
 }
