@@ -51,6 +51,13 @@ class AppErrorBoundary extends Component<
 			return this.props.children;
 		}
 
+		const developerErrorDetails = [
+			error.message,
+			errorInfo?.componentStack,
+		]
+			.filter(Boolean)
+			.join('\n');
+
 		return (
 			<div className='app-error-screen'>
 				<section className='app-error-panel' role='alert' aria-live='assertive'>
@@ -73,10 +80,7 @@ class AppErrorBoundary extends Component<
 					{import.meta.env.DEV && (
 						<details className='app-error-details'>
 							<summary>Developer details</summary>
-							<pre>
-								{error.message}
-								{errorInfo?.componentStack}
-							</pre>
+							<pre>{developerErrorDetails}</pre>
 						</details>
 					)}
 				</section>
