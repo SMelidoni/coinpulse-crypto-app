@@ -182,21 +182,23 @@ const FearGreedIndex = () => {
 			)}
 			<div className='color-guide-container'>
 				<div className='color-guide'>
-					<div>
-						<span className='color-box extreme-fear-box'></span>Extreme Fear
-					</div>
-					<div>
-						<span className='color-box fear-box'></span>Fear
-					</div>
-					<div>
-						<span className='color-box neutral-box'></span>Neutral
-					</div>
-					<div>
-						<span className='color-box greed-box'></span>Greed
-					</div>
-					<div>
-						<span className='color-box extreme-greed-box'></span>Extreme Greed
-					</div>
+					{sentimentSegments.map((segment) => {
+						const isActive = data?.value_classification === segment.label;
+
+						return (
+							<div
+								key={segment.label}
+								className={`color-guide-item ${isActive ? 'active' : ''}`}
+								aria-current={isActive ? 'true' : undefined}
+							>
+								<span
+									className={`color-box ${segment.className}`}
+									aria-hidden='true'
+								></span>
+								{segment.label}
+							</div>
+						);
+					})}
 				</div>
 			</div>
 			<br />

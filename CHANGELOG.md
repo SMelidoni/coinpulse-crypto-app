@@ -9,7 +9,7 @@
 - Added Vercel configuration for Vite deployments and React Router URL rewrites
 - Improved Learn section copy and converted tiles into accessible accordion controls
 - Replaced the Fear & Greed hover tooltip with a dismissible info popover
-- Added a compact mobile Fear & Greed status pill and sentiment bar
+- Refreshed the Fear & Greed sentiment guide with a compact mobile summary and rounded desktop status pills
 
 # v1.2.0 - 17th November 2024
 
