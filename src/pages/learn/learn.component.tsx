@@ -25,7 +25,7 @@ const Learn: FC = () => {
 			<div className='learn-container'>
 				<h1 className='title'>Learn</h1>
 				<p className='sub-header'>
-					Click on a topic below to explore key concepts in the crypto world:
+					Simple explanations for common cryptocurrency terms.
 				</p>
 
 				<div className='crypto-queries' ref={faqsRef}>
@@ -37,6 +37,7 @@ const Learn: FC = () => {
 							isOpen={openIndex === index}
 							onClick={() => setOpenIndex(openIndex === index ? null : index)}
 							emoji={cryptoQuestion.emoji}
+							itemId={`learn-item-${index}`}
 						/>
 					))}
 				</div>
