@@ -1,4 +1,4 @@
-# Unreleased - 18th June 2026
+# v1.3.0 - 19th June 2026
 
 - Migrated the project from Create React App to Vite and removed unused dependencies to reduce audit noise and package footprint
 - Added client-side API caching for CoinGecko and Fear & Greed requests to reduce rate-limit issues
