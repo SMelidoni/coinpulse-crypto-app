@@ -16,7 +16,7 @@ const FearGreedIndex = () => {
 	const [data, setData] = useState<FearGreedData | null>(cachedFearGreedData);
 	const [countDown, setCountDown] = useState<number | null>(() =>
 		cachedFearGreedData?.time_until_update
-			? parseInt(cachedFearGreedData.time_until_update)
+			? parseInt(cachedFearGreedData.time_until_update, 10)
 			: null,
 	);
 
@@ -36,7 +36,7 @@ const FearGreedIndex = () => {
 			const fearGreedData = response.data[0];
 			setData(fearGreedData);
 			if (fearGreedData.time_until_update) {
-				setCountDown(parseInt(fearGreedData.time_until_update));
+				setCountDown(parseInt(fearGreedData.time_until_update, 10));
 			}
 		} catch (error) {
 			console.error(error);
