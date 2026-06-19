@@ -1,6 +1,7 @@
 import './fear-greed-index.styles.scss';
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { MdClose, MdInfoOutline } from 'react-icons/md';
 import Footer from '../../pages/footer/footer.component';
 import { getCachedData, getCachedJson } from '../../utils/api-cache';
 import {
@@ -19,6 +20,8 @@ const FearGreedIndex = () => {
 			? parseInt(cachedFearGreedData.time_until_update, 10)
 			: null,
 	);
+	const [isInfoOpen, setIsInfoOpen] = useState(false);
+	const infoPopoverRef = useRef<HTMLDivElement | null>(null);
 
 	const timeInHMS = (seconds: number | null) => {
 		if (!seconds) return;
@@ -63,27 +66,84 @@ const FearGreedIndex = () => {
 		}
 	}, [countDown, fetchData]);
 
+	useEffect(() => {
+		if (!isInfoOpen) {
+			return;
+		}
+
+		const handlePointerDown = (event: MouseEvent) => {
+			if (
+				infoPopoverRef.current &&
+				!infoPopoverRef.current.contains(event.target as Node)
+			) {
+				setIsInfoOpen(false);
+			}
+		};
+
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === 'Escape') {
+				setIsInfoOpen(false);
+			}
+		};
+
+		document.addEventListener('mousedown', handlePointerDown);
+		document.addEventListener('keydown', handleKeyDown);
+
+		return () => {
+			document.removeEventListener('mousedown', handlePointerDown);
+			document.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [isInfoOpen]);
+
 	return (
 		<div
-			className={`fear-greed-index ${data?.value_classification.replace(
-				' ',
-				'-',
-			)}`}
+			className={`fear-greed-index ${
+				isInfoOpen ? 'info-open' : ''
+			} ${data?.value_classification.replace(' ', '-')}`}
 		>
-			<h2>
-				Fear & Greed Index
-				<div className='tooltip'>
-					<div className='info-circle'>i</div>
-					<span className='tooltiptext'>
-						The Fear & Greed Index offers insight into the current mood of the
-						cryptocurrency market. If the index shows 'Fear', it means many
-						investors are worried, and it might be a good time to buy. On the
-						other hand, if it points to 'Greed', it suggests people might be too
-						excited, and the market could be overpriced potentially signaling a
-						selling opportunity.
-					</span>
+			<div className='fear-greed-heading'>
+				<h2>Fear & Greed Index</h2>
+				<div className='fear-greed-info' ref={infoPopoverRef}>
+					<button
+						type='button'
+						className='info-button'
+						aria-label='Show Fear and Greed Index information'
+						aria-expanded={isInfoOpen}
+						aria-controls='fear-greed-info-panel'
+						onClick={() => setIsInfoOpen((currentValue) => !currentValue)}
+					>
+						<MdInfoOutline aria-hidden />
+					</button>
+					{isInfoOpen && (
+						<div
+							id='fear-greed-info-panel'
+							className='info-popover'
+							role='dialog'
+							aria-label='About the Fear and Greed Index'
+						>
+							<div className='info-popover-header'>
+								<h3>What this means</h3>
+								<button
+									type='button'
+									className='info-close-button'
+									aria-label='Close information panel'
+									onClick={() => setIsInfoOpen(false)}
+								>
+									<MdClose aria-hidden />
+								</button>
+							</div>
+							<p>
+								The index summarises crypto market sentiment on a 0 to 100
+								scale.
+							</p>
+							<p>
+								Lower values suggest fear. Higher values suggest greed. Treat it
+								as context, not financial advice.
+							</p>
+						</div>
+					)}
 				</div>
-			</h2>
+			</div>
 			<div className='fear-greed-value'>{data?.value}</div>
 			<div className='fear-greed-name'>
 				<p>{data?.value_classification}</p>

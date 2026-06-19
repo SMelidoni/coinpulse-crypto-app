@@ -1,3 +1,5 @@
+@import '../../styles/variables.scss';
+
 $extreme-fear-colour: #ea3943;
 $fear-colour: #ea8c00;
 $neutral-colour: #f3d42f;
@@ -11,10 +13,21 @@ $extreme-greed-colour: #16c784;
 	display: flex;
 	flex-direction: column;
 	padding: 20px;
+	position: relative;
 
-	h2 {
+	.fear-greed-heading {
+		align-items: center;
+		display: flex;
+		gap: 10px;
+		justify-content: center;
 		margin-bottom: 20px;
+		position: relative;
+
+		h2 {
+			margin: 0;
+		}
 	}
+
 	.fear-greed-value {
 		font-size: 3em;
 	}
@@ -91,57 +104,108 @@ $extreme-greed-colour: #16c784;
 	margin: 0 12px;
 }
 
-.tooltip {
-	cursor: pointer;
-	display: inline-block;
-	margin-left: 10px;
+.fear-greed-info {
+	display: inline-flex;
 	position: relative;
-	top: -2px;
+}
 
-	&:hover .tooltiptext {
-		opacity: 1;
-		visibility: visible;
+.info-button,
+.info-close-button {
+	align-items: center;
+	border: 0;
+	border-radius: 50%;
+	cursor: pointer;
+	display: flex;
+	font-family: inherit;
+	justify-content: center;
+	transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.info-button {
+	background-color: rgba(255, 255, 255, 0.18);
+	color: $background-white;
+	font-size: 22px;
+	height: 32px;
+	width: 32px;
+
+	&:hover,
+	&:focus-visible {
+		background-color: rgba(255, 255, 255, 0.28);
+		transform: translateY(-1px);
+	}
+
+	&:focus-visible {
+		outline: 3px solid rgba(255, 255, 255, 0.42);
+		outline-offset: 2px;
 	}
 }
 
-.info-circle {
-	align-items: center;
-	background-color: #555;
-	border-radius: 50%;
-	color: #fff;
-	display: flex;
+.info-popover {
+	background-color: $background-white;
+	border: 1px solid rgba($primary-color, 0.12);
+	border-radius: 8px;
+	box-shadow: 0 14px 40px rgba($primary-color, 0.2);
+	color: $primary-text-color;
 	font-size: 14px;
-	height: 20px;
-	justify-content: center;
-	width: 20px;
-}
-
-.tooltiptext {
-	background-color: #555;
-	border-radius: 6px;
-	bottom: 125%;
-	color: #fff;
-	font-size: 12px;
-	left: 50%;
-	margin-left: -150px;
-	opacity: 0;
-	padding: 5px 0;
+	font-weight: 500;
+	line-height: 1.5;
+	max-width: min(320px, calc(100vw - 32px));
+	padding: 16px;
 	position: absolute;
-	text-align: center;
-	transition: opacity 0.3s, visibility 0.3s;
-	visibility: hidden;
-	width: 300px;
-	z-index: 1;
+	right: 0;
+	text-align: left;
+	top: calc(100% + 12px);
+	width: 320px;
+	z-index: 10;
 
 	&:after {
-		border-color: #555 transparent transparent transparent;
+		border-color: transparent transparent $background-white transparent;
 		border-style: solid;
-		border-width: 5px;
+		border-width: 0 8px 8px 8px;
 		content: '';
-		left: 50%;
-		margin-left: -5px;
 		position: absolute;
-		top: 100%;
+		right: 8px;
+		top: -8px;
+	}
+
+	p {
+		margin: 0;
+	}
+
+	p + p {
+		margin-top: 10px;
+	}
+}
+
+.info-popover-header {
+	align-items: center;
+	display: flex;
+	gap: 12px;
+	justify-content: space-between;
+	margin-bottom: 8px;
+
+	h3 {
+		font-size: 16px;
+		line-height: 1.2;
+		margin: 0;
+	}
+}
+
+.info-close-button {
+	background-color: $background-primary;
+	color: $primary-text-color;
+	font-size: 18px;
+	height: 30px;
+	width: 30px;
+
+	&:hover,
+	&:focus-visible {
+		background-color: $secondary-color-light;
+	}
+
+	&:focus-visible {
+		outline: 3px solid rgba($secondary-color, 0.45);
+		outline-offset: 2px;
 	}
 }
 
@@ -150,27 +214,29 @@ $extreme-greed-colour: #16c784;
 		display: none;
 	}
 
-	.tooltiptext {
-		font-size: 12px;
-		padding: 4px 0;
-		transform: translateX(-5%);
-		width: 200px;
+	.fear-greed-info {
+		position: static;
+	}
+
+	.info-popover {
+		left: 16px;
+		max-width: none;
+		right: 16px;
+		top: 64px;
+		width: auto;
 
 		&:after {
-			left: 80%;
+			display: none;
 		}
+	}
+
+	.fear-greed-index.info-open {
+		padding-bottom: 300px;
 	}
 }
 
 @media screen and (max-width: 480px) {
-	.tooltiptext {
-		font-size: 12px;
-		padding: 3px 0;
-		transform: translateX(-1%);
-		width: 175px;
-
-		&:after {
-			left: 87%;
-		}
+	.fear-greed-index .fear-greed-heading {
+		gap: 8px;
 	}
 }
