@@ -1,5 +1,5 @@
 import './App.scss';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
 	BrowserRouter as Router,
 	Route,
@@ -19,6 +19,20 @@ import CoinGeckoProvider from './contexts/coingecko-context';
 import AppLoadingGate from './components/app-loading-gate/app-loading-gate.component';
 import AppErrorBoundary from './components/app-error-boundary/app-error-boundary.component';
 
+const RouteScrollHandler: React.FC<{ position: number }> = ({ position }) => {
+	const location = useLocation();
+
+	useLayoutEffect(() => {
+		window.scrollTo({
+			top: location.pathname === '/' ? position : 0,
+			left: 0,
+			behavior: 'auto',
+		});
+	}, [location.pathname, position]);
+
+	return null;
+};
+
 function AppContent() {
 	const location = useLocation();
 	const [marketRowsPerPage, setMarketRowsPerPage] = useState(10);
@@ -26,20 +40,29 @@ function AppContent() {
 	const [position, setPosition] = useState(0);
 
 	useEffect(() => {
-		if (location.pathname === '/') {
-			window.scrollTo(0, position);
+		const currentScrollRestoration = window.history.scrollRestoration;
+
+		if ('scrollRestoration' in window.history) {
+			window.history.scrollRestoration = 'manual';
 		}
-	}, [location.pathname, position]);
+
+		return () => {
+			if ('scrollRestoration' in window.history) {
+				window.history.scrollRestoration = currentScrollRestoration;
+			}
+		};
+	}, []);
 
 	return (
 		<ScrollPositionContext.Provider value={{ position, setPosition }}>
 			<AppErrorBoundary resetKey={`${location.pathname}${location.search}`}>
 				<AppLoadingGate>
+					<RouteScrollHandler position={position} />
 					<div className='App'>
 						<Topbar />
 						<Navbar />
 						<Routes>
-							<Route path='/:name' element={<CryptoDetail />} />
+							<Route path='/:coinId' element={<CryptoDetail />} />
 							<Route
 								path='/'
 								element={
