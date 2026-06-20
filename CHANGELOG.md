@@ -1,4 +1,4 @@
-# Unreleased
+# v1.3.1 - 20th June 2026
 
 - Fixed mobile token navigation, home scroll restoration, and market row activation
 - Fixed mobile navbar icon colours and active-section highlighting
