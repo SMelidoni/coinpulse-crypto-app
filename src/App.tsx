@@ -62,7 +62,7 @@ function AppContent() {
 						<Topbar />
 						<Navbar />
 						<Routes>
-							<Route path='/:name' element={<CryptoDetail />} />
+							<Route path='/:coinId' element={<CryptoDetail />} />
 							<Route
 								path='/'
 								element={
