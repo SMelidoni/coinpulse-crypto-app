@@ -7,6 +7,17 @@ import { Link as ScrollLink } from 'react-scroll';
 import { MdMenu, MdClose } from 'react-icons/md';
 
 const links = ['home', 'market', 'learn', 'social'];
+const FALLBACK_STICKY_HEADER_OFFSET = 120;
+
+const getStickyHeaderOffset = () => {
+	const navbarElement = document.querySelector<HTMLElement>('.navbar-container');
+
+	if (!navbarElement) {
+		return FALLBACK_STICKY_HEADER_OFFSET;
+	}
+
+	return navbarElement.getBoundingClientRect().bottom;
+};
 
 const Navbar: FC = () => {
 	const location = useLocation();
@@ -27,9 +38,9 @@ const Navbar: FC = () => {
 		}
 
 		let animationFrameId = 0;
-		const stickyHeaderOffset = 120;
 
 		const updateActiveLink = () => {
+			const stickyHeaderOffset = getStickyHeaderOffset();
 			const currentLink =
 				links.find((link) => {
 					const sectionElement = document.getElementById(link);
