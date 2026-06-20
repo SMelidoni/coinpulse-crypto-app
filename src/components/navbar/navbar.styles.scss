@@ -49,29 +49,52 @@
 }
 
 .menu-button {
+	-webkit-appearance: none;
+	-webkit-tap-highlight-color: transparent;
+	appearance: none;
 	background-color: transparent;
 	border: none;
+	color: $primary-color;
 	cursor: pointer;
 	display: none;
+	line-height: 0;
 	transition: color 0.3s ease-in-out;
 	margin-left: auto;
 
-	&:hover {
+	svg {
+		color: currentColor;
+		fill: currentColor;
+	}
+
+	&:hover,
+	&:focus-visible,
+	&:active {
 		color: $secondary-color;
 	}
 }
 
 .close-button {
+	-webkit-appearance: none;
+	-webkit-tap-highlight-color: transparent;
+	appearance: none;
 	background: transparent;
 	border: none;
 	color: $primary-color;
 	cursor: pointer;
+	line-height: 0;
 	position: absolute;
 	right: 1rem;
 	top: 3.5rem;
 	transition: color 0.3s ease-in-out;
 
-	&:hover {
+	svg {
+		color: currentColor;
+		fill: currentColor;
+	}
+
+	&:hover,
+	&:focus-visible,
+	&:active {
 		color: $secondary-color;
 	}
 }

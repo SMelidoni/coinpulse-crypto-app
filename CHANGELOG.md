@@ -1,3 +1,9 @@
+# v1.3.1 - 20th June 2026
+
+- Fixed mobile token navigation, home scroll restoration, and market row activation
+- Fixed mobile navbar icon colours and active-section highlighting
+- Clarified the loading error message for public API rate limits
+
 # v1.3.0 - 19th June 2026
 
 - Migrated the project from Create React App to Vite and removed unused dependencies to reduce audit noise and package footprint

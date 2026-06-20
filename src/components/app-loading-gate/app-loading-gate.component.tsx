@@ -91,7 +91,7 @@ const AppLoadingScreen: FC<{
 				<h1>CoinPulse</h1>
 				<p>
 					{state === 'error'
-						? 'Unable to load live market data.'
+						? 'Unable to load live market data. This demo uses a public API, so requests may be temporarily rate limited.'
 						: 'Loading live market data'}
 				</p>
 			</div>

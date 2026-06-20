@@ -20,8 +20,9 @@ import {
 
 const CryptoDetail: FC = () => {
 	const navigate = useNavigate();
-	const { name } = useParams<{ name?: string }>();
-	const coinUrl = name ? getCoinDetailUrl(name.toLowerCase()) : null;
+	const { coinId } = useParams<{ coinId?: string }>();
+	const normalizedCoinId = coinId?.toLowerCase();
+	const coinUrl = normalizedCoinId ? getCoinDetailUrl(normalizedCoinId) : null;
 
 	const [coinDetail, setCoinDetail] = useState<CoinDetail | null>(
 		() => (coinUrl ? getCachedData<CoinDetail>(coinUrl) : null),
@@ -32,7 +33,7 @@ const CryptoDetail: FC = () => {
 	useEffect(() => {
 		let isMounted = true;
 
-		if (name && name === name.toLowerCase()) {
+		if (coinId && normalizedCoinId && coinId === normalizedCoinId) {
 			const cachedCoinDetail = coinUrl
 				? getCachedData<CoinDetail>(coinUrl)
 				: null;
@@ -41,7 +42,7 @@ const CryptoDetail: FC = () => {
 			setLoading(!cachedCoinDetail);
 			setError(null);
 
-			getCachedJson<CoinDetail>(getCoinDetailUrl(name), {
+			getCachedJson<CoinDetail>(getCoinDetailUrl(normalizedCoinId), {
 				ttlMs: COIN_DETAIL_TTL_MS,
 			})
 				.then((data) => {
@@ -67,14 +68,14 @@ const CryptoDetail: FC = () => {
 		return () => {
 			isMounted = false;
 		};
-	}, [coinUrl, name]);
+	}, [coinId, coinUrl, normalizedCoinId]);
 
-	if (!name) {
-		return <div>Error: Name not provided.</div>;
+	if (!coinId) {
+		return <div>Error: Coin id not provided.</div>;
 	}
 
-	if (name !== name.toLowerCase()) {
-		navigate(`/${name.toLowerCase()}`);
+	if (coinId !== normalizedCoinId) {
+		navigate(`/${normalizedCoinId}`);
 		return null;
 	}
 

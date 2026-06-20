@@ -22,9 +22,9 @@ const Home: FC = () => {
 
 	const { coinData, errorMessage } = context;
 
-	const handleCoinClick = (name: string) => {
+	const handleCoinClick = (id: string) => {
 		setPosition(window.scrollY);
-		navigate(`/${name.toLowerCase()}`);
+		navigate(`/${id}`);
 	};
 
 	return (
@@ -40,7 +40,7 @@ const Home: FC = () => {
 							<div
 								key={coin.id}
 								className='coin-item'
-								onClick={() => handleCoinClick(coin.name)}
+								onClick={() => handleCoinClick(coin.id)}
 							>
 								<img src={coin.image} alt={coin.name} className='coin-image' />
 								<h2>{coin.name}</h2>
