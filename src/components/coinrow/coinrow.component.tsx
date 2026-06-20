@@ -49,7 +49,13 @@ const CoinRow: FC<ICoinData> = ({
 	};
 
 	const handleRowKeyDown = (event: React.KeyboardEvent<HTMLTableRowElement>) => {
-		if (event.key !== 'Enter' && event.key !== ' ') {
+		const isActivationKey =
+			event.key === 'Enter' ||
+			event.key === ' ' ||
+			event.key === 'Spacebar' ||
+			event.code === 'Space';
+
+		if (!isActivationKey) {
 			return;
 		}
 
