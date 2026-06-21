@@ -118,9 +118,10 @@ const AppLoadingGate: FC<AppLoadingGateProps> = ({ children }) => {
 	const forcedLoadingPreview =
 		loaderPreview === 'true' || loaderPreview === 'loading';
 	const forcedErrorPreview = loaderPreview === 'error';
+	const isAppLoading = state !== 'ready';
 
 	useEffect(() => {
-		if (state === 'ready') {
+		if (!isAppLoading) {
 			return;
 		}
 
@@ -134,7 +135,7 @@ const AppLoadingGate: FC<AppLoadingGateProps> = ({ children }) => {
 			document.body.style.overflow = previousBodyOverflow;
 			document.documentElement.style.overflow = previousDocumentOverflow;
 		};
-	}, [state]);
+	}, [isAppLoading]);
 
 	useEffect(() => {
 		let isMounted = true;
