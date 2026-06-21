@@ -1,7 +1,7 @@
 # Unreleased
 
 - Improved token detail scroll resets so mobile detail pages reliably start at the top
-- Fixed global loader positioning so it remains centred and non-scrollable across mobile viewports
+- Fixed global loader positioning and scroll locking across mobile viewports
 
 # v1.3.1 - 20th June 2026
 
