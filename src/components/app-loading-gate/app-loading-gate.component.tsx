@@ -120,6 +120,23 @@ const AppLoadingGate: FC<AppLoadingGateProps> = ({ children }) => {
 	const forcedErrorPreview = loaderPreview === 'error';
 
 	useEffect(() => {
+		if (state === 'ready') {
+			return;
+		}
+
+		const previousBodyOverflow = document.body.style.overflow;
+		const previousDocumentOverflow = document.documentElement.style.overflow;
+
+		document.body.style.overflow = 'hidden';
+		document.documentElement.style.overflow = 'hidden';
+
+		return () => {
+			document.body.style.overflow = previousBodyOverflow;
+			document.documentElement.style.overflow = previousDocumentOverflow;
+		};
+	}, [state]);
+
+	useEffect(() => {
 		let isMounted = true;
 		const startedAt = Date.now();
 

@@ -8,13 +8,17 @@
 .app-loading-screen {
 	align-items: center;
 	background: $background-primary;
+	box-sizing: border-box;
 	color: $primary-text-color;
 	display: flex;
+	inset: 0;
 	justify-content: center;
-	min-height: 100svh;
-	min-height: 100vh;
 	overflow: hidden;
+	overscroll-behavior: none;
 	padding: 24px;
+	position: fixed;
+	width: 100%;
+	z-index: 999;
 }
 
 .app-loading-panel {
