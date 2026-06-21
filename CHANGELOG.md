@@ -1,9 +1,13 @@
+# Unreleased
+
+- Improved token detail scroll resets so mobile detail pages reliably start at the top
+- Fixed global loader positioning so it remains centred and non-scrollable across mobile viewports
+
 # v1.3.1 - 20th June 2026
 
 - Fixed mobile token navigation, home scroll restoration, and market row activation
 - Fixed mobile navbar icon colours and active-section highlighting
 - Clarified the loading error message for public API rate limits
-- Fixed global loader positioning so it remains centered and non-scrollable on small viewports
 
 # v1.3.0 - 19th June 2026
 

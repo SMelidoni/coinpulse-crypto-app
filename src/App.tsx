@@ -23,11 +23,35 @@ const RouteScrollHandler: React.FC<{ position: number }> = ({ position }) => {
 	const location = useLocation();
 
 	useLayoutEffect(() => {
-		window.scrollTo({
-			top: location.pathname === '/' ? position : 0,
-			left: 0,
-			behavior: 'auto',
+		let secondAnimationFrameId = 0;
+		const targetPosition = location.pathname === '/' ? position : 0;
+		const scrollToTargetPosition = () => {
+			window.scrollTo({
+				top: targetPosition,
+				left: 0,
+				behavior: 'auto',
+			});
+
+			document.documentElement.scrollTop = targetPosition;
+			document.body.scrollTop = targetPosition;
+		};
+
+		scrollToTargetPosition();
+
+		// iOS Safari can adjust scroll after navigation/layout, so repeat the target scroll briefly.
+		const firstAnimationFrameId = window.requestAnimationFrame(() => {
+			scrollToTargetPosition();
+			secondAnimationFrameId = window.requestAnimationFrame(
+				scrollToTargetPosition,
+			);
 		});
+		const timeoutId = window.setTimeout(scrollToTargetPosition, 100);
+
+		return () => {
+			window.cancelAnimationFrame(firstAnimationFrameId);
+			window.cancelAnimationFrame(secondAnimationFrameId);
+			window.clearTimeout(timeoutId);
+		};
 	}, [location.pathname, position]);
 
 	return null;

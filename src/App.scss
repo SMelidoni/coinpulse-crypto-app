@@ -17,6 +17,7 @@
 	overscroll-behavior: none;
 	padding: 24px;
 	position: fixed;
+	touch-action: none;
 	width: 100%;
 	z-index: 999;
 }
