@@ -3,6 +3,7 @@
 - Fixed mobile token navigation, home scroll restoration, and market row activation
 - Fixed mobile navbar icon colours and active-section highlighting
 - Clarified the loading error message for public API rate limits
+- Fixed global loader positioning so it remains centered and non-scrollable on small viewports
 
 # v1.3.0 - 19th June 2026
 
